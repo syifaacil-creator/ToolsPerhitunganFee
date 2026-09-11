@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <title>TXT Fee Calculator</title>
+  <style>
+    :root {
+      --ink: #102a43;
+      --muted: #627d98;
+      --line: #d9e2ec;
+      --paper: #f7f9fc;
+      --white: #fff;
+      --blue: #1677c8;
+      --blue-dark: #0b5da6;
+      --mint: #0f766e;
+      --amber: #b45309;
+      --red: #b42318;
+      --shadow: 0 16px 42px rgba(16, 42, 67, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 "Trebuchet MS", "Segoe UI", sans-serif; }
+    button, input { font: inherit; }
+    .topbar { background: var(--ink); color: white; padding: 18px 5vw; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 38px; height: 38px; border: 2px solid #7dd3fc; display: grid; place-items: center; font-weight: 800; transform: rotate(-5deg); }
+    .brand strong { display: block; letter-spacing: .04em; }
+    .brand small { color: #b9d4e8; }
+    .privacy { color: #b9f3df; font-size: 12px; white-space: nowrap; }
+    .shell { width: min(1180px, 90vw); margin: 42px auto 72px; }
+    .hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end; margin-bottom: 28px; }
+    .eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 690px; margin: 0; font: 800 clamp(34px, 5vw, 64px)/.98 Georgia, serif; letter-spacing: -.03em; }
+    .hero-copy { margin: 16px 0 0; max-width: 650px; color: var(--muted); font-size: 17px; }
+    .hero-note { border-left: 3px solid #f59e0b; padding: 12px 0 12px 18px; color: var(--muted); }
+    .panel { background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .upload-panel { display: grid; grid-template-columns: 1.25fr .75fr; gap: 0; margin-bottom: 24px; }
+    .dropzone { min-height: 250px; padding: 30px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--line); }
+    .dropzone.dragover { background: #eef8ff; }
+    .upload-icon { color: var(--blue); font-size: 34px; line-height: 1; margin-bottom: 12px; }
+    h2 { margin: 0; font: 700 24px/1.1 Georgia, serif; }
+    h3 { margin: 0 0 14px; font-size: 16px; }
+    .muted { color: var(--muted); }
+    .dropzone p { margin: 8px 0 20px; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .button { border: 0; cursor: pointer; padding: 11px 16px; font-weight: 800; border-radius: 3px; transition: transform .15s, background .15s; }
+    .button:hover { transform: translateY(-1px); }
+    .button-primary { background: var(--blue); color: white; }
+    .button-primary:hover { background: var(--blue-dark); }
+    .button-secondary { background: #eaf2f8; color: var(--ink); }
+    .button-quiet { background: transparent; color: var(--blue-dark); border: 1px solid var(--line); }
+    .button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    input[type=file] { display: none; }
+    .file-name { min-height: 23px; margin-top: 14px; color: var(--mint); font-weight: 700; }
+    .settings { padding: 30px; background: #fbfcfe; }
+    .settings p { margin: -6px 0 18px; color: var(--muted); font-size: 13px; }
+    .rate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; }
+    input[type=number] { width: 100%; border: 1px solid var(--line); padding: 10px; margin-top: 5px; color: var(--ink); background: white; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0; }
+    .stat { padding: 18px; border-top: 3px solid var(--blue); background: white; border-left: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stat:nth-child(2) { border-top-color: var(--mint); } .stat:nth-child(3) { border-top-color: #f59e0b; } .stat:nth-child(4) { border-top-color: #8b5cf6; }
+    .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .stat-value { display: block; margin-top: 6px; font-size: 22px; font-weight: 800; overflow-wrap: anywhere; }
+    .results { overflow: hidden; }
+    .results-head { padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; border-bottom: 1px solid var(--line); }
+    .results-head p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 850px; }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #edf1f5; white-space: nowrap; }
+    th { color: var(--muted); background: #f8fafc; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+    td.num, th.num { text-align: right; }
+    .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
+    .empty strong { display: block; color: var(--ink); font: 700 21px Georgia, serif; margin-bottom: 5px; }
+    .message { display: none; margin: 16px 0; padding: 13px 16px; border-left: 4px solid var(--red); background: #fff3f2; color: var(--red); }
+    .message.show { display: block; }
+    .skipped { margin: 20px 24px 24px; padding: 14px 16px; background: #fff9eb; border-left: 3px solid #f59e0b; color: #854d0e; }
+    .skipped summary { cursor: pointer; font-weight: 800; }
+    .skipped ul { max-height: 180px; overflow: auto; margin-bottom: 0; padding-left: 20px; font-size: 13px; }
+    footer { margin-top: 20px; color: var(--muted); font-size: 12px; text-align: center; }
+    @media (max-width: 780px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .privacy { white-space: normal; }
+      .shell { width: min(94vw, 1180px); margin-top: 28px; }
+      .hero, .upload-panel { grid-template-columns: 1fr; gap: 20px; }
+      .dropzone { border-right: 0; border-bottom: 1px solid var(--line); min-height: 220px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .results-head { align-items: flex-start; flex-direction: column; }
+      .results-head .actions { width: 100%; }
+      .results-head .button { flex: 1; }
+    }
+    @media (max-width: 430px) { .rate-grid { grid-template-columns: 1fr; } .stat-value { font-size: 17px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">TX</span><div><strong>TXT FEE CALCULATOR</strong><small>GitHub Pages edition</small></div></div>
+    <span class="privacy">Diproses lokal di browser Anda</span>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div><p class="eyebrow">Settlement tools</p><h1>Ubah TXT mentah menjadi angka yang siap dibaca.</h1><p class="hero-copy">Upload file transaksi, hitung nominal dan fee per baris, lalu unduh hasilnya sebagai CSV. Tidak perlu database dan tidak ada file yang dikirim ke server.</p></div>
+      <p class="hero-note">Format yang didukung: baris dipisahkan newline, kolom dipisahkan titik koma (<strong>;</strong>), minimal 26 kolom. Nama file dianjurkan mengandung tanggal <strong>yymmdd</strong>.</p>
+    </section>
+
+    <div id="message" class="message" role="alert"></div>
+    <section class="panel upload-panel">
+      <div id="dropzone" class="dropzone">
+        <div class="upload-icon">↑</div><h2>Pilih file TXT</h2><p>Tarik file ke area ini atau pilih dari komputer. Baris yang lolos akan langsung dihitung.</p>
+        <div class="actions"><label class="button button-primary" for="fileInput">Pilih file TXT</label><button class="button button-quiet" id="clearButton" type="button" disabled>Reset</button></div>
+        <div id="fileName" class="file-name">Belum ada file dipilih</div>
+        <input id="fileInput" type="file" accept=".txt,text/plain">
+      </div>
+      <div class="settings">
+        <h3>Tarif per transaksi</h3><p>Nilai awal mengikuti dashboard lokal. Bisa disesuaikan sebelum menghitung.</p>
+        <div class="rate-grid">
+          <label>Acquirer<input id="feeAcquirer" type="number" min="0" step="1" value="3625"></label>
+          <label>Issuer<input id="feeIssuer" type="number" min="0" step="1" value="700"></label>
+          <label>Destination<input id="feeDestination" type="number" min="0" step="1" value="1500"></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-live="polite">
+      <div class="stat"><span class="stat-label">Baris berhasil</span><span id="statRows" class="stat-value">0</span></div>
+      <div class="stat"><span class="stat-label">Total nominal</span><span id="statNominal" class="stat-value">Rp 0</span></div>
+      <div class="stat"><span class="stat-label">Total fee</span><span id="statFee" class="stat-value">Rp 0</span></div>
+      <div class="stat"><span class="stat-label">Nominal + fee</span><span id="statGrand" class="stat-value">Rp 0</span></div>
+    </section>
+
+    <section class="panel results">
+      <div class="results-head"><div><h2>Hasil perhitungan</h2><p id="resultDescription">Belum ada data untuk ditampilkan.</p></div><div class="actions"><button class="button button-secondary" id="downloadCsv" type="button" disabled>↓ Unduh CSV</button><button class="button button-quiet" id="downloadTxt" type="button" disabled>↓ Unduh TXT ringkas</button></div></div>
+      <div id="emptyState" class="empty"><strong>Mulai dari file transaksi Anda</strong>Hasil akan muncul di sini setelah file TXT dibaca.</div>
+      <div id="tableWrap" class="table-wrap" hidden><table><thead><tr><th>Baris</th><th>Nm Trx</th><th>Flag</th><th>Acquirer</th><th>Issuer</th><th>Destination</th><th class="num">Nominal</th><th class="num">Fee</th><th class="num">Total</th></tr></thead><tbody id="resultBody"></tbody></table></div>
+      <details id="skippedBox" class="skipped" hidden><summary><span id="skippedTitle"></span></summary><ul id="skippedList"></ul></details>
+    </section>
+    <footer>Flag yang dihitung: 1, 5, 6, 15, 16. Kode 011000 dan 311000 tidak dikenai fee destination.</footer>
+  </main>
+
+  <script>
+    (() => {
+      const allowedFlags = new Set(['1', '5', '6', '15', '16']);
+      const noDestinationCodes = new Set(['011000', '311000']);
+      const state = { rows: [], skipped: [], fileName: '' };
+      const $ = (id) => document.getElementById(id);
+      const rupiah = (value) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 2 }).format(value || 0);
+      const csvCell = (value) => '"' + String(value ?? '').replaceAll('"', '""') + '"';
+      const rates = () => ({ acquirer: Number($('feeAcquirer').value) || 0, issuer: Number($('feeIssuer').value) || 0, destination: Number($('feeDestination').value) || 0 });
+      const showMessage = (text) => { $('message').textContent = text; $('message').classList.toggle('show', Boolean(text)); };
+      const parseNominal = (value) => { const normalized = String(value ?? '').trim().replace(',', '.'); const number = Number(normalized); return Number.isFinite(number) ? number : 0; };
+      const reportDate = (name) => { const match = name.replace(/\.[^.]+$/, '').match(/(\d{2})(\d{2})(\d{2})/); return match ? `20${match[1]}-${match[2]}-${match[3]}` : ''; };
+
+      function processFile(file) {
+        showMessage('');
+        if (!file.name.toLowerCase().endsWith('.txt')) { showMessage('File harus berekstensi .txt.'); return; }
+        state.fileName = file.name; $('fileName').textContent = `${file.name} (${Math.ceil(file.size / 1024)} KB)`;
+        const reader = new FileReader();
+        reader.onload = () => parseContent(String(reader.result || ''));
+        reader.onerror = () => showMessage('File tidak bisa dibaca oleh browser.');
+        reader.readAsText(file);
+      }
+
+      function parseContent(content) {
+        const lines = content.split(/\r\n|\r|\n/); state.rows = []; state.skipped = [];
+        lines.forEach((line, index) => {
+          if (!line.trim()) return;
+          const columns = line.trim().split(';');
+          if (columns.length < 26) { state.skipped.push(`Baris ${index + 1}: kolom kurang dari 26 (${columns.length})`); return; }
+          const flag = columns[19].trim(); const nmTrx = columns[1].trim(); const nominal = parseNominal(columns[25]);
+          if (!allowedFlags.has(flag)) { state.skipped.push(`Baris ${index + 1}: flag kolom 20 "${flag}" tidak lolos filter`); return; }
+          if (nominal <= 0) { state.skipped.push(`Baris ${index + 1}: nominal kolom 26 tidak valid`); return; }
+          state.rows.push({ line: index + 1, nmTrx, flag, acquirer: columns[9].trim(), issuer: columns[10].trim(), destination: columns[21].trim(), nominal, reportDate: reportDate(state.fileName) });
+        });
+        render();
+      }
+
+      function render() {
+        const fee = rates();
+        state.rows = state.rows.map((row) => { const destinationFee = noDestinationCodes.has(row.nmTrx) ? 0 : fee.destination; return { ...row, feeAcquirer: fee.acquirer, feeIssuer: fee.issuer, feeDestination: destinationFee, totalFee: fee.acquirer + fee.issuer + destinationFee, total: row.nominal + fee.acquirer + fee.issuer + destinationFee }; });
+        const totals = state.rows.reduce((sum, row) => ({ nominal: sum.nominal + row.nominal, fee: sum.fee + row.totalFee, total: sum.total + row.total }), { nominal: 0, fee: 0, total: 0 });
+        $('statRows').textContent = state.rows.length.toLocaleString('id-ID'); $('statNominal').textContent = rupiah(totals.nominal); $('statFee').textContent = rupiah(totals.fee); $('statGrand').textContent = rupiah(totals.total);
+        $('resultDescription').textContent = state.rows.length ? `${state.rows.length.toLocaleString('id-ID')} baris dari ${state.fileName} siap diunduh${reportDate(state.fileName) ? ` · tanggal report ${reportDate(state.fileName)}` : ''}.` : 'Tidak ada baris yang lolos filter.';
+        $('emptyState').hidden = state.rows.length > 0; $('tableWrap').hidden = state.rows.length === 0; $('clearButton').disabled = !state.fileName; $('downloadCsv').disabled = state.rows.length === 0; $('downloadTxt').disabled = state.rows.length === 0;
+        $('resultBody').innerHTML = state.rows.map((row) => `<tr><td>${row.line}</td><td>${escapeHtml(row.nmTrx)}</td><td>${row.flag}</td><td>${escapeHtml(row.acquirer)}</td><td>${escapeHtml(row.issuer)}</td><td>${escapeHtml(row.destination)}</td><td class="num">${rupiah(row.nominal)}</td><td class="num">${rupiah(row.totalFee)}</td><td class="num"><strong>${rupiah(row.total)}</strong></td></tr>`).join('');
+        $('skippedBox').hidden = state.skipped.length === 0; $('skippedTitle').textContent = `${state.skipped.length} baris dilewati`; $('skippedList').innerHTML = state.skipped.map(escapeHtml).map((text) => `<li>${text}</li>`).join('');
+      }
+      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
+      const download = (content, name, type) => { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click(); URL.revokeObjectURL(link.href); };
+      const outputName = (extension) => (state.fileName || 'hasil-perhitungan').replace(/\.txt$/i, '') + `-hasil.${extension}`;
+      function csvOutput() { const headers = ['baris', 'tgl_report', 'nm_trx', 'flag', 'acquirer', 'issuer', 'destination', 'nominal', 'fee_acquirer', 'fee_issuer', 'fee_destination', 'total_fee', 'nominal_plus_fee']; return [headers, ...state.rows.map((row) => [row.line, row.reportDate, row.nmTrx, row.flag, row.acquirer, row.issuer, row.destination, row.nominal, row.feeAcquirer, row.feeIssuer, row.feeDestination, row.totalFee, row.total])].map((row) => row.map(csvCell).join(';')).join('\r\n'); }
+      function txtOutput() { const totals = state.rows.reduce((sum, row) => ({ nominal: sum.nominal + row.nominal, fee: sum.fee + row.totalFee, total: sum.total + row.total }), { nominal: 0, fee: 0, total: 0 }); return [`HASIL PERHITUNGAN TXT`, `File: ${state.fileName}`, `Tanggal report: ${reportDate(state.fileName) || '-'}`, `Baris berhasil: ${state.rows.length}`, `Total nominal: ${totals.nominal}`, `Total fee: ${totals.fee}`, `Nominal + fee: ${totals.total}`, '', 'baris;nm_trx;flag;acquirer;issuer;destination;nominal;total_fee;nominal_plus_fee', ...state.rows.map((row) => [row.line, row.nmTrx, row.flag, row.acquirer, row.issuer, row.destination, row.nominal, row.totalFee, row.total].map(csvCell).join(';'))].join('\r\n'); }
+
+      $('fileInput').addEventListener('change', (event) => { if (event.target.files[0]) processFile(event.target.files[0]); });
+      ['feeAcquirer', 'feeIssuer', 'feeDestination'].forEach((id) => $(id).addEventListener('input', () => { if (state.rows.length) render(); }));
+      $('dropzone').addEventListener('dragover', (event) => { event.preventDefault(); $('dropzone').classList.add('dragover'); });
+      $('dropzone').addEventListener('dragleave', () => $('dropzone').classList.remove('dragover'));
+      $('dropzone').addEventListener('drop', (event) => { event.preventDefault(); $('dropzone').classList.remove('dragover'); if (event.dataTransfer.files[0]) processFile(event.dataTransfer.files[0]); });
+      $('clearButton').addEventListener('click', () => { state.rows = []; state.skipped = []; state.fileName = ''; $('fileInput').value = ''; $('fileName').textContent = 'Belum ada file dipilih'; showMessage(''); render(); });
+      $('downloadCsv').addEventListener('click', () => download('\ufeff' + csvOutput(), outputName('csv'), 'text/csv;charset=utf-8'));
+      $('downloadTxt').addEventListener('click', () => download(txtOutput(), outputName('txt'), 'text/plain;charset=utf-8'));
+      render();
+    })();
+  </script>
+</body>
+</html>
