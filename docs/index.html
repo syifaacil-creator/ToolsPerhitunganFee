@@ -1,207 +1,42 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#102a43">
-  <title>TXT Fee Calculator</title>
-  <style>
-    :root {
-      --ink: #102a43;
-      --muted: #627d98;
-      --line: #d9e2ec;
-      --paper: #f7f9fc;
-      --white: #fff;
-      --blue: #1677c8;
-      --blue-dark: #0b5da6;
-      --mint: #0f766e;
-      --amber: #b45309;
-      --red: #b42318;
-      --shadow: 0 16px 42px rgba(16, 42, 67, .10);
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 "Trebuchet MS", "Segoe UI", sans-serif; }
-    button, input { font: inherit; }
-    .topbar { background: var(--ink); color: white; padding: 18px 5vw; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-mark { width: 38px; height: 38px; border: 2px solid #7dd3fc; display: grid; place-items: center; font-weight: 800; transform: rotate(-5deg); }
-    .brand strong { display: block; letter-spacing: .04em; }
-    .brand small { color: #b9d4e8; }
-    .privacy { color: #b9f3df; font-size: 12px; white-space: nowrap; }
-    .shell { width: min(1180px, 90vw); margin: 42px auto 72px; }
-    .hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end; margin-bottom: 28px; }
-    .eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-    h1 { max-width: 690px; margin: 0; font: 800 clamp(34px, 5vw, 64px)/.98 Georgia, serif; letter-spacing: -.03em; }
-    .hero-copy { margin: 16px 0 0; max-width: 650px; color: var(--muted); font-size: 17px; }
-    .hero-note { border-left: 3px solid #f59e0b; padding: 12px 0 12px 18px; color: var(--muted); }
-    .panel { background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
-    .upload-panel { display: grid; grid-template-columns: 1.25fr .75fr; gap: 0; margin-bottom: 24px; }
-    .dropzone { min-height: 250px; padding: 30px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--line); }
-    .dropzone.dragover { background: #eef8ff; }
-    .upload-icon { color: var(--blue); font-size: 34px; line-height: 1; margin-bottom: 12px; }
-    h2 { margin: 0; font: 700 24px/1.1 Georgia, serif; }
-    h3 { margin: 0 0 14px; font-size: 16px; }
-    .muted { color: var(--muted); }
-    .dropzone p { margin: 8px 0 20px; color: var(--muted); }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-    .button { border: 0; cursor: pointer; padding: 11px 16px; font-weight: 800; border-radius: 3px; transition: transform .15s, background .15s; }
-    .button:hover { transform: translateY(-1px); }
-    .button-primary { background: var(--blue); color: white; }
-    .button-primary:hover { background: var(--blue-dark); }
-    .button-secondary { background: #eaf2f8; color: var(--ink); }
-    .button-quiet { background: transparent; color: var(--blue-dark); border: 1px solid var(--line); }
-    .button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-    input[type=file] { display: none; }
-    .file-name { min-height: 23px; margin-top: 14px; color: var(--mint); font-weight: 700; }
-    .settings { padding: 30px; background: #fbfcfe; }
-    .settings p { margin: -6px 0 18px; color: var(--muted); font-size: 13px; }
-    .rate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; }
-    input[type=number] { width: 100%; border: 1px solid var(--line); padding: 10px; margin-top: 5px; color: var(--ink); background: white; }
-    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0; }
-    .stat { padding: 18px; border-top: 3px solid var(--blue); background: white; border-left: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .stat:nth-child(2) { border-top-color: var(--mint); } .stat:nth-child(3) { border-top-color: #f59e0b; } .stat:nth-child(4) { border-top-color: #8b5cf6; }
-    .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-    .stat-value { display: block; margin-top: 6px; font-size: 22px; font-weight: 800; overflow-wrap: anywhere; }
-    .results { overflow: hidden; }
-    .results-head { padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; border-bottom: 1px solid var(--line); }
-    .results-head p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 850px; }
-    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #edf1f5; white-space: nowrap; }
-    th { color: var(--muted); background: #f8fafc; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
-    td.num, th.num { text-align: right; }
-    .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
-    .empty strong { display: block; color: var(--ink); font: 700 21px Georgia, serif; margin-bottom: 5px; }
-    .message { display: none; margin: 16px 0; padding: 13px 16px; border-left: 4px solid var(--red); background: #fff3f2; color: var(--red); }
-    .message.show { display: block; }
-    .skipped { margin: 20px 24px 24px; padding: 14px 16px; background: #fff9eb; border-left: 3px solid #f59e0b; color: #854d0e; }
-    .skipped summary { cursor: pointer; font-weight: 800; }
-    .skipped ul { max-height: 180px; overflow: auto; margin-bottom: 0; padding-left: 20px; font-size: 13px; }
-    footer { margin-top: 20px; color: var(--muted); font-size: 12px; text-align: center; }
-    @media (max-width: 780px) {
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .privacy { white-space: normal; }
-      .shell { width: min(94vw, 1180px); margin-top: 28px; }
-      .hero, .upload-panel { grid-template-columns: 1fr; gap: 20px; }
-      .dropzone { border-right: 0; border-bottom: 1px solid var(--line); min-height: 220px; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
-      .results-head { align-items: flex-start; flex-direction: column; }
-      .results-head .actions { width: 100%; }
-      .results-head .button { flex: 1; }
-    }
-    @media (max-width: 430px) { .rate-grid { grid-template-columns: 1fr; } .stat-value { font-size: 17px; } }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parser Report TXT ke Excel</title>
+<style>
+:root{--ink:#17324d;--muted:#627d98;--line:#9db4c4;--paper:#eef3f7;--blue:#1f6f9f;--yellow:#fff4c7}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.45 "Trebuchet MS","Segoe UI",sans-serif}button,input{font:inherit}.topbar{padding:18px 5vw;background:var(--ink);color:#fff;display:flex;justify-content:space-between;gap:16px}.brand{display:flex;gap:12px;align-items:center}.brand-mark{width:38px;height:38px;border:2px solid #9cd8ef;display:grid;place-items:center;font-weight:800}.brand small,.brand strong{display:block}.brand small{color:#b9d4e8}.privacy{color:#b9f3df;font-size:12px}.shell{width:min(1320px,94vw);margin:34px auto 70px}h1{margin:0;font:800 clamp(32px,5vw,58px)/1 Georgia,serif;letter-spacing:-.03em}h2{margin:0;font:700 23px/1.1 Georgia,serif}.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:end;margin-bottom:26px}.intro p{color:var(--muted);font-size:16px}.note{padding:12px 0 12px 18px;border-left:3px solid #e5a11b}.panel{background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px #17324d16}.upload{display:grid;grid-template-columns:1fr 1fr;margin-bottom:22px}.upload-area,.rules{padding:24px}.upload-area{border-right:1px solid var(--line)}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.button{border:0;border-radius:3px;padding:11px 16px;cursor:pointer;font-weight:800}.primary{color:#fff;background:var(--blue)}.secondary{color:var(--ink);background:#e4eef5}.quiet{color:var(--blue);background:#fff;border:1px solid var(--line)}.button:disabled{opacity:.45;cursor:not-allowed}input[type=file]{display:none}.file-name{min-height:22px;margin-top:12px;color:#08745c;font-weight:700}.rules{background:#fbfdff}.rules p{color:var(--muted);font-size:13px}.rule-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 0;padding:0;list-style:none}.rule-list li{padding:8px 10px;border:1px solid var(--line);background:#fff}.rule-list strong{display:block}.message{display:none;margin:14px 0;padding:12px 15px;border-left:4px solid #b42318;color:#b42318;background:#fff3f2}.message.show{display:block}.sheet{overflow:hidden}.sheet-head{padding:20px 22px;display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line)}.sheet-head p{margin:5px 0;color:var(--muted);font-size:13px}.sheet-scroll{overflow-x:auto;padding:0 14px 18px}.report-grid{min-width:1100px;margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:26px}.report-title,.report-subtitle{text-align:center;border:1px solid #6e9ab5;font-weight:800}.report-title{padding:7px;background:#acd1e8}.report-subtitle{padding:5px;background:#d7ecf7}table{width:100%;border-collapse:collapse}th,td{padding:7px 8px;border:1px solid #8ea5b7;white-space:nowrap}th{background:#c7e5f3;text-align:center;font-size:12px}td.center{text-align:center}td.right{text-align:right}.total-row td{background:#c9e6f2;font-weight:800}.fee-input{width:92px;padding:5px;text-align:right;border:1px solid #7897aa;background:var(--yellow)}.computed{background:#edf5fa}.total-row .computed{background:#c9e6f2}.accumulation{width:290px;margin-top:22px}.accumulation caption{text-align:left;font-weight:800;margin-bottom:5px}.empty{padding:46px 20px;text-align:center;color:var(--muted)}.skipped{margin:0 22px 22px;padding:12px 15px;background:#fff9eb;border-left:3px solid #e5a11b;color:#854d0e}.skipped summary{cursor:pointer;font-weight:800}@media(max-width:800px){.intro,.upload{grid-template-columns:1fr;gap:0}.upload-area{border-right:0;border-bottom:1px solid var(--line)}.topbar{flex-direction:column}.sheet-head{flex-direction:column}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><span class="brand-mark">TX</span><div><strong>TXT FEE CALCULATOR</strong><small>GitHub Pages edition</small></div></div>
-    <span class="privacy">Diproses lokal di browser Anda</span>
-  </header>
-
-  <main class="shell">
-    <section class="hero">
-      <div><p class="eyebrow">Settlement tools</p><h1>Ubah TXT mentah menjadi angka yang siap dibaca.</h1><p class="hero-copy">Upload file transaksi, hitung nominal dan fee per baris, lalu unduh hasilnya sebagai CSV. Tidak perlu database dan tidak ada file yang dikirim ke server.</p></div>
-      <p class="hero-note">Format yang didukung: baris dipisahkan newline, kolom dipisahkan titik koma (<strong>;</strong>), minimal 26 kolom. Nama file dianjurkan mengandung tanggal <strong>yymmdd</strong>.</p>
-    </section>
-
-    <div id="message" class="message" role="alert"></div>
-    <section class="panel upload-panel">
-      <div id="dropzone" class="dropzone">
-        <div class="upload-icon">↑</div><h2>Pilih file TXT</h2><p>Tarik file ke area ini atau pilih dari komputer. Baris yang lolos akan langsung dihitung.</p>
-        <div class="actions"><label class="button button-primary" for="fileInput">Pilih file TXT</label><button class="button button-quiet" id="clearButton" type="button" disabled>Reset</button></div>
-        <div id="fileName" class="file-name">Belum ada file dipilih</div>
-        <input id="fileInput" type="file" accept=".txt,text/plain">
-      </div>
-      <div class="settings">
-        <h3>Tarif per transaksi</h3><p>Nilai awal mengikuti dashboard lokal. Bisa disesuaikan sebelum menghitung.</p>
-        <div class="rate-grid">
-          <label>Acquirer<input id="feeAcquirer" type="number" min="0" step="1" value="3625"></label>
-          <label>Issuer<input id="feeIssuer" type="number" min="0" step="1" value="700"></label>
-          <label>Destination<input id="feeDestination" type="number" min="0" step="1" value="1500"></label>
-        </div>
-      </div>
-    </section>
-
-    <section class="stats" aria-live="polite">
-      <div class="stat"><span class="stat-label">Baris berhasil</span><span id="statRows" class="stat-value">0</span></div>
-      <div class="stat"><span class="stat-label">Total nominal</span><span id="statNominal" class="stat-value">Rp 0</span></div>
-      <div class="stat"><span class="stat-label">Total fee</span><span id="statFee" class="stat-value">Rp 0</span></div>
-      <div class="stat"><span class="stat-label">Nominal + fee</span><span id="statGrand" class="stat-value">Rp 0</span></div>
-    </section>
-
-    <section class="panel results">
-      <div class="results-head"><div><h2>Hasil perhitungan</h2><p id="resultDescription">Belum ada data untuk ditampilkan.</p></div><div class="actions"><button class="button button-secondary" id="downloadCsv" type="button" disabled>↓ Unduh CSV</button><button class="button button-quiet" id="downloadTxt" type="button" disabled>↓ Unduh TXT ringkas</button></div></div>
-      <div id="emptyState" class="empty"><strong>Mulai dari file transaksi Anda</strong>Hasil akan muncul di sini setelah file TXT dibaca.</div>
-      <div id="tableWrap" class="table-wrap" hidden><table><thead><tr><th>Baris</th><th>Nm Trx</th><th>Flag</th><th>Acquirer</th><th>Issuer</th><th>Destination</th><th class="num">Nominal</th><th class="num">Fee</th><th class="num">Total</th></tr></thead><tbody id="resultBody"></tbody></table></div>
-      <details id="skippedBox" class="skipped" hidden><summary><span id="skippedTitle"></span></summary><ul id="skippedList"></ul></details>
-    </section>
-    <footer>Flag yang dihitung: 1, 5, 6, 15, 16. Kode 011000 dan 311000 tidak dikenai fee destination.</footer>
-  </main>
-
-  <script>
-    (() => {
-      const allowedFlags = new Set(['1', '5', '6', '15', '16']);
-      const noDestinationCodes = new Set(['011000', '311000']);
-      const state = { rows: [], skipped: [], fileName: '' };
-      const $ = (id) => document.getElementById(id);
-      const rupiah = (value) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 2 }).format(value || 0);
-      const csvCell = (value) => '"' + String(value ?? '').replaceAll('"', '""') + '"';
-      const rates = () => ({ acquirer: Number($('feeAcquirer').value) || 0, issuer: Number($('feeIssuer').value) || 0, destination: Number($('feeDestination').value) || 0 });
-      const showMessage = (text) => { $('message').textContent = text; $('message').classList.toggle('show', Boolean(text)); };
-      const parseNominal = (value) => { const normalized = String(value ?? '').trim().replace(',', '.'); const number = Number(normalized); return Number.isFinite(number) ? number : 0; };
-      const reportDate = (name) => { const match = name.replace(/\.[^.]+$/, '').match(/(\d{2})(\d{2})(\d{2})/); return match ? `20${match[1]}-${match[2]}-${match[3]}` : ''; };
-
-      function processFile(file) {
-        showMessage('');
-        if (!file.name.toLowerCase().endsWith('.txt')) { showMessage('File harus berekstensi .txt.'); return; }
-        state.fileName = file.name; $('fileName').textContent = `${file.name} (${Math.ceil(file.size / 1024)} KB)`;
-        const reader = new FileReader();
-        reader.onload = () => parseContent(String(reader.result || ''));
-        reader.onerror = () => showMessage('File tidak bisa dibaca oleh browser.');
-        reader.readAsText(file);
-      }
-
-      function parseContent(content) {
-        const lines = content.split(/\r\n|\r|\n/); state.rows = []; state.skipped = [];
-        lines.forEach((line, index) => {
-          if (!line.trim()) return;
-          const columns = line.trim().split(';');
-          if (columns.length < 26) { state.skipped.push(`Baris ${index + 1}: kolom kurang dari 26 (${columns.length})`); return; }
-          const flag = columns[19].trim(); const nmTrx = columns[1].trim(); const nominal = parseNominal(columns[25]);
-          if (!allowedFlags.has(flag)) { state.skipped.push(`Baris ${index + 1}: flag kolom 20 "${flag}" tidak lolos filter`); return; }
-          if (nominal <= 0) { state.skipped.push(`Baris ${index + 1}: nominal kolom 26 tidak valid`); return; }
-          state.rows.push({ line: index + 1, nmTrx, flag, acquirer: columns[9].trim(), issuer: columns[10].trim(), destination: columns[21].trim(), nominal, reportDate: reportDate(state.fileName) });
-        });
-        render();
-      }
-
-      function render() {
-        const fee = rates();
-        state.rows = state.rows.map((row) => { const destinationFee = noDestinationCodes.has(row.nmTrx) ? 0 : fee.destination; return { ...row, feeAcquirer: fee.acquirer, feeIssuer: fee.issuer, feeDestination: destinationFee, totalFee: fee.acquirer + fee.issuer + destinationFee, total: row.nominal + fee.acquirer + fee.issuer + destinationFee }; });
-        const totals = state.rows.reduce((sum, row) => ({ nominal: sum.nominal + row.nominal, fee: sum.fee + row.totalFee, total: sum.total + row.total }), { nominal: 0, fee: 0, total: 0 });
-        $('statRows').textContent = state.rows.length.toLocaleString('id-ID'); $('statNominal').textContent = rupiah(totals.nominal); $('statFee').textContent = rupiah(totals.fee); $('statGrand').textContent = rupiah(totals.total);
-        $('resultDescription').textContent = state.rows.length ? `${state.rows.length.toLocaleString('id-ID')} baris dari ${state.fileName} siap diunduh${reportDate(state.fileName) ? ` · tanggal report ${reportDate(state.fileName)}` : ''}.` : 'Tidak ada baris yang lolos filter.';
-        $('emptyState').hidden = state.rows.length > 0; $('tableWrap').hidden = state.rows.length === 0; $('clearButton').disabled = !state.fileName; $('downloadCsv').disabled = state.rows.length === 0; $('downloadTxt').disabled = state.rows.length === 0;
-        $('resultBody').innerHTML = state.rows.map((row) => `<tr><td>${row.line}</td><td>${escapeHtml(row.nmTrx)}</td><td>${row.flag}</td><td>${escapeHtml(row.acquirer)}</td><td>${escapeHtml(row.issuer)}</td><td>${escapeHtml(row.destination)}</td><td class="num">${rupiah(row.nominal)}</td><td class="num">${rupiah(row.totalFee)}</td><td class="num"><strong>${rupiah(row.total)}</strong></td></tr>`).join('');
-        $('skippedBox').hidden = state.skipped.length === 0; $('skippedTitle').textContent = `${state.skipped.length} baris dilewati`; $('skippedList').innerHTML = state.skipped.map(escapeHtml).map((text) => `<li>${text}</li>`).join('');
-      }
-      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
-      const download = (content, name, type) => { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click(); URL.revokeObjectURL(link.href); };
-      const outputName = (extension) => (state.fileName || 'hasil-perhitungan').replace(/\.txt$/i, '') + `-hasil.${extension}`;
-      function csvOutput() { const headers = ['baris', 'tgl_report', 'nm_trx', 'flag', 'acquirer', 'issuer', 'destination', 'nominal', 'fee_acquirer', 'fee_issuer', 'fee_destination', 'total_fee', 'nominal_plus_fee']; return [headers, ...state.rows.map((row) => [row.line, row.reportDate, row.nmTrx, row.flag, row.acquirer, row.issuer, row.destination, row.nominal, row.feeAcquirer, row.feeIssuer, row.feeDestination, row.totalFee, row.total])].map((row) => row.map(csvCell).join(';')).join('\r\n'); }
-      function txtOutput() { const totals = state.rows.reduce((sum, row) => ({ nominal: sum.nominal + row.nominal, fee: sum.fee + row.totalFee, total: sum.total + row.total }), { nominal: 0, fee: 0, total: 0 }); return [`HASIL PERHITUNGAN TXT`, `File: ${state.fileName}`, `Tanggal report: ${reportDate(state.fileName) || '-'}`, `Baris berhasil: ${state.rows.length}`, `Total nominal: ${totals.nominal}`, `Total fee: ${totals.fee}`, `Nominal + fee: ${totals.total}`, '', 'baris;nm_trx;flag;acquirer;issuer;destination;nominal;total_fee;nominal_plus_fee', ...state.rows.map((row) => [row.line, row.nmTrx, row.flag, row.acquirer, row.issuer, row.destination, row.nominal, row.totalFee, row.total].map(csvCell).join(';'))].join('\r\n'); }
-
-      $('fileInput').addEventListener('change', (event) => { if (event.target.files[0]) processFile(event.target.files[0]); });
-      ['feeAcquirer', 'feeIssuer', 'feeDestination'].forEach((id) => $(id).addEventListener('input', () => { if (state.rows.length) render(); }));
-      $('dropzone').addEventListener('dragover', (event) => { event.preventDefault(); $('dropzone').classList.add('dragover'); });
-      $('dropzone').addEventListener('dragleave', () => $('dropzone').classList.remove('dragover'));
-      $('dropzone').addEventListener('drop', (event) => { event.preventDefault(); $('dropzone').classList.remove('dragover'); if (event.dataTransfer.files[0]) processFile(event.dataTransfer.files[0]); });
-      $('clearButton').addEventListener('click', () => { state.rows = []; state.skipped = []; state.fileName = ''; $('fileInput').value = ''; $('fileName').textContent = 'Belum ada file dipilih'; showMessage(''); render(); });
-      $('downloadCsv').addEventListener('click', () => download('\ufeff' + csvOutput(), outputName('csv'), 'text/csv;charset=utf-8'));
-      $('downloadTxt').addEventListener('click', () => download(txtOutput(), outputName('txt'), 'text/plain;charset=utf-8'));
-      render();
-    })();
-  </script>
+<header class="topbar"><div class="brand"><span class="brand-mark">TX</span><div><strong>PARSER REPORT TXT</strong><small>Perhitungan fee dan ekspor Excel</small></div></div><span class="privacy">File diproses lokal di browser</span></header>
+<main class="shell">
+<section class="intro"><div><h1>Report TXT masuk, lembar fee siap.</h1><p>Proses file report TXT menjadi tampilan perhitungan seperti template fee, lalu download hasilnya sebagai file Excel.</p></div><p class="note">Kolom kuning <strong>C, F, L, O</strong> bisa diedit. Kolom jumlah dan subtotal terisi otomatis dari data transaksi.</p></section>
+<div id="message" class="message"></div>
+<section class="panel upload"><div id="dropzone" class="upload-area"><h2>1. Pilih report TXT</h2><p>Separator titik koma (;), minimal 26 kolom. Flag diproses: 1, 5, 6, 15, 16.</p><div class="actions"><label class="button primary" for="fileInput">Pilih file TXT</label><button id="processButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="resetButton" class="button quiet" disabled>Reset</button></div><div id="fileName" class="file-name">Belum ada file dipilih</div><input id="fileInput" type="file" accept=".txt,text/plain"></div><div class="rules"><h2>2. Aturan fee</h2><p>Nilai awal mengikuti skema contoh. Ubah di tabel setelah proses.</p><ul class="rule-list"><li><strong>Info Saldo</strong>3.625 / 0</li><li><strong>Tarik Tunai</strong>7.125 / 0</li><li><strong>Transfer Intra</strong>4.625 / 0</li><li><strong>Transfer Inter</strong>4.625 / 1.500</li><li><strong>Payment</strong>3.625 / 0</li></ul></div></section>
+<section class="panel sheet"><div class="sheet-head"><div><h2>Hasil perhitungan</h2><p id="description">Upload file lalu klik proses parser.</p></div><button id="downloadExcel" class="button primary" disabled>↓ Download Excel</button></div><div id="empty" class="empty"><strong>Belum ada hasil</strong><br>Hasil parser akan tampil dalam format tabel fee.</div><div id="sheetScroll" class="sheet-scroll" hidden><div class="report-grid"><div><div class="report-title">SKEMA FEE HAK</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><thead><tr><th rowspan="2">TIPE</th><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>C<br>Fee Per Trx</th><th>D<br>Jumlah Trx</th><th>E<br>Fee*Jumlah</th><th>F<br>Fee Per Trx</th><th>G<br>Jumlah Trx</th><th>H<br>Fee*Jumlah</th></tr></thead><tbody id="hakBody"></tbody></table><table class="accumulation"><caption>Akumulasi Per Jenis Transaksi</caption><tbody id="hakAccumulation"></tbody></table></div><div><div class="report-title">SKEMA FEE KEWAJIBAN</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><thead><tr><th rowspan="2">TIPE</th><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>L<br>Fee Per Trx</th><th>M<br>Jumlah Trx</th><th>N<br>Fee*Jumlah</th><th>O<br>Fee Per Trx</th><th>P<br>Jumlah Trx</th><th>Q<br>Fee*Jumlah</th></tr></thead><tbody id="kewajibanBody"></tbody></table><table class="accumulation"><caption>Akumulasi Per Jenis Transaksi</caption><tbody id="kewajibanAccumulation"></tbody></table></div></div></div><details id="skippedBox" class="skipped" hidden><summary id="skippedTitle"></summary><ul id="skippedList"></ul></details></section>
+<p style="text-align:center;color:var(--muted);font-size:12px">Kuning = bisa diedit. Biru muda = hasil otomatis.</p>
+</main>
+<script>
+(function () {
+  var categories = ['Info Saldo', 'Tarik Tunai', 'Transfer Intra', 'Transfer Inter', 'Payment (ACQ-BILLER)'];
+  var defaults = { hak:{}, kewajiban:{} };
+  categories.forEach(function (name) { var acq = name === 'Tarik Tunai' ? 7125 : 4625; if (name === 'Info Saldo' || name === 'Payment (ACQ-BILLER)') acq = 3625; var dest = name === 'Transfer Inter' ? 1500 : 0; defaults.hak[name] = { acquirer:acq, destination:dest }; defaults.kewajiban[name] = { acquirer:acq, destination:dest }; });
+  var state = { file:null, rows:[], skipped:[], rates:JSON.parse(JSON.stringify(defaults)) };
+  function el(id) { return document.getElementById(id); }
+  function escapeHtml(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[c]; }); }
+  function number(value) { var result = Number(String(value == null ? '' : value).trim().replace(/\./g, '').replace(',', '.')); return isFinite(result) ? result : 0; }
+  function money(value) { return new Intl.NumberFormat('id-ID', { maximumFractionDigits:0 }).format(Number(value) || 0); }
+  function classify(value) { var text = String(value || '').toLowerCase(); if (text.indexOf('saldo') >= 0 || value === '011000' || value === '311000') return 'Info Saldo'; if (text.indexOf('tarik') >= 0) return 'Tarik Tunai'; if (text.indexOf('intra') >= 0) return 'Transfer Intra'; if (text.indexOf('inter') >= 0) return 'Transfer Inter'; return 'Payment (ACQ-BILLER)'; }
+  function parseFile() { var reader = new FileReader(); reader.onload = function () { state.rows=[]; state.skipped=[]; String(reader.result || '').split(/\r\n|\r|\n/).forEach(function (line, index) { if (!line.trim()) return; var c=line.trim().split(';'); var flag=c[19] ? c[19].trim() : ''; var nominal=number(c[25]); if (c.length < 26) state.skipped.push('Baris '+(index+1)+': kolom kurang dari 26'); else if (['1','5','6','15','16'].indexOf(flag) < 0) state.skipped.push('Baris '+(index+1)+': flag '+flag+' tidak lolos filter'); else if (nominal <= 0) state.skipped.push('Baris '+(index+1)+': nominal kolom 26 tidak valid'); else state.rows.push({ category:classify(c[1] ? c[1].trim() : ''), nominal:nominal }); }); render(); }; reader.readAsText(state.file); }
+  function rowHtml(category, side) { var count=state.rows.filter(function (row) { return row.category === category; }).length; var rate=state.rates[side][category]; var type=category === 'Payment (ACQ-BILLER)' ? 'Payment' : category.indexOf('Transfer') === 0 ? 'Transfer' : 'BASIC BANKING'; return '<tr><td class="center">'+type+'</td><td>'+category+'</td><td class="right"><input class="fee-input" data-category="'+escapeHtml(category)+'" data-side="'+side+'" data-rate="acquirer" type="number" min="0" value="'+rate.acquirer+'"></td><td class="right computed">'+(count ? money(count) : '-')+'</td><td class="right computed">'+(count ? money(rate.acquirer*count) : '-')+'</td><td class="right"><input class="fee-input" data-category="'+escapeHtml(category)+'" data-side="'+side+'" data-rate="destination" type="number" min="0" value="'+rate.destination+'"></td><td class="right computed">'+(count ? money(count) : '-')+'</td><td class="right computed">'+(count ? money(rate.destination*count) : '-')+'</td></tr>'; }
+  function tableHtml(side) { var acq=0; var dest=0; categories.forEach(function (category) { var count=state.rows.filter(function (row) { return row.category === category; }).length; acq += state.rates[side][category].acquirer*count; dest += state.rates[side][category].destination*count; }); return categories.map(function (category) { return rowHtml(category, side); }).join('')+'<tr class="total-row"><td colspan="2">TOTAL</td><td></td><td class="computed">'+money(state.rows.length)+'</td><td class="computed">'+money(acq)+'</td><td></td><td class="computed">'+money(state.rows.length)+'</td><td class="computed">'+money(dest)+'</td></tr>'; }
+  function accumulation(side) { return '<tr><th>JENIS TRANSAKSI</th><th>TOTAL FEE</th></tr>'+categories.map(function (category) { var count=state.rows.filter(function (row) { return row.category === category; }).length; var total=(state.rates[side][category].acquirer+state.rates[side][category].destination)*count; return '<tr><td>'+category+'</td><td class="right computed">'+(count ? money(total) : '-')+'</td></tr>'; }).join(''); }
+  function render() { el('hakBody').innerHTML=tableHtml('hak'); el('kewajibanBody').innerHTML=tableHtml('kewajiban'); el('hakAccumulation').innerHTML=accumulation('hak'); el('kewajibanAccumulation').innerHTML=accumulation('kewajiban'); el('empty').hidden=state.rows.length > 0; el('sheetScroll').hidden=state.rows.length === 0; el('downloadExcel').disabled=state.rows.length === 0; el('resetButton').disabled=!state.file; el('description').textContent=state.rows.length ? state.rows.length+' transaksi berhasil diproses. C/F/L/O dapat diedit.' : 'Tidak ada baris yang lolos filter.'; el('skippedBox').hidden=state.skipped.length === 0; el('skippedTitle').textContent=state.skipped.length+' baris dilewati'; el('skippedList').innerHTML=state.skipped.map(function (item) { return '<li>'+escapeHtml(item)+'</li>'; }).join(''); document.querySelectorAll('.fee-input').forEach(function (input) { input.addEventListener('input', function () { state.rates[input.dataset.side][input.dataset.category][input.dataset.rate]=number(input.value); render(); }); }); }
+  function excelHtml() { var html='<html><head><meta charset="UTF-8"></head><body><h2>HASIL PARSER REPORT TXT</h2><table border="1"><tr><th>SKEMA</th><th>Jenis Transaksi</th><th>Fee Acquirer</th><th>Jumlah Acquirer</th><th>Total Acquirer</th><th>Fee Destination</th><th>Jumlah Destination</th><th>Total Destination</th></tr>'; ['hak','kewajiban'].forEach(function (side) { categories.forEach(function (category) { var count=state.rows.filter(function (row) { return row.category === category; }).length; var rate=state.rates[side][category]; html+='<tr><td>'+side.toUpperCase()+'</td><td>'+category+'</td><td>'+rate.acquirer+'</td><td>'+count+'</td><td>'+(rate.acquirer*count)+'</td><td>'+rate.destination+'</td><td>'+count+'</td><td>'+(rate.destination*count)+'</td></tr>'; }); }); return html+'</table></body></html>'; }
+  function download() { var link=document.createElement('a'); link.href=URL.createObjectURL(new Blob([excelHtml()], {type:'application/vnd.ms-excel'})); link.download=(state.file.name || 'hasil').replace(/\.txt$/i, '')+'-hasil.xls'; link.click(); }
+  el('fileInput').addEventListener('change', function (event) { state.file=event.target.files[0] || null; el('fileName').textContent=state.file ? state.file.name : 'Belum ada file dipilih'; el('processButton').disabled=!state.file; });
+  el('processButton').addEventListener('click', function () { if (state.file) parseFile(); }); el('downloadExcel').addEventListener('click', download); el('resetButton').addEventListener('click', function () { state.file=null; state.rows=[]; state.skipped=[]; el('fileInput').value=''; el('fileName').textContent='Belum ada file dipilih'; el('processButton').disabled=true; render(); });
+  el('dropzone').addEventListener('dragover', function (event) { event.preventDefault(); }); el('dropzone').addEventListener('drop', function (event) { event.preventDefault(); state.file=event.dataTransfer.files[0] || null; if (state.file) { el('fileName').textContent=state.file.name; el('processButton').disabled=false; } }); render();
+}());
+</script>
 </body>
 </html>
