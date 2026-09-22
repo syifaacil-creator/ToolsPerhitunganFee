@@ -9,6 +9,11 @@
 .processing{display:inline-flex;align-items:center;gap:8px}.spinner{width:15px;height:15px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;display:none}.processing .spinner{display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}.process-status{min-height:22px;margin-top:8px;color:var(--muted);font-size:13px}.process-status.running{color:var(--blue);font-weight:700}.process-status.done{color:var(--green);font-weight:700}.download-excel,.download-parser{display:none}.download-excel.ready,.download-parser.ready{display:block}
 .compare-grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:26px}.compare-scroll{overflow-x:auto}.compare-grid table{min-width:420px}.compare-badge{display:inline-block;padding:3px 11px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:.02em}.compare-match{background:#d9f2e6;color:var(--green)}.compare-unmatch{background:#fbe0df;color:var(--red)}.compare-na{background:#eef1f5;color:var(--muted)}@media(max-width:800px){.compare-grid{grid-template-columns:1fr}}
 .count-link{border:0;background:transparent;color:var(--blue);font:inherit;font-weight:800;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}.count-link:hover{color:var(--blue-2)}
+.interkoneksi-upload{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:10px}.interkoneksi-upload .button{opacity:.55;cursor:not-allowed}.soon-badge{background:var(--gold-soft);color:var(--red);font-size:11px;font-weight:800;padding:3px 9px;border-radius:10px;letter-spacing:.02em}.interkoneksi-note{flex-basis:100%;margin:2px 0 0;color:var(--muted);font-size:12px}
+.report-grid.bpd-grid{grid-template-columns:1fr;min-width:0}.bpd-scroll{overflow-x:auto}.bpd-grid .bpd-table{min-width:900px}.bpd-table th:first-child{font-weight:800;color:var(--navy);background:#eef4fa}.bpd-table td.group-cell{vertical-align:middle;text-align:center;font-weight:800;color:var(--navy);background:#eef4fa}.bpd-table td.type-cell{background:#f6fafd;color:var(--ink);font-weight:400}.accumulation td:first-child{background:#f6fafd;font-weight:700;color:var(--navy)}
+.pending{color:var(--muted);font-style:italic;font-weight:600;font-size:11px}
+.scheme-banner{margin-top:12px;padding:10px 14px;border-radius:8px;background:#eef4fa;border:1px solid var(--line);color:var(--navy);font-size:13px;font-weight:700}.scheme-banner.warn{background:#fff3f2;border-color:#f3c6c2;color:var(--red)}
+.gt-ref-list{grid-template-columns:1fr}.gt-ref-list li{font-size:12.5px;color:var(--muted)}.gt-ref-list li strong{display:block;color:var(--navy);margin-bottom:2px}
 .modal-overlay{position:fixed;inset:0;background:#0b1f3acc;display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000}.modal-overlay[hidden]{display:none}.modal-box{background:#fff;border-radius:14px;max-width:960px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px #00000040}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line)}.modal-head h2{font-size:18px}.modal-subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}.modal-scroll{overflow:auto;padding:0 24px;flex:1}.modal-scroll table{width:100%;border-collapse:collapse;font-size:12px}.modal-scroll th{position:sticky;top:0;background:#eef4fa;padding:8px;border:1px solid #e1e9f0;white-space:nowrap;color:var(--navy)}.modal-scroll td{padding:7px 8px;border:1px solid #e1e9f0;white-space:nowrap}.modal-foot{padding:16px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}@media(max-width:800px){.modal-box{max-height:92vh}.modal-head{flex-direction:column}}
 </style>
 <style>
@@ -38,9 +43,14 @@
 <div id="tabPanelMp" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnMp" hidden>
 <section class="intro"><div><h1>ATM MERAH PUTIH REPORT PARSER & FEE CALCULATION TOOLS</h1><p>Proses file report TXT menjadi tampilan perhitungan fee, lalu download hasilnya sebagai file Excel.</p></div><svg class="hero-art" viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="8" y="2" width="94" height="44" rx="6" fill="#fff" stroke="#dde3ea" stroke-width="1.5"/><circle cx="90" cy="12" r="4" fill="#c1121f"/><rect x="16" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="46" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="16" y="26" width="56" height="6" rx="2" fill="#8fa0b8"/><rect x="16" y="35" width="40" height="5" rx="2" fill="#c1121f"/><rect x="8" y="46" width="94" height="102" rx="6" fill="#c1121f"/><rect x="16" y="54" width="78" height="86" rx="5" fill="#a10f19"/><rect x="26" y="64" width="58" height="40" rx="4" fill="#0b1f3a" stroke="#16345f" stroke-width="1.5"/><rect x="32" y="70" width="46" height="8" rx="2" fill="#e2222f"/><rect x="32" y="82" width="30" height="5" rx="1.5" fill="#7fa8d6"/><rect x="32" y="90" width="38" height="5" rx="1.5" fill="#7fa8d6"/><rect x="26" y="110" width="58" height="24" rx="4" fill="#fff"/><circle cx="35" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="35" cy="127" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="127" r="2.3" fill="#0b1f3a"/><rect x="44" y="112" width="22" height="18" rx="2" fill="#dde3ea"/></svg><p class="note">Pada bagian hasil perhitungan, Kolom kuning <strong>A dan D</strong> bisa disesuaikan nilainya. Kolom jumlah dan subtotal terisi otomatis dari perhitungan data transaksi.</p></section>
 <div id="mpmessage" class="message"></div>
-<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"></div><div class="rules"><h2>2. Aturan fee</h2><p>Nilai awal mengikuti skema eksisting. Dapat di ubah di tabel setelah di proses. (Fee Acquirer/Fee Destination)</p><ul class="rule-list"><li><strong>Info Saldo</strong>3.625 / 0</li><li><strong>Tarik Tunai</strong>7.125 / 0</li><li><strong>Transfer Intra (Issuer=Destination)</strong>4.625 / 0</li><li><strong>Transfer Inter (Issuer&lt;&gt;Destination)</strong>4.625 / 1.500</li><li><strong>Payment</strong>3.625 / 0</li></ul></div></section>
-<section class="panel sheet"><div class="sheet-head"><div><h2>Hasil perhitungan</h2><p id="mpdescription">Upload file lalu klik proses parser.</p></div><button id="mpdownloadExcel" class="button primary" disabled>↓ Download Excel</button></div><div id="mpempty" class="empty"><strong>Belum ada hasil</strong><br>Hasil parser akan tampil dalam format tabel fee.</div><div id="mpsheetScroll" class="sheet-scroll" hidden><div class="report-grid"><div><div class="report-title">Hak Atas Fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mphakBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06B</p><table class="accumulation"><caption>Total Hak Fee Per Jenis Transaksi</caption><tbody id="mphakAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06A</p></div><div><div class="report-title">Kewajiban Atas fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpkewajibanBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03B</p><table class="accumulation"><caption>Total Kewajiban Fee Per Jenis Transaksi</caption><tbody id="mpkewajibanAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03A</p></div></div></div><details id="mpskippedBox" class="skipped" hidden><summary id="mpskippedTitle"></summary><ul id="mpskippedList"></ul></details></section>
-<section class="panel compare"><div class="sheet-head"><div><h2>3. Perbandingan Total Fee vs Report</h2><p>Cross-check otomatis Total Fee hasil perhitungan terhadap Total Fee yang tertera pada report (kode 06A untuk Hak, 03A untuk Kewajiban).</p></div></div><div style="padding:22px"><div class="compare-grid"><div><div class="report-title">Kode Report 06A — Hak Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpcompareHakBody"></tbody></table></div></div><div><div class="report-title">Kode Report 03A — Kewajiban Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpcompareKewajibanBody"></tbody></table></div></div></div></div></section>
+<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"><div id="mpschemeBanner" class="scheme-banner" hidden></div><div class="interkoneksi-upload"><label class="button quiet" for="mpinterkoneksiInput">Upload file Interkoneksi</label><input id="mpinterkoneksiInput" type="file" accept=".txt,text/plain" disabled><span class="soon-badge">Segera hadir</span><p class="interkoneksi-note">Baris INTERKONEKSI belum dihitung otomatis — menunggu logic & file referensi khusus.</p></div></div><div class="rules"><h2>2. Referensi kode bank per GT</h2><p>Skema tabel otomatis mengikuti 3 huruf pertama nama file (sebelum tanda "-"). Daftar di bawah untuk referensi — <strong>menambah anggota baru tetap perlu update kode</strong>, bukan dari tampilan ini.</p><ul class="rule-list gt-ref-list"><li><strong>GT 1 — Skema ATM LINK</strong>BNI, BRI, MDR, BTN</li><li><strong>GT 3 — Himbara Group lain</strong>AGR, MTP, BSM</li><li><strong>GT 4 — BPD / ASBANDA</strong>MUA, JBS, DKI, MLK, KAS, BKL, SUL, LMP, NTB, NUT, SMT, JTM, BJB</li><li><strong>GT 5 — Bank Umum lain</strong>BAL, BMS, GPY, ALB, BMI, GNS, CBC, NOB, BCA, CMB, VIC, POS, MNC</li></ul></div></section>
+<section class="panel sheet"><div class="sheet-head"><div><h2>Hasil perhitungan</h2><p id="mpdescription">Upload file lalu klik proses parser.</p></div><button id="mpdownloadExcel" class="button primary" disabled>↓ Download Excel</button></div><div id="mpempty" class="empty"><strong>Belum ada hasil</strong><br>Hasil parser akan tampil sesuai skema GT yang terdeteksi dari nama file.</div><div id="mpsheetScroll" class="sheet-scroll" hidden>
+
+<div id="mpclassicWrap" hidden><div class="report-grid"><div><div class="report-title">Hak Atas Fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicHakBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06B</p><table class="accumulation"><caption>Total Hak Fee Per Jenis Transaksi</caption><tbody id="mpclassicHakAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06A</p></div><div><div class="report-title">Kewajiban Atas fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicKewajibanBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03B</p><table class="accumulation"><caption>Total Kewajiban Fee Per Jenis Transaksi</caption><tbody id="mpclassicKewajibanAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03A</p></div></div><section class="panel compare" style="margin-top:22px"><div class="sheet-head"><div><h2>Perbandingan Total Fee vs Report</h2><p>Cross-check otomatis Total Fee hasil perhitungan terhadap Total Fee yang tertera pada report (kode 06A untuk Hak, 03A untuk Kewajiban).</p></div></div><div style="padding:22px"><div class="compare-grid"><div><div class="report-title">Kode Report 06A — Hak Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareHakBody"></tbody></table></div></div><div><div class="report-title">Kode Report 03A — Kewajiban Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareKewajibanBody"></tbody></table></div></div></div></div></section></div>
+
+<div id="mpgroupedWrap" hidden><div class="report-grid bpd-grid"><div><div class="report-title">Hak Atas Fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><div class="bpd-scroll"><table class="bpd-table"><colgroup><col style="width:17%"><col style="width:17%"><col style="width:9%"><col style="width:9%"><col style="width:15%"><col style="width:9%"><col style="width:9%"><col style="width:15%"></colgroup><thead><tr><th rowspan="2">Nama GT</th><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpbpdHakBody"></tbody></table></div><table class="accumulation"><caption>Total Hak Fee Per Grup</caption><tbody id="mpbpdHakAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06A</p></div><div><div class="report-title">Kewajiban Atas fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><div class="bpd-scroll"><table class="bpd-table"><colgroup><col style="width:17%"><col style="width:17%"><col style="width:9%"><col style="width:9%"><col style="width:15%"><col style="width:9%"><col style="width:9%"><col style="width:15%"></colgroup><thead><tr><th rowspan="2">Nama GT</th><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpbpdKewajibanBody"></tbody></table></div><table class="accumulation"><caption>Total Kewajiban Fee Per Grup</caption><tbody id="mpbpdKewajibanAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03A</p></div></div><section class="panel compare" style="margin-top:22px"><div class="sheet-head"><div><h2>Perbandingan Total Fee vs Report</h2><p>Cross-check otomatis Total Fee hasil perhitungan terhadap Total Fee yang tertera pada report (kode 06A untuk Hak, 03A untuk Kewajiban).</p></div></div><div style="padding:22px"><div class="compare-grid"><div><div class="report-title">Kode Report 06A — Hak Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpgroupedCompareHakBody"></tbody></table></div></div><div><div class="report-title">Kode Report 03A — Kewajiban Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Hasil Compare</th></tr></thead><tbody id="mpgroupedCompareKewajibanBody"></tbody></table></div></div></div></div></section></div>
+
+</div><details id="mpskippedBox" class="skipped" hidden><summary id="mpskippedTitle"></summary><ul id="mpskippedList"></ul></details></section>
 </div>
 <p style="text-align:center;color:var(--muted);font-size:12px">Version 1.0.0 | © 2026 Backoffice Business Operation</p>
 </main>
@@ -159,10 +169,604 @@
   el('processButton').addEventListener('click',function(){ var before=el('description').textContent; var timer=setInterval(function(){ if(el('description').textContent !== before){ clearInterval(timer); el('downloadParser').classList.add('ready'); el('downloadExcel').classList.add('ready'); } },100); });
   el('resetButton').addEventListener('click',function(){ el('downloadParser').classList.remove('ready'); el('downloadExcel').classList.remove('ready'); });
   }
+  // ============================================================
+  // ATM MERAH PUTIH — skema dipilih otomatis dari 3 huruf prefix nama file:
+  // GT 1 (BNI/BRI/MDR/BTN)      -> template_fee, porting Module91 (Gabungan)
+  // GT 3 (AGR/MTP/BSM)          -> templateFeeHG, porting Module10
+  // GT 4 (13 bank BPD/ASBANDA)  -> templateFeeBPD, porting Module11
+  // GT 5 (13 bank umum lain)    -> templateFeeBankUmum, porting Module12
+  // Porting dari "macro - nambah asbanda.xlsm". Terpisah dari createApp
+  // (ATM LINK) supaya logic ATM LINK yang sudah ada tidak tersentuh.
+  // Interkoneksi (G19/G27/M10/P10 di VBA) sengaja BELUM dihitung — menunggu
+  // file referensi & logic khusus yang menyusul.
+  // ============================================================
+  function createAppBPD(prefix, root) {
+    function el(id) { return document.getElementById(prefix + id); }
+    function escapeHtml(value) { return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[c]; }); }
+    function number(value) { var text=String(value == null ? '' : value).trim(); if (text === '') return 0; if (text.indexOf(',') >= 0) text=text.replace(/,/g,''); else if (text.indexOf('.') >= 0) text=text.replace(/\./g,''); var result=Number(text); return isFinite(result) ? result : 0; }
+    function money(value) { return new Intl.NumberFormat('en-US', { maximumFractionDigits:0 }).format(Number(value) || 0); }
+    function rupiah(value) { return 'Rp ' + money(value); }
+    function formatDigits(value) { var digits=String(value == null ? '' : value).replace(/[^0-9]/g,''); return digits === '' ? '' : Number(digits).toLocaleString('en-US'); }
+    function applyLiveFormat(input) { var caret=input.selectionStart == null ? input.value.length : input.selectionStart; var digitsBeforeCaret=input.value.slice(0,caret).replace(/[^0-9]/g,'').length; var digitsOnly=input.value.replace(/[^0-9]/g,''); var formatted=formatDigits(digitsOnly); input.value=formatted; var pos=0; var seen=0; while (pos < formatted.length && seen < digitsBeforeCaret) { if (/[0-9]/.test(formatted[pos])) seen+=1; pos+=1; } input.setSelectionRange(pos,pos); return digitsOnly === '' ? 0 : Number(digitsOnly); }
+
+    // -- parsing TXT report: sama seperti ACQ/DEST/ISS-BASICBANKING + PAYMENT di ATM LINK --
+    function moduleForCode(code) { var groups = { 'ACQ-BASICBANKING':['04','05A','05B'], 'ISS-BASICBANKING':['01','02A','02B'], 'DEST-BASICBANKING':['07','08A','08B'], 'ACQ-PAYMENT':['34','35A','35B'], 'ISS-PAYMENT':['31','32A','32B'], 'BILLER-PAYMENT':['09','09D','09E'] }; for (var name in groups) if (groups[name].indexOf(code) >= 0) return name; return ''; }
+    function remapDest08(tokens) { var out=tokens.slice(); out[2]=tokens[7]; out[3]=tokens[2]; out[4]=tokens[3]; out[5]=tokens[4]; out[6]=tokens[5]; out[7]=tokens[6]; return out; }
+    function nominalIndexFor(moduleName) { return (moduleName === 'ISS-BASICBANKING' || moduleName === 'ISS-PAYMENT' || moduleName === 'BILLER-PAYMENT') ? 5 : 6; }
+    function rawTransaction(code, line) { var moduleName=moduleForCode(code); var tokens=line.trim().replace(/\s+/g,' ').split(' '); if (!moduleName || line.trim().charAt(0)==='*' || tokens.length < 11 || !/^\d{6}$/.test(tokens[0]) || !/^\d{6}$/.test(tokens[1])) return null; if (moduleName === 'DEST-BASICBANKING' && (code === '08A' || code === '08B')) tokens=remapDest08(tokens); var nominal=number(tokens[nominalIndexFor(moduleName)]); return { module:moduleName, reportCode:code, raw:tokens, nominal:nominal }; }
+    function tok(row, idx) { return row.raw && row.raw[idx] != null ? String(row.raw[idx]).trim() : ''; }
+
+    var state = { file:null, rows:[], skipped:[], content:'', scheme:null, counts:null, compareData:null };
+
+    function rowsOf(moduleName) { return state.rows.filter(function (row) { return row.module === moduleName; }); }
+    // ACQ/DEST-BASICBANKING getters
+    function bbJ(row) { return tok(row,8); }
+    function bbG(row) { return tok(row,5); }
+    function bbM(row) { return tok(row,11); }
+    function bbD(row) { return tok(row,2); }
+    function bbK(row) { return tok(row,9); }
+    function bbL(row) { return tok(row,10); }
+    // ISS-BASICBANKING getters
+    function issJ(row) { return tok(row,8); }
+    function issF(row) { return tok(row,4); }
+    function issM(row) { return tok(row,11); }
+    function issI(row) { return tok(row,7); }
+    function issK(row) { return tok(row,9); }
+    function issL(row) { return tok(row,10); }
+    // PAYMENT getters
+    function payG(row) { return tok(row,5); }
+    function payF(row) { return tok(row,4); }
+
+    function normalizeCode(value) { var s=String(value == null ? '' : value).trim(); if (s === '') return ''; if (/^\d+$/.test(s) && s.length < 3) s=('000'+s).slice(-3); return s.toUpperCase(); }
+    function isInList(value, list) { return list.indexOf(normalizeCode(value)) >= 0; }
+    function isAtm(value) { return String(value || '').trim().toUpperCase() === 'ATM'; }
+    function startsWithT(value) { return String(value || '').trim().toUpperCase().charAt(0) === 'T'; }
+
+    // ============================================================
+    // DAFTAR KODE BANK PER GT (dari user, dicocokkan ke kode bank via sheet ListBank)
+    // Untuk menambah anggota baru: tambahkan pasangan PREFIX:KODE di map & list di bawah.
+    // ============================================================
+    var BANK_CODE = { BNI:'009', BRI:'002', MDR:'008', BTN:'200', AGR:'494', MTP:'564', BSM:'451', MUA:'147', JBS:'425', DKI:'111', MLK:'131', KAS:'122', BKL:'133', SUL:'134', LMP:'121', NTB:'128', NUT:'130', SMT:'117', JTM:'114', BJB:'110', BAL:'947', BMS:'815', GPY:'914', ALB:'567', BMI:'157', GNS:'161', CBC:'164', NOB:'503', BCA:'014', CMB:'022', VIC:'566', POS:'191', MNC:'485' };
+    var GT1_PREFIXES=['BNI','BRI','MDR','BTN'];
+    var GT3_PREFIXES=['AGR','MTP','BSM'];
+    var GT4_PREFIXES=['MUA','JBS','DKI','MLK','KAS','BKL','SUL','LMP','NTB','NUT','SMT','JTM','BJB'];
+    var GT5_PREFIXES=['BAL','BMS','GPY','ALB','BMI','GNS','CBC','NOB','BCA','CMB','VIC','POS','MNC'];
+    var GT1=GT1_PREFIXES.map(function (p) { return BANK_CODE[p]; });
+    // Daftar khusus skema GT4/GT5 (grouped, Module10/11/12) — 13 anggota penuh
+    var GT3IS=['494','564'];
+    var GT3TR=['451','494','564'];
+    var GT4=GT4_PREFIXES.map(function (p) { return BANK_CODE[p]; });
+    var GT5=GT5_PREFIXES.map(function (p) { return BANK_CODE[p]; });
+    // Daftar khusus skema GT1 (Module91) — sedikit berbeda dari GT4/GT5 di atas, porting apa adanya
+    var GT1_GT3=['451','494','564'];
+    var GT1_GT5=['947','914','157','161','164','503','014','022','566','191'];
+    var GT1_CCW=['914','566','191','567','485','110'];
+    // Daftar 36 bank di sheet ListBank (dipakai logic INTERKONEKSI)
+    var LIST_BANK=['947','147','425','111','815','914','131','567','002','008','009','200','122','133','134','157','161','422','427','494','564','121','128','130','164','503','451','014','117','022','114','110','566','911','191','485'];
+    function isKValidInterkoneksi(value) { var v=String(value || '').trim(); return v.length > 4 && v.length <= 12 && /^[0-9]+$/.test(v); }
+    // Porting CountDEST_G27_Interkoneksi (Module91/GT1) — tanpa validasi kolom K
+    function countInterkoneksiGT1(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(bbM(r)); var d=bbD(r);
+        if (m === '014') return true;
+        if (m === '200') return d.charAt(0) === '6';
+        return LIST_BANK.indexOf(m) < 0;
+      }).length;
+    }
+    // Porting Count_DEST_G19 (Module10/HG) — D awal 6 atau 4 untuk M=200, plus validasi K
+    function countInterkoneksiHG(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(bbM(r)); var d=bbD(r); var k=bbK(r);
+        if (m === '') return false;
+        var candidate=false;
+        if (m === '014') candidate=true;
+        else if (m === '200') candidate = d.charAt(0) === '6' || d.charAt(0) === '4';
+        else candidate = LIST_BANK.indexOf(m) < 0;
+        return candidate && isKValidInterkoneksi(k);
+      }).length;
+    }
+    // Porting Count_DEST_G19_BPD (Module11/GT4) — D awal 6, 4, atau 13 untuk M=200, plus validasi K
+    function countInterkoneksiBPD(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(bbM(r)); var d=bbD(r); var k=bbK(r);
+        var candidate=false;
+        if (m === '014') candidate=true;
+        else if (m !== '') candidate = LIST_BANK.indexOf(m) < 0;
+        if (m === '200') candidate = d.charAt(0) === '6' || d.charAt(0) === '4' || d.slice(0,2) === '13';
+        return candidate && isKValidInterkoneksi(k);
+      }).length;
+    }
+    // ============================================================
+    // INTERKONEKSI sisi Kewajiban (ISS-BASICBANKING) — TIDAK ADA logic VBA
+    // aslinya untuk ini (sudah dicek, semua module tidak punya M10/P10).
+    // Versi di bawah adalah cerminan logic Hak (M/D/K) yang dipetakan ke
+    // kolom setara di sheet ISS (M=KODE BANK DESTINATION, I=KODE TERMINAL,
+    // K=NOMOR REFERENSI) — bukan porting langsung, mohon diverifikasi manual.
+    // ============================================================
+    function countInterkoneksiGT1_ISS(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(issM(r)); var d=issI(r);
+        if (m === '014') return true;
+        if (m === '200') return d.charAt(0) === '6';
+        return LIST_BANK.indexOf(m) < 0;
+      }).length;
+    }
+    function countInterkoneksiHG_ISS(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(issM(r)); var d=issI(r); var k=issK(r);
+        if (m === '') return false;
+        var candidate=false;
+        if (m === '014') candidate=true;
+        else if (m === '200') candidate = d.charAt(0) === '6' || d.charAt(0) === '4';
+        else candidate = LIST_BANK.indexOf(m) < 0;
+        return candidate && isKValidInterkoneksi(k);
+      }).length;
+    }
+    function countInterkoneksiBPD_ISS(rows) {
+      return rows.filter(function (r) {
+        var m=normalizeCode(issM(r)); var d=issI(r); var k=issK(r);
+        var candidate=false;
+        if (m === '014') candidate=true;
+        else if (m !== '') candidate = LIST_BANK.indexOf(m) < 0;
+        if (m === '200') candidate = d.charAt(0) === '6' || d.charAt(0) === '4' || d.slice(0,2) === '13';
+        return candidate && isKValidInterkoneksi(k);
+      }).length;
+    }
+
+    function getFilePrefix(fileName) { var name=String(fileName || '').replace(/\.(xlsx|xls|txt)$/i,''); return (name.split('-')[0] || '').toUpperCase().trim(); }
+    function detectScheme(fileName) {
+      var prefix=getFilePrefix(fileName);
+      if (GT1_PREFIXES.indexOf(prefix) >= 0) return { gt:'1', prefix:prefix, bankCode:BANK_CODE[prefix], label:'GT 1 — Skema template_fee (Himbara)' };
+      if (GT3_PREFIXES.indexOf(prefix) >= 0) return { gt:'3', prefix:prefix, bankCode:BANK_CODE[prefix], label:'GT 3 — Skema Himbara Group lain' };
+      if (GT4_PREFIXES.indexOf(prefix) >= 0) return { gt:'4', prefix:prefix, bankCode:BANK_CODE[prefix], label:'GT 4 — Skema BPD / ASBANDA' };
+      if (GT5_PREFIXES.indexOf(prefix) >= 0) return { gt:'5', prefix:prefix, bankCode:BANK_CODE[prefix], label:'GT 5 — Skema Bank Umum lain' };
+      return null;
+    }
+
+    // ============================================================
+    // GT 3 / GT 4 / GT 5 — skema grup (porting Module10/11/12)
+    // ============================================================
+    function countPrefixJIn(rows, getG, getJ, prefix, list) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isInList(getJ(r), list); }).length; }
+    function countGPrefixOnly(rows, getG, prefix) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix; }).length; }
+    function countAcqExcludeFileBank(rows, getG, getJ, prefix, list, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isInList(getJ(r),list) && normalizeCode(getJ(r)) !== normalizeCode(bankFile); }).length; }
+    function countGT4TransferOneSide(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && isInList(getJ(r),GT4) && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && !isInList(getM(r),GT4); }).length; }
+    function countGT4TransferBothSides(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && isInList(getJ(r),GT4) && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && isInList(getM(r),GT4); }).length; }
+    function countDestG7_GT2(rows) { return rows.filter(function (r) { var g=bbG(r).slice(0,2); var j=normalizeCode(bbJ(r)); var m=normalizeCode(bbM(r)); var d=bbD(r); if (g !== '40') return false; if (GT1.indexOf(j) < 0) return false; if (['920','889','153','014','011'].indexOf(m) >= 0) return false; if (m === '200') { if (d.charAt(0) === '6') return false; if (d.slice(0,2) === '13') return false; return true; } return true; }).length; }
+    function countDestG16_GT5(rows) { return rows.filter(function (r) { var g=bbG(r).slice(0,2); var j=normalizeCode(bbJ(r)); var m=normalizeCode(bbM(r)); return g === '40' && GT5.indexOf(j) >= 0 && m !== '014' && m !== '920'; }).length; }
+    function countIssPrefixExclude(rows, prefix, list) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && !isInList(issJ(r), list); }).length; }
+    function countIssPrefixInclude(rows, prefix, list) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && isInList(issJ(r), list); }).length; }
+    function countIssPrefix(rows, prefix) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix; }).length; }
+    function countIssGT4XOR(rows, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; if (normalizeCode(issJ(r)) === normalizeCode(bankFile)) return false; var isJ=isInList(issJ(r),GT4), isM=isInList(issM(r),GT4); return !(isJ && isM); }).length; }
+    function countIssGT4XORP7(rows, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; if (normalizeCode(issM(r)) === normalizeCode(bankFile)) return false; var isJ=isInList(issJ(r),GT4), isM=isInList(issM(r),GT4); return !(isJ && isM); }).length; }
+    function countIssGT4Both(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && isInList(issJ(r),GT4) && normalizeCode(issJ(r)) !== normalizeCode(bankFile) && isInList(issM(r),GT4); }).length; }
+    function countIssGT4BothP13(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && isInList(issJ(r),GT4) && isInList(issM(r),GT4) && normalizeCode(issM(r)) !== normalizeCode(bankFile); }).length; }
+    function countIssExcludeFileBank(rows, bankColumnGetter, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; var v=bankColumnGetter(r); if (v === '') return false; return normalizeCode(v) !== normalizeCode(bankFile); }).length; }
+
+    function computeGroupCounts345(gt, bankFile) {
+      var acqRows=rowsOf('ACQ-BASICBANKING'), destRows=rowsOf('DEST-BASICBANKING'), issRows=rowsOf('ISS-BASICBANKING');
+      var c={ hak:{}, kewajiban:{} };
+      function set(side, group, label, acq, dest) { c[side][group+'|'+label] = { acquirer:acq, destination:dest }; }
+      var ownName = gt === '3' ? 'GT 3' : gt === '5' ? 'GT 5' : 'GT 4';
+
+      set('hak','GT 2','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT1), 0);
+      set('hak','GT 2','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT1), 0);
+      set('hak','GT 2','Transfer', countPrefixJIn(acqRows,bbG,bbJ,'40',GT1), countDestG7_GT2(destRows));
+      set('hak','GT 3','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT3IS), 0);
+      set('hak','GT 3','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT3IS), 0);
+      set('hak','GT 3','Transfer', gt === '3' ? countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'40',GT3TR), gt === '3' ? countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(destRows,bbG,bbJ,'40',GT3TR));
+      set('hak','GT 4','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), 0);
+      set('hak','GT 4','Tarik Tunai', gt === '4' ? 0 : countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), 0);
+      if (gt === '4') { set('hak','GT 4','Transfer', countGT4TransferOneSide(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferOneSide(destRows,bbG,bbJ,bbM,bankFile)); }
+      else { set('hak','GT 4','Transfer', countPrefixJIn(acqRows,bbG,bbJ,'40',GT4), countPrefixJIn(destRows,bbG,bbJ,'40',GT4)); }
+      set('hak','GT 5','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT5), 0);
+      set('hak','GT 5','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT5), 0);
+      if (gt === '5') { set('hak','GT 5','Transfer', countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT5,bankFile), countDestG16_GT5(destRows)); }
+      else { set('hak','GT 5','Transfer', countPrefixJIn(acqRows,bbG,bbJ,'40',GT5), countDestG16_GT5(destRows)); }
+      set('hak','CCW','CCW 23xxxx', countGPrefixOnly(acqRows,bbG,'23'), 0);
+      set('hak','CCW','CCW 32xxxx', countGPrefixOnly(acqRows,bbG,'32'), 0);
+      var interkoneksiDest345 = gt === '4' ? countInterkoneksiBPD(destRows) : gt === '3' ? countInterkoneksiHG(destRows) : null;
+      set('hak','INTERKONEKSI','Transfer', interkoneksiDest345 == null ? null : 0, interkoneksiDest345);
+      if (gt === '4') {
+        set('hak','ASBANDA','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), 0);
+        set('hak','ASBANDA','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), 0);
+        set('hak','ASBANDA','Transfer', countGT4TransferBothSides(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferBothSides(destRows,bbG,bbJ,bbM,bankFile));
+      }
+
+      if (gt === '4') {
+        set('kewajiban',ownName,'Info Saldo', countIssPrefixExclude(issRows,'31',GT4), 0);
+        set('kewajiban',ownName,'Tarik Tunai', countIssPrefixExclude(issRows,'01',GT4), 0);
+        set('kewajiban',ownName,'Transfer', countIssGT4XOR(issRows,bankFile), countIssGT4XORP7(issRows,bankFile));
+      } else {
+        set('kewajiban',ownName,'Info Saldo', countIssPrefix(issRows,'31'), 0);
+        set('kewajiban',ownName,'Tarik Tunai', countIssPrefix(issRows,'01'), 0);
+        set('kewajiban',ownName,'Transfer', countIssExcludeFileBank(issRows,issJ,bankFile), countIssExcludeFileBank(issRows,issM,bankFile));
+      }
+      set('kewajiban','CCW','CCW 23xxxx', countIssPrefix(issRows,'23'), countIssPrefix(issRows,'23'));
+      set('kewajiban','CCW','CCW 32xxxx', countIssPrefix(issRows,'32'), countIssPrefix(issRows,'32'));
+      set('kewajiban','INTERKONEKSI','Transfer', null, null);
+      if (gt === '4') {
+        set('kewajiban','ASBANDA','Info Saldo', countIssPrefixInclude(issRows,'31',GT4), 0);
+        set('kewajiban','ASBANDA','Tarik Tunai', countIssPrefixInclude(issRows,'01',GT4), 0);
+        set('kewajiban','ASBANDA','Transfer', countIssGT4Both(issRows,bankFile), countIssGT4BothP13(issRows,bankFile));
+      }
+      return c;
+    }
+
+    // ============================================================
+    // GT 1 — skema template_fee (porting Module91 "Hitung_BASICBANKING_Gabungan")
+    // Kolom ACQ/DEST: G=KODE PEMROSESAN, J=KODE BANK ISSUER, M=KODE BANK DEST,
+    //                 D=KODE TERMINAL, L=CHANNEL TYPE
+    // Kolom ISS:      F=KODE PEMROSESAN, J=KODE BANK ACQUIRER, M=KODE BANK DEST,
+    //                 I=KODE TERMINAL, L=CHANNEL TYPE
+    // ============================================================
+    function computeGT1Counts(bankFile) {
+      var acqRows=rowsOf('ACQ-BASICBANKING'), destRows=rowsOf('DEST-BASICBANKING'), issRows=rowsOf('ISS-BASICBANKING');
+      var c={ hak:{}, kewajiban:{} };
+      function set(side, group, label, acq, dest) { c[side][group+'|'+label] = { acquirer:acq, destination:dest }; }
+
+      // ---- ACQ (D5:D26) ----
+      set('hak','GT 1','Info Saldo', acqRows.filter(function (r) { return isInList(bbJ(r),GT1) && bbG(r).slice(0,2)==='31' && isAtm(bbL(r)); }).length, 0);
+      set('hak','GT 1','Tarik Tunai', acqRows.filter(function (r) { return isInList(bbJ(r),GT1) && bbG(r).slice(0,2)==='01' && isAtm(bbL(r)); }).length, 0);
+      set('hak','GT 1','Transfer Intra', acqRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && isInList(m,GT1) && normalizeCode(j)===normalizeCode(m) && !startsWithT(bbD(r)); }).length, 0);
+      set('hak','GT 1','Transfer Inter', acqRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && isInList(m,GT1) && normalizeCode(j)!==normalizeCode(m) && !startsWithT(bbD(r)); }).length, 0);
+      set('hak','GT 2','Info Saldo', 0, 0);
+      set('hak','GT 2','Tarik Tunai', 0, 0);
+      set('hak','GT 2','Transfer', acqRows.filter(function (r) { var j=bbJ(r), m=bbM(r); if (!isInList(j,GT1)) return false; if (normalizeCode(j)===normalizeCode(bankFile)) return false; if (bbG(r).slice(0,2)!=='40') return false; if (!isAtm(bbL(r))) return false; if (m==='') return false; return !isInList(m,GT1); }).length, 0);
+      set('hak','GT 3','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT1_GT3), 0);
+      set('hak','GT 3','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT1_GT3), 0);
+      set('hak','GT 3','Transfer', countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT1_GT3,bankFile), 0);
+      set('hak','GT 4','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), 0);
+      set('hak','GT 4','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), 0);
+      set('hak','GT 4','Transfer', countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT4,bankFile), 0);
+      set('hak','GT 5','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT1_GT5), 0);
+      set('hak','GT 5','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT1_GT5), 0);
+      set('hak','GT 5','Transfer', countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT1_GT5,bankFile), 0);
+      set('hak','GT 7','Transfer Inter', acqRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && isInList(m,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && startsWithT(bbD(r)); }).length, 0);
+      set('hak','FEE LAIN-LAIN','Info Saldo', acqRows.filter(function (r) { return isInList(bbJ(r),GT1) && bbG(r).slice(0,2)==='31' && !isAtm(bbL(r)); }).length, 0);
+      set('hak','FEE LAIN-LAIN','Tarik Tunai', acqRows.filter(function (r) { return isInList(bbJ(r),GT1) && bbG(r).slice(0,2)==='01' && !isAtm(bbL(r)); }).length, 0);
+      set('hak','FEE LAIN-LAIN','Transfer', acqRows.filter(function (r) { var j=bbJ(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && !isAtm(bbL(r)); }).length, 0);
+      set('hak','CCW','CCW 23xxxx', countPrefixJIn(acqRows,bbG,bbJ,'23',GT1_CCW), 0);
+      set('hak','CCW','CCW 32xxxx', countPrefixJIn(acqRows,bbG,bbJ,'32',GT1_CCW), 0);
+      set('hak','INTERKONEKSI','Transfer', 0, countInterkoneksiGT1(destRows));
+
+      // ---- DEST (G5:G27) — destination side ditulis di kolom H (dest) untuk grup yang sama ----
+      c.hak['GT 1|Transfer Intra'].destination = destRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && normalizeCode(j)===normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && isInList(m,GT1) && !startsWithT(bbD(r)); }).length;
+      c.hak['GT 1|Transfer Inter'].destination = destRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && isInList(m,GT1) && !startsWithT(bbD(r)); }).length;
+      c.hak['GT 2|Transfer'].destination = destRows.filter(function (r) { var j=bbJ(r), m=normalizeCode(bbM(r)); if (!isInList(j,GT1)) return false; if (normalizeCode(j)===normalizeCode(bankFile)) return false; if (bbG(r).slice(0,2)!=='40') return false; if (m==='') return false; if (isInList(m,GT1)) return false; return ['920','889','153','014','011'].indexOf(m) < 0; }).length;
+      c.hak['GT 3|Transfer'].destination = countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT1_GT3,bankFile);
+      c.hak['GT 4|Transfer'].destination = countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT4,bankFile);
+      c.hak['GT 5|Transfer'].destination = destRows.filter(function (r) { var g=bbG(r).slice(0,2); var j=normalizeCode(bbJ(r)); var m=normalizeCode(bbM(r)); var d=bbD(r); if (g!=='40') return false; if (GT1_GT5.indexOf(j) < 0) return false; if (['889','886','920','867','553','472','014','153','019','013','949','011'].indexOf(m) >= 0) return false; if (m==='200') return d.charAt(0) !== '6'; return true; }).length;
+      c.hak['GT 7|Transfer Inter'].destination = destRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && isInList(m,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && isAtm(bbL(r)) && startsWithT(bbD(r)); }).length;
+      c.hak['FEE LAIN-LAIN|Transfer'].destination = destRows.filter(function (r) { var j=bbJ(r), m=bbM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && bbG(r).slice(0,2)==='40' && !isAtm(bbL(r)) && isInList(m,GT1); }).length;
+
+      // ---- ISS/kewajiban ACQUIRER (M5:M18) ----
+      set('kewajiban','GT 1','Info Saldo', issRows.filter(function (r) { return isInList(issJ(r),GT1) && issF(r).slice(0,2)==='31' && isAtm(issL(r)); }).length, 0);
+      set('kewajiban','GT 1','Tarik Tunai', issRows.filter(function (r) { return isInList(issJ(r),GT1) && issF(r).slice(0,2)==='01' && isAtm(issL(r)); }).length, 0);
+      set('kewajiban','GT 1','Transfer Intra', issRows.filter(function (r) { var j=issJ(r), m=issM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && issF(r).slice(0,2)==='40' && isAtm(issL(r)) && normalizeCode(m)===normalizeCode(bankFile) && !startsWithT(issI(r)); }).length, 0);
+      set('kewajiban','GT 1','Transfer Inter', issRows.filter(function (r) { var j=issJ(r), m=issM(r); return isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && issF(r).slice(0,2)==='40' && isAtm(issL(r)) && isInList(m,GT1) && normalizeCode(m)!==normalizeCode(bankFile) && !startsWithT(issI(r)); }).length, 0);
+      set('kewajiban','GT 2','Info Saldo', issRows.filter(function (r) { return !isInList(issJ(r),GT1) && issF(r).slice(0,2)==='31'; }).length, 0);
+      set('kewajiban','GT 2','Tarik Tunai', issRows.filter(function (r) { return !isInList(issJ(r),GT1) && issF(r).slice(0,2)==='01'; }).length, 0);
+      set('kewajiban','GT 2','Transfer', issRows.filter(function (r) { var f=issF(r).slice(0,2); var j=issJ(r), m=issM(r); if (f!=='40') return false; if (normalizeCode(j)===normalizeCode(bankFile)) return false; if (isInList(j,GT1)) return isAtm(issL(r)) && !isInList(m,GT1); return true; }).length, 0);
+      set('kewajiban','GT 7','Transfer Inter', issRows.filter(function (r) { var j=issJ(r), m=issM(r); return issF(r).slice(0,2)==='40' && isInList(j,GT1) && isInList(m,GT1) && isAtm(issL(r)) && normalizeCode(j)!==normalizeCode(bankFile) && startsWithT(issI(r)); }).length, 0);
+      set('kewajiban','FEE LAIN-LAIN','Info Saldo', issRows.filter(function (r) { return issF(r).slice(0,2)==='31' && isInList(issJ(r),GT1) && !isAtm(issL(r)); }).length, 0);
+      set('kewajiban','FEE LAIN-LAIN','Tarik Tunai', issRows.filter(function (r) { return issF(r).slice(0,2)==='01' && isInList(issJ(r),GT1) && !isAtm(issL(r)); }).length, 0);
+      set('kewajiban','FEE LAIN-LAIN','Transfer', issRows.filter(function (r) { var j=issJ(r); return issF(r).slice(0,2)==='40' && isInList(j,GT1) && normalizeCode(j)!==normalizeCode(bankFile) && !isAtm(issL(r)); }).length, 0);
+      set('kewajiban','CCW','CCW 23xxxx', issRows.filter(function (r) { return issF(r).slice(0,2)==='23' && isInList(issJ(r),GT1_CCW); }).length, 0);
+      set('kewajiban','CCW','CCW 32xxxx', issRows.filter(function (r) { return issF(r).slice(0,2)==='32' && isInList(issJ(r),GT1_CCW); }).length, 0);
+      set('kewajiban','INTERKONEKSI','Transfer', null, null);
+
+      // ---- ISS/kewajiban DESTINATION (P5:P17) ----
+      c.kewajiban['GT 1|Transfer Intra'].destination = issRows.filter(function (r) { var j=issJ(r), m=issM(r); return isInList(j,GT1) && issF(r).slice(0,2)==='40' && isAtm(issL(r)) && normalizeCode(m)===normalizeCode(bankFile) && !startsWithT(issI(r)); }).length;
+      c.kewajiban['GT 1|Transfer Inter'].destination = issRows.filter(function (r) { var j=issJ(r), m=issM(r); return isInList(j,GT1) && issF(r).slice(0,2)==='40' && isAtm(issL(r)) && isInList(m,GT1) && normalizeCode(m)!==normalizeCode(bankFile) && !startsWithT(issI(r)); }).length;
+      c.kewajiban['GT 2|Transfer'].destination = issRows.filter(function (r) { var f=issF(r).slice(0,2); var j=issJ(r), m=issM(r); if (f!=='40') return false; if (isInList(j,GT1)) { if (!isAtm(issL(r))) return false; if (m==='' || isInList(m,GT1)) return false; return normalizeCode(m)!==normalizeCode(bankFile); } if (isInList(m,GT1)) return normalizeCode(m)!==normalizeCode(bankFile); if (m==='') return false; return normalizeCode(m)!==normalizeCode(bankFile); }).length;
+      c.kewajiban['GT 7|Transfer Inter'].destination = issRows.filter(function (r) { var j=issJ(r), m=issM(r); return issF(r).slice(0,2)==='40' && isInList(j,GT1) && isInList(m,GT1) && isAtm(issL(r)) && normalizeCode(m)!==normalizeCode(bankFile) && startsWithT(issI(r)); }).length;
+      c.kewajiban['FEE LAIN-LAIN|Transfer'].destination = issRows.filter(function (r) { var j=issJ(r), m=issM(r); return issF(r).slice(0,2)==='40' && isInList(j,GT1) && normalizeCode(m)!==normalizeCode(bankFile) && !isAtm(issL(r)); }).length;
+
+      return c;
+    }
+
+    function computeGroupCounts(gt, bankFile) { return gt === '1' ? computeGT1Counts(bankFile) : computeGroupCounts345(gt, bankFile); }
+
+    // -- struktur grup tabel --
+    function buildGroupDefsHak(gt) {
+      if (gt === '1') {
+        return [
+          { name:'GT 1', rows:['Info Saldo','Tarik Tunai','Transfer Intra','Transfer Inter'] },
+          { name:'GT 2', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'GT 3', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'GT 4', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'GT 5', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'GT 7', rows:['Transfer Inter'] },
+          { name:'FEE LAIN-LAIN', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'CCW', rows:['CCW 23xxxx','CCW 32xxxx'] },
+          { name:'INTERKONEKSI', rows:['Transfer'] }
+        ];
+      }
+      var defs=[
+        { name:'GT 2', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+        { name:'GT 3', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+        { name:'GT 4', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+        { name:'GT 5', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+        { name:'CCW', rows:['CCW 23xxxx','CCW 32xxxx'] },
+        { name:'INTERKONEKSI', rows:['Transfer'] }
+      ];
+      if (gt === '4') defs.push({ name:'ASBANDA', rows:['Info Saldo','Tarik Tunai','Transfer'] });
+      return defs;
+    }
+    function buildGroupDefsKewajiban(gt) {
+      if (gt === '1') {
+        return [
+          { name:'GT 1', rows:['Info Saldo','Tarik Tunai','Transfer Intra','Transfer Inter'] },
+          { name:'GT 2', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'GT 7', rows:['Transfer Inter'] },
+          { name:'FEE LAIN-LAIN', rows:['Info Saldo','Tarik Tunai','Transfer'] },
+          { name:'CCW', rows:['CCW 23xxxx','CCW 32xxxx'] },
+          { name:'INTERKONEKSI', rows:['Transfer'] }
+        ];
+      }
+      var ownName = gt === '3' ? 'GT 3' : gt === '5' ? 'GT 5' : 'GT 4';
+      var defs=[
+        { name:ownName, rows:['Info Saldo','Tarik Tunai','Transfer'] },
+        { name:'CCW', rows:['CCW 23xxxx','CCW 32xxxx'] },
+        { name:'INTERKONEKSI', rows:['Transfer'] }
+      ];
+      if (gt === '4') defs.push({ name:'ASBANDA', rows:['Info Saldo','Tarik Tunai','Transfer'] });
+      return defs;
+    }
+    function defaultRate(groupName, label) {
+      if (groupName === 'INTERKONEKSI') return { acquirer:0, destination:1500 };
+      if (groupName === 'GT 7') return { acquirer:0, destination:0 };
+      if (groupName === 'GT 1' || groupName === 'FEE LAIN-LAIN') {
+        if (label === 'Info Saldo') return { acquirer:3625, destination:0 };
+        if (label === 'Tarik Tunai') return { acquirer:7125, destination:0 };
+        if (label === 'Transfer Intra' || label === 'Transfer') return { acquirer:4625, destination:0 };
+        if (label === 'Transfer Inter') return { acquirer:4625, destination:1500 };
+      }
+      if (label === 'Info Saldo') return { acquirer:3230, destination:0 };
+      if (label === 'Tarik Tunai') return { acquirer:6510, destination:0 };
+      if (label === 'Transfer') return { acquirer:3800, destination:1500 };
+      if (label === 'CCW 23xxxx') return { acquirer:6510, destination:0 };
+      if (label === 'CCW 32xxxx') return { acquirer:3000, destination:0 };
+      return { acquirer:0, destination:0 };
+    }
+    function buildInitialRates(groupDefs) { var rates={}; groupDefs.forEach(function (g) { g.rows.forEach(function (label) { rates[g.name+'|'+label]=defaultRate(g.name, label); }); }); return rates; }
+
+    // ============================================================
+    // PARSE FILE
+    // ============================================================
+    function parseFile() {
+      var reader = new FileReader();
+      reader.onload = function () {
+        state.rows=[]; state.skipped=[];
+        var content=String(reader.result || '');
+        state.content=content;
+        if (content.indexOf('KODE REPORT') >= 0) {
+          var active='';
+          content.split(/\r\n|\r|\n/).forEach(function (line) {
+            var match=line.match(/KODE REPORT\s*:\s*([0-9A-Z]+)/i);
+            if (match) { active=match[1].toUpperCase(); return; }
+            if (!active) return;
+            if (/^\s*(KODE BANK|WAKTU|TRANSAKSI|ISSUER|DESTINATION|BILLER)/i.test(line)) return;
+            var parsed=rawTransaction(active, line);
+            if (parsed) state.rows.push(parsed);
+          });
+        } else {
+          state.skipped.push('Format file tidak dikenali (tidak ditemukan penanda KODE REPORT).');
+        }
+        var scheme=detectScheme(state.file ? state.file.name : '');
+        state.scheme=scheme;
+        if (!scheme) {
+          state.skipped.push('Prefix nama file tidak dikenali di daftar GT 1/3/4/5 — perhitungan tidak bisa dilakukan.');
+          state.counts=null;
+        } else {
+          state.counts={ mode:'grouped', data:computeGroupCounts(scheme.gt, scheme.bankCode) };
+        }
+        state.compareData={ hak: extractReportFeeTotals(content, '06A'), kewajiban: extractReportFeeTotals(content, '03A') };
+        render();
+      };
+      reader.readAsText(state.file);
+    }
+
+    function extractReportFeeTotals(content, code) { if (!content) return null; var lines=content.split(/\r\n|\r|\n/); var i=0; var found=null; while (i<lines.length) { var headerMatch=lines[i].match(/KODE REPORT\s*:\s*([0-9A-Z]+)/i); if (headerMatch && headerMatch[1].toUpperCase()===code) { var j=i+1; while (j<lines.length) { var nextHeader=lines[j].match(/KODE REPORT\s*:\s*([0-9A-Z]+)/i); if (nextHeader) break; if (/TOTAL\s*:/i.test(lines[j])) { var afterLabel=(lines[j].split(/TOTAL\s*:/i)[1] || ''); var nums=afterLabel.match(/-?[\d.,]+/g) || []; var parsed=nums.map(function (v) { return number(v); }); if (parsed.length>=8) { found={ 'Info Saldo':parsed[4], 'Tarik Tunai':parsed[5], 'Transfer':parsed[6], 'Payment (ACQ-BILLER)':parsed[7] }; } break; } j+=1; } if (found) break; } i+=1; } return found; }
+
+    // ============================================================
+    // RENDER — tabel grup (dipakai semua GT 1/3/4/5)
+    // ============================================================
+    function countCellDisplay(value) { return value == null ? '<span class="pending">Segera hadir</span>' : money(value); }
+    function feeCellDisplay(rate, count) { if (count == null) return '<span class="pending">-</span>'; return rupiah(rate*count); }
+    function groupedRowsHtml(side, groupDefs, rates, counts) {
+      var html='';
+      groupDefs.forEach(function (g) {
+        g.rows.forEach(function (label, idx) {
+          var key=g.name+'|'+label;
+          var c=counts[side][key] || { acquirer:0, destination:0 };
+          var rate=rates[side][key];
+          html += '<tr>';
+          if (idx === 0) html += '<td class="group-cell" rowspan="'+g.rows.length+'">'+escapeHtml(g.name)+'</td>';
+          html += '<td class="type-cell">'+escapeHtml(label)+'</td>';
+          html += '<td class="right"><input class="fee-input" data-side="'+side+'" data-key="'+escapeHtml(key)+'" data-rate="acquirer" type="text" inputmode="numeric" value="'+formatDigits(rate.acquirer)+'"></td>';
+          html += '<td class="right computed">'+countCellDisplay(c.acquirer)+'</td>';
+          html += '<td class="right computed">'+feeCellDisplay(rate.acquirer, c.acquirer)+'</td>';
+          html += '<td class="right"><input class="fee-input" data-side="'+side+'" data-key="'+escapeHtml(key)+'" data-rate="destination" type="text" inputmode="numeric" value="'+formatDigits(rate.destination)+'"></td>';
+          html += '<td class="right computed">'+countCellDisplay(c.destination)+'</td>';
+          html += '<td class="right computed">'+feeCellDisplay(rate.destination, c.destination)+'</td>';
+          html += '</tr>';
+        });
+      });
+      return html;
+    }
+    function groupedAccumulationHtml(side, groupDefs, rates, counts) {
+      var own=groupedOwnTotals(side, groupDefs, rates, counts);
+      var html='<tr><th>JENIS TRANSAKSI</th><th>TOTAL FEE</th></tr>';
+      ['Info Saldo','Tarik Tunai','Transfer'].forEach(function (category) {
+        html += '<tr><td>'+category+'</td><td class="right computed">'+rupiah(own.totals[category])+(own.pending[category] ? ' <span class="pending">+Interkoneksi</span>' : '')+'</td></tr>';
+      });
+      return html;
+    }
+    function bucketFor(label) { if (label.indexOf('CCW') === 0) return 'Transfer'; if (label === 'Transfer' || label === 'Transfer Intra' || label === 'Transfer Inter') return 'Transfer'; return label; }
+    function groupedOwnTotals(side, groupDefs, rates, counts) {
+      var totals={ 'Info Saldo':0, 'Tarik Tunai':0, 'Transfer':0 };
+      var pending={ 'Info Saldo':false, 'Tarik Tunai':false, 'Transfer':false };
+      groupDefs.forEach(function (g) {
+        g.rows.forEach(function (label) {
+          var key=g.name+'|'+label;
+          var c=counts[side][key] || { acquirer:0, destination:0 };
+          var rate=rates[side][key];
+          var bucket=bucketFor(label);
+          if (!(bucket in totals)) return;
+          if (c.acquirer == null || c.destination == null) { pending[bucket]=true; return; }
+          totals[bucket] += rate.acquirer*c.acquirer + rate.destination*c.destination;
+        });
+      });
+      return { totals:totals, pending:pending };
+    }
+    function groupedComparisonHtml(side, groupDefs, rates, counts) {
+      var own=groupedOwnTotals(side, groupDefs, rates, counts);
+      var reportData=state.compareData ? state.compareData[side] : null;
+      return ['Info Saldo','Tarik Tunai','Transfer'].map(function (category) {
+        var ownVal=own.totals[category];
+        var reportVal=reportData ? reportData[category] : null;
+        var hasReport=reportVal != null;
+        var isMatch=hasReport && !own.pending[category] && ownVal===reportVal;
+        var badgeClass=!hasReport ? 'compare-na' : (own.pending[category] ? 'compare-na' : (isMatch ? 'compare-match' : 'compare-unmatch'));
+        var badgeText=!hasReport ? 'N/A' : (own.pending[category] ? 'MENUNGGU INTERKONEKSI' : (isMatch ? 'MATCH' : 'UNMATCH'));
+        return '<tr><td>'+category+'</td><td class="right computed">'+money(ownVal)+(own.pending[category] ? ' <span class="pending">+Interkoneksi</span>' : '')+'</td><td class="right computed">'+(hasReport ? money(reportVal) : '-')+'</td><td class="center"><span class="compare-badge '+badgeClass+'">'+badgeText+'</span></td></tr>';
+      }).join('');
+    }
+
+    // ============================================================
+    // DOWNLOAD HASIL PARSER (.xlsx) — dump mentah per modul, sama seperti ATM LINK
+    // ============================================================
+    var parserHeadersMap = {
+      'ACQ-BASICBANKING':['KODE REPORT','WAKTU','TANGGAL','KODE TERMINAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','KODE KESALAHAN','KODE BANK ISSUER','NOMOR REFERENSI','CHANNEL TYPE','KODE BANK DESTINATION'],
+      'ISS-BASICBANKING':['KODE REPORT','WAKTU','TANGGAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','KODE KESALAHAN','KODE TERMINAL','KODE BANK ACQUIRER','NOMOR REFERENSI','CHANNEL TYPE','KODE BANK DESTINATION'],
+      'DEST-BASICBANKING':['KODE REPORT','WAKTU','TANGGAL','KODE TERMINAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','KODE KESALAHAN','KODE BANK ISSUER','NOMOR REFERENSI','CHANNEL TYPE','KODE BANK ACQUIRER','NOMOR REKENING TUJUAN'],
+      'ACQ-PAYMENT':['KODE REPORT','WAKTU','TANGGAL','KODE TERMINAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','NOMINAL TAGIHAN','ADMIN FEE','KODE KESALAHAN','KODE BANK ISSUER','NOMOR REFERENSI','CHANNEL TYPE','KODE PRODUK','NAMA PRODUK','ID PEMBAYARAN'],
+      'ISS-PAYMENT':['KODE REPORT','WAKTU','TANGGAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','NOMINAL TAGIHAN','ADMIN FEE','KODE KESALAHAN','KODE TERMINAL','KODE BANK ACQUIRER','NOMOR REFERENSI','CHANNEL TYPE','KODE PRODUK','NAMA PRODUK','ID PEMBAYARAN'],
+      'BILLER-PAYMENT':['KODE REPORT','WAKTU','TANGGAL','NOMOR KARTU','JENIS MESSAGE','KODE PEMROSESAN','NOMINAL TRANSAKSI','NOMINAL TAGIHAN','ADMIN FEE','KODE KESALAHAN','KODE TERMINAL','KODE BANK ACQUIRER','NOMOR REFERENSI','CHANNEL TYPE','KODE PRODUK','NAMA PRODUK','ID PEMBAYARAN']
+    };
+    function parserHeaders(moduleName) { return parserHeadersMap[moduleName] || ['KODE REPORT','DATA TRANSAKSI']; }
+    var nominalColumnsByModule = { 'ACQ-BASICBANKING':[7], 'DEST-BASICBANKING':[7], 'ISS-BASICBANKING':[6], 'ACQ-PAYMENT':[7,8,9], 'ISS-PAYMENT':[6,7,8], 'BILLER-PAYMENT':[6,7,8] };
+    function nominalCellValue(value) { if (value == null || value === '') return ''; var num=Number(value); return isFinite(num) ? num : ''; }
+    function textifyParserRow(values, nominalIndexes) { return values.map(function (value, index) { if (nominalIndexes.indexOf(index) >= 0) return nominalCellValue(value); return value == null ? '' : String(value); }); }
+    function buildPaymentRowValues(moduleName, row) {
+      var t=row.raw || []; var values=[row.reportCode || '',t[0] || '',t[1] || ''];
+      if (moduleName === 'ACQ-BASICBANKING') values=values.concat([t[2],t[3],t[4],t[5],row.nominal,t[7],t[8],t[9],t[10],t[11]]);
+      else if (moduleName === 'ISS-BASICBANKING') values=values.concat([t[2],t[3],t[4],row.nominal,t[6],t[7],t[8],t[9],t[10],t[11]]);
+      else if (moduleName === 'DEST-BASICBANKING') values=values.concat([t[2],t[3],t[4],t[5],row.nominal,t[7],t[8],t[9],t[10],t[11],t[12]]);
+      else if (moduleName === 'ACQ-PAYMENT') { var payIdx=t.length-1; values=values.concat([t[2],t[3],t[4],t[5],row.nominal,number(t[7]),number(t[8]),t[9],t[10],t[11],t[12],t[13],t.slice(14,payIdx).join(' '),t[payIdx] || '']); }
+      else { var payIdx2=t.length-1; values=values.concat([t[2],t[3],t[4],row.nominal,number(t[6]),number(t[7]),t[8],t[9],t[10],t[11],t[12],t[13],t.slice(14,payIdx2).join(' '),t[payIdx2] || '']); }
+      return values;
+    }
+    function parserSheet(moduleName) { var nominalIndexes=nominalColumnsByModule[moduleName] || []; var rows=[parserHeaders(moduleName)]; state.rows.filter(function (row) { return row.module===moduleName; }).forEach(function (row) { var values=buildPaymentRowValues(moduleName, row); rows.push(textifyParserRow(values, nominalIndexes)); }); return rows; }
+    function applyParserBorders(sheet, rows, nominalIndexes) { var border={top:{style:'thin',color:{rgb:'7F9DB2'}},bottom:{style:'thin',color:{rgb:'7F9DB2'}},left:{style:'thin',color:{rgb:'7F9DB2'}},right:{style:'thin',color:{rgb:'7F9DB2'}}}; var headerStyle={fill:{fgColor:{rgb:'B7D7EA'}},font:{bold:true,color:{rgb:'17324D'}},alignment:{horizontal:'center',vertical:'center',wrapText:true},border:border}; var bodyStyle={alignment:{vertical:'center'},border:border}; var bodyStyleRight={alignment:{vertical:'center',horizontal:'right'},border:border}; var nominalSet=nominalIndexes || []; var maxCols=rows[0].length; for (var rowIndex=0; rowIndex<Math.max(rows.length,2); rowIndex+=1) { for (var colIndex=0; colIndex<maxCols; colIndex+=1) { var address=XLSX.utils.encode_cell({r:rowIndex,c:colIndex}); if (!sheet[address]) sheet[address]={v:'',t:'s'}; var isNominalCol=nominalSet.indexOf(colIndex) >= 0; sheet[address].s = rowIndex===0 ? headerStyle : (isNominalCol ? bodyStyleRight : bodyStyle); if (rowIndex>0 && isNominalCol && sheet[address].t==='n') sheet[address].z='#,##0'; } } sheet['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:Math.max(rows.length-1,1),c:maxCols-1}}); sheet['!cols']=rows[0].map(function (header) { return { wch:Math.min(Math.max(String(header).length+3,14),28) }; }); }
+    function downloadParserXlsx() {
+      var book=XLSX.utils.book_new();
+      ['ACQ-BASICBANKING','ISS-BASICBANKING','DEST-BASICBANKING','ACQ-PAYMENT','ISS-PAYMENT','BILLER-PAYMENT'].forEach(function (moduleName) {
+        var rows=parserSheet(moduleName); var sheet=XLSX.utils.aoa_to_sheet(rows); applyParserBorders(sheet, rows, nominalColumnsByModule[moduleName]);
+        if (rows.length === 1) { sheet['A2']={ v:'Tidak ada data', t:'s' }; sheet['A2'].s={ font:{bold:true,color:{rgb:'7A4E00'}}, fill:{fgColor:{rgb:'FFF4C7'}}, alignment:{horizontal:'center',vertical:'center'}, border:{top:{style:'thin',color:{rgb:'D6A84F'}},bottom:{style:'thin',color:{rgb:'D6A84F'}},left:{style:'thin',color:{rgb:'D6A84F'}},right:{style:'thin',color:{rgb:'D6A84F'}}} }; sheet['!merges']=[{s:{r:1,c:0},e:{r:1,c:rows[0].length-1}}]; }
+        XLSX.utils.book_append_sheet(book, sheet, moduleName.substring(0,31));
+      });
+      XLSX.writeFile(book, (state.file && state.file.name ? state.file.name : 'hasil-parser').replace(/\.txt$/i,'')+'-parser.xlsx', { cellStyles:true });
+    }
+
+    // ============================================================
+    // RENDER — dispatcher
+    // ============================================================
+    var lastFocusedInput = null;
+    var groupedRatesCache = {};
+    var groupDefsCache = {};
+
+    function renderSchemeBanner() {
+      var banner=el('schemeBanner');
+      if (!state.file) { banner.hidden=true; return; }
+      var scheme=state.scheme;
+      banner.hidden=false;
+      if (!scheme) { banner.className='scheme-banner warn'; banner.textContent='Prefix nama file "'+getFilePrefix(state.file.name)+'" tidak dikenali di daftar GT 1/3/4/5. Cek nama file atau tambahkan ke daftar kode (perlu update kode).'; return; }
+      banner.className='scheme-banner';
+      banner.textContent='Terdeteksi: '+scheme.label+' (prefix "'+scheme.prefix+'", kode bank '+scheme.bankCode+')';
+    }
+
+    function render() {
+      renderSchemeBanner();
+      var hasResult = state.rows.length > 0 && state.counts;
+      el('empty').hidden = hasResult;
+      el('sheetScroll').hidden = !hasResult;
+      el('downloadExcel').disabled = !hasResult;
+      var parserBtn=root.querySelector('.download-parser');
+      if (parserBtn) parserBtn.disabled = !hasResult;
+      el('resetButton').disabled = !state.file;
+      el('description').textContent = hasResult ? state.rows.length+' transaksi berhasil diproses. Kolom A dan D dapat diedit.' : (state.rows.length ? 'Skema tidak terdeteksi, perhitungan tidak bisa ditampilkan.' : 'Tidak ada baris yang lolos filter.');
+      el('skippedBox').hidden = state.skipped.length === 0;
+      el('skippedTitle').textContent = state.skipped.length+' catatan';
+      el('skippedList').innerHTML = state.skipped.map(function (item) { return '<li>'+escapeHtml(item)+'</li>'; }).join('');
+
+      el('classicWrap').hidden = true;
+      el('groupedWrap').hidden = !hasResult;
+
+      if (hasResult) {
+        var gt=state.scheme.gt;
+        if (!groupDefsCache[gt]) groupDefsCache[gt]={ hak:buildGroupDefsHak(gt), kewajiban:buildGroupDefsKewajiban(gt) };
+        if (!groupedRatesCache[gt]) groupedRatesCache[gt]={ hak:buildInitialRates(groupDefsCache[gt].hak), kewajiban:buildInitialRates(groupDefsCache[gt].kewajiban) };
+        var gdefs=groupDefsCache[gt]; var grates=groupedRatesCache[gt]; var gcounts=state.counts.data;
+        el('bpdHakBody').innerHTML=groupedRowsHtml('hak', gdefs.hak, grates, gcounts);
+        el('bpdKewajibanBody').innerHTML=groupedRowsHtml('kewajiban', gdefs.kewajiban, grates, gcounts);
+        el('bpdHakAccumulation').innerHTML=groupedAccumulationHtml('hak', gdefs.hak, grates, gcounts);
+        el('bpdKewajibanAccumulation').innerHTML=groupedAccumulationHtml('kewajiban', gdefs.kewajiban, grates, gcounts);
+        el('groupedCompareHakBody').innerHTML=groupedComparisonHtml('hak', gdefs.hak, grates, gcounts);
+        el('groupedCompareKewajibanBody').innerHTML=groupedComparisonHtml('kewajiban', gdefs.kewajiban, grates, gcounts);
+      }
+
+      root.querySelectorAll('.fee-input').forEach(function (input) {
+        input.addEventListener('input', function () {
+          var numeric=applyLiveFormat(input);
+          var gt=state.scheme.gt;
+          groupedRatesCache[gt][input.dataset.side][input.dataset.key][input.dataset.rate]=numeric;
+          lastFocusedInput={ side:input.dataset.side, key:input.dataset.key, rate:input.dataset.rate, caret:input.selectionStart };
+          render();
+        });
+      });
+      if (lastFocusedInput) {
+        var restore=root.querySelector('.fee-input[data-side="'+lastFocusedInput.side+'"][data-key="'+lastFocusedInput.key+'"][data-rate="'+lastFocusedInput.rate+'"]');
+        if (restore) { restore.focus(); restore.setSelectionRange(lastFocusedInput.caret, lastFocusedInput.caret); }
+      }
+    }
+
+    function downloadFeeXlsx() {
+      var rows=[['SKEMA','NAMA GT','JENIS TRANSAKSI','FEE ACQUIRER','JUMLAH ACQUIRER','TOTAL ACQUIRER','FEE DESTINATION','JUMLAH DESTINATION','TOTAL DESTINATION']];
+      if (state.counts && state.counts.mode === 'grouped') {
+        var gt=state.scheme.gt; var gdefs=groupDefsCache[gt]; var grates=groupedRatesCache[gt]; var gcounts=state.counts.data;
+        [['hak',gdefs.hak],['kewajiban',gdefs.kewajiban]].forEach(function (pair) { var side=pair[0], groupDefs=pair[1]; groupDefs.forEach(function (g) { g.rows.forEach(function (label) { var key=g.name+'|'+label; var c=gcounts[side][key] || { acquirer:0, destination:0 }; var rate=grates[side][key]; rows.push([side.toUpperCase(), g.name, label, rate.acquirer, c.acquirer == null ? 'Segera hadir' : c.acquirer, c.acquirer == null ? '' : rate.acquirer*c.acquirer, rate.destination, c.destination == null ? 'Segera hadir' : c.destination, c.destination == null ? '' : rate.destination*c.destination]); }); }); });
+      }
+      var book=XLSX.utils.book_new();
+      var sheet=XLSX.utils.aoa_to_sheet(rows);
+      XLSX.utils.book_append_sheet(book, sheet, 'Perhitungan Fee');
+      XLSX.writeFile(book, (state.file && state.file.name ? state.file.name : 'hasil-perhitungan').replace(/\.txt$/i,'')+'-fee.xlsx');
+    }
+
+    el('fileInput').addEventListener('change', function (event) { state.file=event.target.files[0] || null; el('fileName').textContent=state.file ? state.file.name : 'Belum ada file dipilih'; el('processButton').disabled=!state.file; state.scheme=state.file ? detectScheme(state.file.name) : null; renderSchemeBanner(); });
+    el('processButton').addEventListener('click', function () { if (state.file) parseFile(); });
+    el('resetButton').addEventListener('click', function () { state.file=null; state.rows=[]; state.skipped=[]; state.counts=null; state.scheme=null; state.compareData=null; el('fileInput').value=''; el('fileName').textContent='Belum ada file dipilih'; el('processButton').disabled=true; render(); });
+    el('dropzone').addEventListener('dragover', function (event) { event.preventDefault(); });
+    el('dropzone').addEventListener('drop', function (event) { event.preventDefault(); state.file=event.dataTransfer.files[0] || null; if (state.file) { el('fileName').textContent=state.file.name; el('processButton').disabled=false; state.scheme=detectScheme(state.file.name); renderSchemeBanner(); } });
+    el('downloadExcel').addEventListener('click', downloadFeeXlsx);
+
+    var parserButton=document.createElement('button');
+    parserButton.id=prefix+'downloadParser';
+    parserButton.className='button secondary download-parser ready';
+    parserButton.textContent='↓ Download Hasil Parser (.xlsx)';
+    parserButton.style.marginTop='10px';
+    parserButton.disabled=true;
+    parserButton.addEventListener('click', downloadParserXlsx);
+    el('fileName').insertAdjacentElement('afterend', parserButton);
+
+    render();
+  }
+
   function setupTabs() { var tabs=[{ btn:'tabBtnLink', panel:'tabPanelLink' },{ btn:'tabBtnMp', panel:'tabPanelMp' }]; tabs.forEach(function (item) { document.getElementById(item.btn).addEventListener('click', function () { tabs.forEach(function (other) { var isActive=other.btn === item.btn; document.getElementById(other.btn).classList.toggle('active', isActive); document.getElementById(other.btn).setAttribute('aria-selected', isActive ? 'true' : 'false'); document.getElementById(other.panel).hidden=!isActive; }); }); }); }
   setupDetailModal();
   createApp('', document.getElementById('tabPanelLink'));
-  createApp('mp', document.getElementById('tabPanelMp'));
+  createAppBPD('mp', document.getElementById('tabPanelMp'));
   setupTabs();
 }());
 </script>
