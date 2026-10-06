@@ -52,11 +52,36 @@
 
 </div><details id="mpskippedBox" class="skipped" hidden><summary id="mpskippedTitle"></summary><ul id="mpskippedList"></ul></details></section>
 </div>
-<p style="text-align:center;color:var(--muted);font-size:12px">Version 1.0.0 | © 2026 Backoffice Business Operation</p>
+<p style="text-align:center;color:var(--muted);font-size:12px">Version <button id="versionLink" class="count-link" type="button">1.0.0</button> | © 2026 Backoffice Business Operation</p>
 </main>
 <div id="detailModal" class="modal-overlay" hidden><div class="modal-box"><div class="modal-head"><div><h2 id="detailModalTitle">Detail Transaksi</h2><p id="detailModalSubtitle" class="modal-subtitle"></p></div><button id="detailModalClose" class="button quiet" type="button">✕ Tutup</button></div><div id="detailModalScroll" class="modal-scroll"><table id="detailModalTable"><thead id="detailModalHead"></thead><tbody id="detailModalBody"></tbody></table></div><div class="modal-foot"><button id="detailModalDownload" class="button primary" type="button">↓ Download Excel Detail</button></div></div></div>
+<div id="versionModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:640px"><div class="modal-head"><div><h2>Riwayat Versi</h2><p class="modal-subtitle">Catatan perubahan tools dari waktu ke waktu.</p></div><button id="versionModalClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="versionList" style="padding:4px 0 20px"></div></div></div></div>
 <script>
 (function () {
+  var CURRENT_VERSION = '2.0';
+  var CHANGELOG = [
+    { version:'2.0', date:'2026-09-22', type:'Major', changes:[
+      'Tambah tab ATM MERAH PUTIH dengan skema fee otomatis per GT (1/3/4/5)',
+      'Tambah fitur detail transaksi klik kolom B/E di tab ATM MERAH PUTIH'
+    ] },
+    { version:'1.2', date:'2026-09-21', type:'Minor', changes:[
+      'Redesign tampilan corporate: warna merah-navy-putih, tambah ilustrasi ATM',
+      'Tambah fitur perbandingan Total Fee vs Report (06A/03A)',
+      'Tambah detail transaksi per klik kolom Jumlah Trx (B/E) dengan opsi download Excel',
+      'Fix kolom parser untuk report Payment (kode 31/34) yang geser posisi'
+    ] },
+    { version:'1.1', date:'2026-09-14', type:'Minor', changes:[
+      'Tambah menu tab ATM LINK / ATM MERAH PUTIH',
+      'Rata kanan kolom nominal parser, tambah logo topbar, update copy judul',
+      'Update teks default hasil parser Excel'
+    ] },
+    { version:'1.0', date:'2026-09-11', type:'Major', changes:[
+      'Rilis awal: parser report TXT ke Excel dan perhitungan fee',
+      'Port logic filter fee dari macro.xlsm (VBA Module8/9/91) ke JS',
+      'Fix kolom DEST-BASICBANKING 08A/08B dan format mata uang'
+    ] }
+  ];
+  function setupVersionModal() { var overlay=document.getElementById('versionModal'); if (!overlay) return; var link=document.getElementById('versionLink'); var closeBtn=document.getElementById('versionModalClose'); var listEl=document.getElementById('versionList'); if (link) link.textContent=CURRENT_VERSION; function close() { overlay.hidden=true; } function badgeHtml(type) { var cls=type==='Major' ? 'compare-unmatch' : 'compare-match'; return '<span class="compare-badge '+cls+'">'+type.toUpperCase()+'</span>'; } function open() { listEl.innerHTML=CHANGELOG.map(function (entry) { return '<div style="padding:14px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div style="display:flex;align-items:center;gap:8px"><strong style="color:var(--navy);font-size:15px">v'+entry.version+'</strong>'+badgeHtml(entry.type)+'</div><span style="color:var(--muted);font-size:12.5px">'+entry.date+'</span></div><ul style="margin:8px 0 0;padding-left:18px;color:var(--ink);font-size:13.5px;line-height:1.6">'+entry.changes.map(function (c) { return '<li>'+c+'</li>'; }).join('')+'</ul></div>'; }).join(''); overlay.hidden=false; } if (link) link.addEventListener('click', open); closeBtn.addEventListener('click', close); overlay.addEventListener('click', function (event) { if (event.target === overlay) close(); }); document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !overlay.hidden) close(); }); }
   function setupDetailModal() { var overlay=document.getElementById('detailModal'); if (!overlay) return; var titleEl=document.getElementById('detailModalTitle'); var subtitleEl=document.getElementById('detailModalSubtitle'); var headEl=document.getElementById('detailModalHead'); var bodyEl=document.getElementById('detailModalBody'); var downloadBtn=document.getElementById('detailModalDownload'); var closeBtn=document.getElementById('detailModalClose'); var currentRows=null; var currentNominalIndexes=[]; var currentFileName='detail.xlsx'; function moneyFmt(v) { return new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Number(v)||0); } function close() { overlay.hidden=true; } window.showDetailModal=function (title, subtitle, tableRows, nominalIndexes, fileName) { currentRows=tableRows; currentNominalIndexes=nominalIndexes || []; currentFileName=fileName || 'detail.xlsx'; titleEl.textContent=title; subtitleEl.textContent=subtitle; var header=tableRows[0] || []; headEl.innerHTML='<tr>'+header.map(function (h) { return '<th>'+h+'</th>'; }).join('')+'</tr>'; bodyEl.innerHTML=tableRows.slice(1).map(function (row) { return '<tr>'+row.map(function (cell,idx) { var isNominal=currentNominalIndexes.indexOf(idx) >= 0; var display=isNominal && cell !== '' ? moneyFmt(cell) : (cell == null ? '' : cell); return '<td'+(isNominal ? ' style="text-align:right"' : '')+'>'+display+'</td>'; }).join('')+'</tr>'; }).join('') || '<tr><td style="text-align:center;color:#5c6b85">Tidak ada data</td></tr>'; overlay.hidden=false; }; downloadBtn.addEventListener('click', function () { if (!currentRows || !window.XLSX) return; var book=XLSX.utils.book_new(); var sheet=XLSX.utils.aoa_to_sheet(currentRows); XLSX.utils.book_append_sheet(book,sheet,'Detail'); XLSX.writeFile(book,currentFileName); }); closeBtn.addEventListener('click', close); overlay.addEventListener('click', function (event) { if (event.target === overlay) close(); }); document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !overlay.hidden) close(); }); }
   function createApp(prefix, root) {
   var categories = ['Info Saldo', 'Tarik Tunai', 'Transfer Intra', 'Transfer Inter', 'Payment (ACQ-BILLER)'];
@@ -759,6 +784,7 @@
 
   function setupTabs() { var tabs=[{ btn:'tabBtnLink', panel:'tabPanelLink' },{ btn:'tabBtnMp', panel:'tabPanelMp' }]; tabs.forEach(function (item) { document.getElementById(item.btn).addEventListener('click', function () { tabs.forEach(function (other) { var isActive=other.btn === item.btn; document.getElementById(other.btn).classList.toggle('active', isActive); document.getElementById(other.btn).setAttribute('aria-selected', isActive ? 'true' : 'false'); document.getElementById(other.panel).hidden=!isActive; }); }); }); }
   setupDetailModal();
+  setupVersionModal();
   createApp('', document.getElementById('tabPanelLink'));
   createAppBPD('mp', document.getElementById('tabPanelMp'));
   setupTabs();
