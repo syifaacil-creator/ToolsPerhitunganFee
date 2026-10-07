@@ -9,11 +9,11 @@
   },
   "gt1": ["BNI", "BRI", "MDR", "BTN"],
   "gt3": ["AGR", "MTP", "BSM"],
-  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB"],
+  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB","TST"],
   "gt5": ["BAL", "BMS", "GPY", "ALB", "BMI", "GNS", "CBC", "NOB", "BCA", "CMB", "VIC", "POS", "MNC"],
   "rateProfiles": {
     "gt1": {
-      "Info Saldo": { "acquirer": 500, "destination": 0 },
+      "Info Saldo": { "acquirer": 0, "destination": 0 },
       "Tarik Tunai": { "acquirer": 0, "destination": 0 },
       "Transfer Intra": { "acquirer": 0, "destination": 0 },
       "Transfer Inter": { "acquirer": 3625, "destination": 0 }
