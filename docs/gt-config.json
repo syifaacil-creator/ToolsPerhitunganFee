@@ -4,16 +4,16 @@
     "BNI": "009", "BRI": "002", "MDR": "008", "BTN": "200",
     "AGR": "494", "MTP": "564", "BSM": "451",
     "MUA": "147", "JBS": "425", "DKI": "111", "MLK": "131", "KAS": "122", "BKL": "133", "SUL": "134", "LMP": "121", "NTB": "128", "NUT": "130", "SMT": "117", "JTM": "114", "BJB": "110",
-    "MJK": "",
+    "TST":"123",
     "BAL": "947", "BMS": "815", "GPY": "914", "ALB": "567", "BMI": "157", "GNS": "161", "CBC": "164", "NOB": "503", "BCA": "014", "CMB": "022", "VIC": "566", "POS": "191", "MNC": "485"
   },
   "gt1": ["BNI", "BRI", "MDR", "BTN"],
   "gt3": ["AGR", "MTP", "BSM"],
-  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB", "MJK"],
+  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB"],
   "gt5": ["BAL", "BMS", "GPY", "ALB", "BMI", "GNS", "CBC", "NOB", "BCA", "CMB", "VIC", "POS", "MNC"],
   "rateProfiles": {
     "gt1": {
-      "Info Saldo": { "acquirer": 0, "destination": 0 },
+      "Info Saldo": { "acquirer": 500, "destination": 0 },
       "Tarik Tunai": { "acquirer": 0, "destination": 0 },
       "Transfer Intra": { "acquirer": 0, "destination": 0 },
       "Transfer Inter": { "acquirer": 3625, "destination": 0 }
