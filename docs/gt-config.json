@@ -9,7 +9,7 @@
   },
   "gt1": ["BNI", "BRI", "MDR", "BTN"],
   "gt3": ["AGR", "MTP", "BSM"],
-  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB","TST"],
+  "gt4": ["MUA", "JBS", "DKI", "MLK", "KAS", "BKL", "SUL", "LMP", "NTB", "NUT", "SMT", "JTM", "BJB"],
   "gt5": ["BAL", "BMS", "GPY", "ALB", "BMI", "GNS", "CBC", "NOB", "BCA", "CMB", "VIC", "POS", "MNC"],
   "rateProfiles": {
     "gt1": {
