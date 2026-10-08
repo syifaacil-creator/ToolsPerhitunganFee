@@ -59,6 +59,9 @@
       "CCW 32xxxx": { "acquirer": 3000, "destination": 0 }
     },
     "gt7": {
+      "Info Saldo": { "acquirer": 0, "destination": 0 },
+      "Tarik Tunai": { "acquirer": 0, "destination": 0 },
+      "Transfer": { "acquirer": 0, "destination": 0 },
       "Transfer Inter": { "acquirer": 0, "destination": 0 }
     },
     "interkoneksi": {

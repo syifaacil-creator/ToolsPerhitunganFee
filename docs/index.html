@@ -47,7 +47,7 @@
 <div id="tabPanelMp" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnMp" hidden>
 <section class="intro"><div><h1>ATM MERAH PUTIH REPORT PARSER & FEE CALCULATION TOOLS</h1><p>Proses file report TXT menjadi tampilan perhitungan fee, lalu download hasilnya sebagai file Excel.</p></div><svg class="hero-art" viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="8" y="2" width="94" height="44" rx="6" fill="#fff" stroke="#dde3ea" stroke-width="1.5"/><circle cx="90" cy="12" r="4" fill="#c1121f"/><rect x="16" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="46" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="16" y="26" width="56" height="6" rx="2" fill="#8fa0b8"/><rect x="16" y="35" width="40" height="5" rx="2" fill="#c1121f"/><rect x="8" y="46" width="94" height="102" rx="6" fill="#c1121f"/><rect x="16" y="54" width="78" height="86" rx="5" fill="#a10f19"/><rect x="26" y="64" width="58" height="40" rx="4" fill="#0b1f3a" stroke="#16345f" stroke-width="1.5"/><rect x="32" y="70" width="46" height="8" rx="2" fill="#e2222f"/><rect x="32" y="82" width="30" height="5" rx="1.5" fill="#7fa8d6"/><rect x="32" y="90" width="38" height="5" rx="1.5" fill="#7fa8d6"/><rect x="26" y="110" width="58" height="24" rx="4" fill="#fff"/><circle cx="35" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="35" cy="127" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="127" r="2.3" fill="#0b1f3a"/><rect x="44" y="112" width="22" height="18" rx="2" fill="#dde3ea"/></svg><p class="note">Pada bagian hasil perhitungan, Kolom kuning <strong>A dan D</strong> bisa disesuaikan nilainya. Kolom jumlah dan subtotal terisi otomatis dari perhitungan data transaksi.</p></section>
 <div id="mpmessage" class="message"></div>
-<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"><div id="mpschemeBanner" class="scheme-banner" hidden></div><div class="interkoneksi-upload"><label class="button quiet" for="mpinterkoneksiInput">Upload file Interkoneksi</label><input id="mpinterkoneksiInput" type="file" accept=".txt,text/plain" disabled><span class="soon-badge">Segera hadir</span><p class="interkoneksi-note">Baris INTERKONEKSI belum dihitung otomatis — menunggu logic & file referensi khusus.</p></div></div><div class="rules"><h2>2. Referensi kode bank per GT</h2><p>Skema tabel otomatis mengikuti 3 huruf pertama nama file (sebelum tanda "-"). Daftar &amp; nilai fee per GT diambil dari <code>gt-config.json</code> — edit file itu di repo untuk menambah anggota baru atau ubah nilai fee per GT.</p><ul id="gtRefList" class="rule-list gt-ref-list"></ul></div></section>
+<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"><div id="mpschemeBanner" class="scheme-banner" hidden></div><div class="interkoneksi-upload"><label class="button quiet" for="mpinterkoneksiInput">Upload file Interkoneksi</label><input id="mpinterkoneksiInput" type="file" accept=".txt,text/plain" disabled><span class="soon-badge">Segera hadir</span><p class="interkoneksi-note">Baris INTERKONEKSI belum dihitung otomatis — menunggu logic & file referensi khusus.</p></div></div><div class="rules"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap"><h2>2. Referensi kode bank per GT</h2><button id="gtGuideBtn" class="button quiet" type="button" style="font-size:12px;padding:6px 12px">📋 Panduan Skema GT</button></div><p>Skema tabel otomatis mengikuti 3 huruf pertama nama file (sebelum tanda "-"). Daftar &amp; nilai fee per GT diambil dari <code>gt-config.json</code> — edit file itu di repo untuk menambah anggota baru atau ubah nilai fee per GT.</p><ul id="gtRefList" class="rule-list gt-ref-list"></ul></div></section>
 <section class="panel sheet"><div class="sheet-head"><div><h2>Hasil perhitungan</h2><p id="mpdescription">Upload file lalu klik proses parser.</p></div><button id="mpdownloadExcel" class="button primary" disabled>↓ Download Excel</button></div><div id="mpempty" class="empty"><strong>Belum ada hasil</strong><br>Hasil parser akan tampil sesuai skema GT yang terdeteksi dari nama file.</div><div id="mpsheetScroll" class="sheet-scroll" hidden>
 
 <div id="mpclassicWrap" hidden><div class="report-grid"><div><div class="report-title">Hak Atas Fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicHakBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06B</p><table class="accumulation"><caption>Total Hak Fee Per Jenis Transaksi</caption><tbody id="mpclassicHakAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06A</p></div><div><div class="report-title">Kewajiban Atas fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicKewajibanBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03B</p><table class="accumulation"><caption>Total Kewajiban Fee Per Jenis Transaksi</caption><tbody id="mpclassicKewajibanAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03A</p></div></div><section class="panel compare" style="margin-top:22px"><div class="sheet-head"><div><h2>Perbandingan Total Fee vs Report</h2><p>Cross-check otomatis Total Fee hasil perhitungan terhadap Total Fee yang tertera pada report (kode 06A untuk Hak, 03A untuk Kewajiban).</p></div></div><div style="padding:22px"><div class="compare-grid"><div><div class="report-title">Kode Report 06A — Hak Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Selisih</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareHakBody"></tbody></table></div></div><div><div class="report-title">Kode Report 03A — Kewajiban Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Selisih</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareKewajibanBody"></tbody></table></div></div></div></div></section></div>
@@ -60,6 +60,7 @@
 </main>
 <div id="detailModal" class="modal-overlay" hidden><div class="modal-box"><div class="modal-head"><div><h2 id="detailModalTitle">Detail Transaksi</h2><p id="detailModalSubtitle" class="modal-subtitle"></p></div><button id="detailModalClose" class="button quiet" type="button">✕ Tutup</button></div><div id="detailModalScroll" class="modal-scroll"><table id="detailModalTable"><thead id="detailModalHead"></thead><tbody id="detailModalBody"></tbody></table></div><div class="modal-foot"><button id="detailModalDownload" class="button primary" type="button">↓ Download Excel Detail</button></div></div></div>
 <div id="versionModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:640px"><div class="modal-head"><div><h2>Riwayat Versi</h2><p class="modal-subtitle">Catatan perubahan tools dari waktu ke waktu.</p></div><button id="versionModalClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="versionList" style="padding:4px 0 20px"></div></div></div></div>
+<div id="gtGuideModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:1000px"><div class="modal-head"><div><h2>Panduan Skema GT</h2><p class="modal-subtitle">Kolom Acquirer &amp; Destination mengikuti <code>gt-config.json</code> (otomatis berubah kalau config diubah). Kolom Biaya Nasabah, Issuer, Switching bersifat referensi tetap.</p></div><button id="gtGuideClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="gtGuideContent" style="padding:4px 0 20px"></div></div><div class="modal-foot"><button id="gtGuideDownload" class="button primary" type="button">↓ Download Excel Panduan</button></div></div></div>
 <script>
 (function () {
   var FEE_RULE_LABELS = { 'Info Saldo':'Info Saldo', 'Tarik Tunai':'Tarik Tunai', 'Transfer Intra':'Transfer Intra (Issuer=Destination)', 'Transfer Inter':'Transfer Inter (Issuer<>Destination)', 'Payment (ACQ-BILLER)':'Payment' };
@@ -92,7 +93,7 @@
       gt4: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
       gt5: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
       asbanda: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      gt7: { 'Transfer Inter':{acquirer:0,destination:0} },
+      gt7: { 'Info Saldo':{acquirer:0,destination:0}, 'Tarik Tunai':{acquirer:0,destination:0}, 'Transfer':{acquirer:0,destination:0}, 'Transfer Inter':{acquirer:0,destination:0} },
       interkoneksi: { 'Transfer':{acquirer:0,destination:1500} }
     }
   };
@@ -123,8 +124,112 @@
       console.warn('Gagal memuat gt-config.json, memakai skema GT bawaan.', err);
     });
   }
-  var CURRENT_VERSION = '2.2';
+  var GT_GUIDE_SECTIONS = [
+    { title:'GT1 = Issuer Himbara (All himbara)', membersKey:'gt1', profileKey:'gt1', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:0, issuer:'-', switching:375 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:0, issuer:'-', switching:375 },
+      { label:'Transfer Intra Bank', rateLabel:'Transfer Intra', biayaNasabah:0, issuer:'-', switching:375 },
+      { label:'Transfer Inter Bank', rateLabel:'Transfer Inter', biayaNasabah:4000, issuer:'-', switching:375 }
+    ] },
+    { title:'GT2 = Issuer Himbara & Another Bank (Acq or Dest = Non HIMBARA)', membersKey:'gt1', profileKey:'gt2', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:395, switching:375 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:615, switching:375 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:825, switching:375 }
+    ] },
+    { title:'GT3 = Issuer Himbara Group', membersKey:'gt3', profileKey:'gt3', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:220, switching:550 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:440, switching:550 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:650, switching:550 }
+    ] },
+    { title:'GT4 = Issuer BPD & Another Bank', membersKey:'gt4', profileKey:'gt4', note:'*Saat ini, seluruh BPD masih menerapkan ketentuan yang berlaku eksisting (kondisi sebelum ASBANDA)', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:220, switching:770 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:430, switching:770 }
+    ] },
+    { title:'GT5 = Issuer Bank Umum', membersKey:'gt5', profileKey:'gt5', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:'-', switching:990 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:'-', switching:1200 }
+    ] },
+    { title:'Fee Lain-lain (Jika Iss & Acq adalah Himbara + Channel Non ATM)', membersKey:'gt1', profileKey:'feeLainLain', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:375 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:'-', switching:375 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:'-', switching:375 }
+    ] },
+    { title:'GT7 = Issuer Himbara (All himbara) dari Acquirer Mesin ECP Terminal ID (Txxxxxx)', membersKey:'gt1', profileKey:'gt7', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:0, issuer:'-', switching:0 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:0, issuer:'-', switching:0 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:4000, issuer:4000, switching:0 }
+    ] },
+    { title:'ASBANDA', membersKey:'gt4', profileKey:'asbanda', note:'*Note belum live', rows:[
+      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:220, switching:770 },
+      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:430, switching:770 }
+    ] }
+  ];
+  function guideDash(v) { return v ? fmtRule(v) : '-'; }
+  function gtGuideRateCell(profileKey, rateLabel, side) {
+    var profile=(window.GT_CONFIG.rateProfiles[profileKey])||{};
+    var rate=profile[rateLabel];
+    return rate ? guideDash(rate[side]) : '-';
+  }
+  function buildGtGuideRows() {
+    return GT_GUIDE_SECTIONS.map(function (section) {
+      var members=(window.GT_CONFIG[section.membersKey]||[]).join(', ');
+      return { section:section, members:members };
+    });
+  }
+  function renderGtGuide() {
+    var el=document.getElementById('gtGuideContent'); if (!el) return;
+    el.innerHTML=buildGtGuideRows().map(function (entry) {
+      var section=entry.section;
+      var rowsHtml=section.rows.map(function (row) {
+        return '<tr><td>'+row.label+'</td>'
+          +'<td class="right">'+fmtRule(row.biayaNasabah)+'</td>'
+          +'<td class="right">'+gtGuideRateCell(section.profileKey, row.rateLabel, 'acquirer')+'</td>'
+          +'<td class="right">'+gtGuideRateCell(section.profileKey, row.rateLabel, 'destination')+'</td>'
+          +'<td class="right">'+(row.issuer==='-' ? '-' : fmtRule(row.issuer))+'</td>'
+          +'<td class="right">'+fmtRule(row.switching)+'</td></tr>';
+      }).join('');
+      return '<div style="margin-bottom:22px"><div class="report-title" style="border-radius:8px 8px 0 0">'+section.title+'</div>'
+        +'<div style="padding:6px 10px;background:#fafcfe;border:1px solid var(--line);border-top:0;font-size:12.5px;color:var(--muted)">'+entry.members+'</div>'
+        +'<table style="margin-top:0"><thead><tr><th style="background:var(--red);color:#fff">Jenis Transaksi</th><th style="background:var(--red);color:#fff">Biaya Nasabah</th><th style="background:var(--red);color:#fff">Acquirer</th><th style="background:var(--red);color:#fff">Destination</th><th style="background:var(--red);color:#fff">Issuer</th><th style="background:var(--red);color:#fff">Switching</th></tr></thead><tbody>'+rowsHtml+'</tbody></table>'
+        +(section.note ? '<p class="manual-note">'+section.note+'</p>' : '')
+        +'</div>';
+    }).join('');
+  }
+  function downloadGtGuideXlsx() {
+    if (!window.XLSX) return;
+    var rows=[['Skema GT','Anggota','Jenis Transaksi','Biaya Nasabah','Acquirer','Destination','Issuer','Switching']];
+    GT_GUIDE_SECTIONS.forEach(function (section) {
+      var members=(window.GT_CONFIG[section.membersKey]||[]).join(', ');
+      section.rows.forEach(function (row) {
+        var profile=(window.GT_CONFIG.rateProfiles[section.profileKey])||{};
+        var rate=profile[row.rateLabel] || { acquirer:0, destination:0 };
+        rows.push([section.title, members, row.label, row.biayaNasabah, rate.acquirer, rate.destination, row.issuer==='-' ? 0 : row.issuer, row.switching]);
+      });
+      if (section.note) rows.push([section.note,'','','','','','','']);
+    });
+    var book=XLSX.utils.book_new();
+    var sheet=XLSX.utils.aoa_to_sheet(rows);
+    XLSX.utils.book_append_sheet(book, sheet, 'Panduan Skema GT');
+    XLSX.writeFile(book, 'panduan-skema-gt.xlsx');
+  }
+  function setupGtGuide() {
+    var btn=document.getElementById('gtGuideBtn'); var modal=document.getElementById('gtGuideModal'); var closeBtn=document.getElementById('gtGuideClose'); var downloadBtn=document.getElementById('gtGuideDownload');
+    if (!btn) return;
+    btn.addEventListener('click', function () { renderGtGuide(); modal.hidden=false; });
+    closeBtn.addEventListener('click', function () { modal.hidden=true; });
+    modal.addEventListener('click', function (e) { if (e.target===modal) modal.hidden=true; });
+    downloadBtn.addEventListener('click', downloadGtGuideXlsx);
+  }
+  var CURRENT_VERSION = '2.3';
   var CHANGELOG = [
+    { version:'2.3', date:'2026-10-08', type:'Minor', changes:[
+      'Tambah tombol "Panduan Skema GT" di tab ATM MERAH PUTIH — bisa dilihat & di-download jadi Excel',
+      'Kolom Acquirer/Destination di Panduan Skema GT otomatis mengikuti gt-config.json',
+      'Tambah profil fee GT 7 di gt-config.json (Info Saldo/Tarik Tunai/Transfer) untuk kebutuhan panduan'
+    ] },
     { version:'2.2', date:'2026-10-07', type:'Minor', changes:[
       'Nilai fee ATM LINK dipindah ke file fee-config.json (bisa diedit tanpa ubah kode)',
       'Daftar kode bank & nilai fee per GT di ATM MERAH PUTIH dipindah ke gt-config.json, dipecah per grup (GT 1/2/3/4/5/7, FEE LAIN-LAIN, ASBANDA, INTERKONEKSI)',
@@ -856,6 +961,7 @@
   function setupTabs() { var tabs=[{ btn:'tabBtnLink', panel:'tabPanelLink' },{ btn:'tabBtnMp', panel:'tabPanelMp' }]; tabs.forEach(function (item) { document.getElementById(item.btn).addEventListener('click', function () { tabs.forEach(function (other) { var isActive=other.btn === item.btn; document.getElementById(other.btn).classList.toggle('active', isActive); document.getElementById(other.btn).setAttribute('aria-selected', isActive ? 'true' : 'false'); document.getElementById(other.panel).hidden=!isActive; }); }); }); }
   setupDetailModal();
   setupVersionModal();
+  setupGtGuide();
   renderRuleList();
   renderGtRefList();
   Promise.all([loadFeeConfig(), loadGtConfig()]).then(function () {
