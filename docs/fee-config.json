@@ -1,7 +1,7 @@
 {
   "Info Saldo": { "acquirer": 3625, "destination": 0 },
   "Tarik Tunai": { "acquirer": 7125, "destination": 0 },
-  "Transfer Intra": { "acquirer": 4625, "destination": 0 },
+  "Transfer Intra": { "acquirer": 4625, "destination": 1500 },
   "Transfer Inter": { "acquirer": 4625, "destination": 1500 },
   "Payment (ACQ-BILLER)": { "acquirer": 3625, "destination": 0 }
 }
