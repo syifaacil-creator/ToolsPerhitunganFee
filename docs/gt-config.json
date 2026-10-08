@@ -4,7 +4,6 @@
     "BNI": "009", "BRI": "002", "MDR": "008", "BTN": "200",
     "AGR": "494", "MTP": "564", "BSM": "451",
     "MUA": "147", "JBS": "425", "DKI": "111", "MLK": "131", "KAS": "122", "BKL": "133", "SUL": "134", "LMP": "121", "NTB": "128", "NUT": "130", "SMT": "117", "JTM": "114", "BJB": "110",
-    "TST":"123",
     "BAL": "947", "BMS": "815", "GPY": "914", "ALB": "567", "BMI": "157", "GNS": "161", "CBC": "164", "NOB": "503", "BCA": "014", "CMB": "022", "VIC": "566", "POS": "191", "MNC": "485"
   },
   "gt1": ["BNI", "BRI", "MDR", "BTN"],
@@ -21,7 +20,7 @@
     "feeLainLain": {
       "Info Saldo": { "acquirer": 3625, "destination": 0 },
       "Tarik Tunai": { "acquirer": 7125, "destination": 0 },
-      "Transfer": { "acquirer": 4625, "destination": 1500 }
+      "Transfer": { "acquirer": 4625, "destination": 0 }
     },
     "gt2": {
       "Info Saldo": { "acquirer": 3230, "destination": 0 },
