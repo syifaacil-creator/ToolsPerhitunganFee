@@ -20,7 +20,7 @@
     "feeLainLain": {
       "Info Saldo": { "acquirer": 3625, "destination": 0 },
       "Tarik Tunai": { "acquirer": 7125, "destination": 0 },
-      "Transfer": { "acquirer": 4625, "destination": 0 }
+      "Transfer": { "acquirer": 4625, "destination": 1500 }
     },
     "gt2": {
       "Info Saldo": { "acquirer": 3230, "destination": 0 },
