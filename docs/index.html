@@ -473,9 +473,9 @@
     var GT4_PREFIXES=window.GT_CONFIG.gt4;
     var GT5_PREFIXES=window.GT_CONFIG.gt5;
     var GT1=GT1_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
-    // Daftar khusus skema GT4/GT5 (grouped, Module10/11/12) — 13 anggota penuh
-    var GT3IS=['494','564'];
-    var GT3TR=['451','494','564'];
+    // Daftar anggota GT 3/4/5 untuk tab ATM MERAH PUTIH — diturunkan dari gt-config.json,
+    // jadi nambah/ngurangi anggota cukup lewat config. (Daftar tab ATM LINK di bawah terpisah.)
+    var GT3=GT3_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
     var GT4=GT4_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
     var GT5=GT5_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
     // ASBANDA = subset dari GT 4 (lihat asbandaMembers di gt-config.json).
@@ -483,7 +483,8 @@
     // bank sendiri (dari nama file) + lawan transaksi, plus destination khusus Transfer.
     // Kalau ada satu pihak saja BPD non-ASBANDA, transaksi tetap masuk GT 4.
     var ASB=(window.GT_CONFIG.asbandaMembers||[]).map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
-    // Daftar khusus skema GT1 (Module91) — sedikit berbeda dari GT4/GT5 di atas, porting apa adanya
+    // Daftar khusus skema GT1 (Module91) — tab ATM LINK, sengaja TIDAK diambil dari config:
+    // porting apa adanya dari macro dan dibiarkan terpisah dari daftar GT di atas.
     var GT1_GT3=['451','494','564'];
     var GT1_GT5=['947','914','157','161','164','503','014','022','566','191'];
     var GT1_CCW=['914','566','191','567','485','110'];
@@ -572,9 +573,9 @@
       set('hak','GT 2','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT1), []);
       set('hak','GT 2','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT1), []);
       set('hak','GT 2','Transfer', countPrefixJIn(acqRows,bbG,bbJ,'40',GT1), countDestG7_GT2(destRows));
-      set('hak','GT 3','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT3IS), []);
-      set('hak','GT 3','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT3IS), []);
-      set('hak','GT 3','Transfer', gt === '3' ? countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'40',GT3TR), gt === '3' ? countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(destRows,bbG,bbJ,'40',GT3TR));
+      set('hak','GT 3','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT3), []);
+      set('hak','GT 3','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT3), []);
+      set('hak','GT 3','Transfer', gt === '3' ? countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT3,bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'40',GT3), gt === '3' ? countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT3,bankFile) : countPrefixJIn(destRows,bbG,bbJ,'40',GT3));
       set('hak','GT 4','Info Saldo', gt === '4' ? countBpdNonAsb(acqRows,bbG,bbJ,'31',bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), []);
       set('hak','GT 4','Tarik Tunai', gt === '4' ? countBpdNonAsb(acqRows,bbG,bbJ,'01',bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), []);
       if (gt === '4') { set('hak','GT 4','Transfer', countGT4TransferNonAsb(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferNonAsb(destRows,bbG,bbJ,bbM,bankFile)); }
