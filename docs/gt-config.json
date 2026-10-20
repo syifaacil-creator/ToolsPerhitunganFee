@@ -12,15 +12,15 @@
   "gt5": ["BAL", "BMS", "GPY", "ALB", "BMI", "GNS", "CBC", "NOB", "BCA", "CMB", "VIC", "POS", "MNC"],
   "rateProfiles": {
     "gt1": {
-      "Info Saldo":     { "biayaNasabah": 0,    "acquirer": 0,    "issuer": null, "destination": 0, "switching": 375 },
-      "Tarik Tunai":    { "biayaNasabah": 0,    "acquirer": 0,    "issuer": null, "destination": 0, "switching": 375 },
-      "Transfer Intra": { "biayaNasabah": 0,    "acquirer": 0,    "issuer": null, "destination": 0, "switching": 375 },
-      "Transfer Inter": { "biayaNasabah": 4000, "acquirer": 3625, "issuer": null, "destination": 0, "switching": 375 }
+      "Info Saldo":     { "biayaNasabah": 0,    "acquirer": 0,    "issuer": 0, "destination": 0, "switching": 375 },
+      "Tarik Tunai":    { "biayaNasabah": 0,    "acquirer": 0,    "issuer": 0, "destination": 0, "switching": 375 },
+      "Transfer Intra": { "biayaNasabah": 0,    "acquirer": 0,    "issuer": 0, "destination": 0, "switching": 375 },
+      "Transfer Inter": { "biayaNasabah": 4000, "acquirer": 3625, "issuer": 0, "destination": 0, "switching": 375 }
     },
     "feeLainLain": {
-      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3625, "issuer": null, "destination": 0,    "switching": 375 },
-      "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 7125, "issuer": null, "destination": 0,    "switching": 375 },
-      "Transfer":    { "biayaNasabah": 6500, "acquirer": 4625, "issuer": null, "destination": 1500, "switching": 375 }
+      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3625, "issuer": 0, "destination": 0,    "switching": 375 },
+      "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 7125, "issuer": 0, "destination": 0,    "switching": 375 },
+      "Transfer":    { "biayaNasabah": 6500, "acquirer": 4625, "issuer": 0, "destination": 1500, "switching": 375 }
     },
     "gt2": {
       "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3230, "issuer": 395, "destination": 0,    "switching": 375 },
@@ -37,7 +37,7 @@
       "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "gt4": {
-      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3230, "issuer": null, "destination": 0,    "switching": 770 },
+      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3230, "issuer": 0, "destination": 0,    "switching": 770 },
       "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 6510, "issuer": 220,  "destination": 0,    "switching": 770 },
       "Transfer":    { "biayaNasabah": 6500, "acquirer": 3800, "issuer": 430,  "destination": 1500, "switching": 770 },
       "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
@@ -51,15 +51,15 @@
       "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "asbanda": {
-      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 0, "issuer": null, "destination": 0, "switching": 770 },
-      "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 0, "issuer": 220,  "destination": 0, "switching": 770 },
-      "Transfer":    { "biayaNasabah": 6500, "acquirer": 0, "issuer": 430,  "destination": 0, "switching": 770 },
+      "Info Saldo":  { "biayaNasabah": 0, "acquirer": 0, "issuer": 0, "destination": 0, "switching": 0 },
+      "Tarik Tunai": { "biayaNasabah": 0, "acquirer": 0, "issuer": 0,  "destination": 0, "switching": 0 },
+      "Transfer":    { "biayaNasabah": 0, "acquirer": 0, "issuer": 0,  "destination": 0, "switching": 0 },
       "CCW 23xxxx":  { "acquirer": 0, "destination": 0 },
       "CCW 32xxxx":  { "acquirer": 0, "destination": 0 }
     },
     "gt7": {
-      "Info Saldo":     { "biayaNasabah": 0,    "acquirer": 0, "issuer": null, "destination": 0, "switching": 0 },
-      "Tarik Tunai":    { "biayaNasabah": 0,    "acquirer": 0, "issuer": null, "destination": 0, "switching": 0 },
+      "Info Saldo":     { "biayaNasabah": 0,    "acquirer": 0, "issuer": 0, "destination": 0, "switching": 0 },
+      "Tarik Tunai":    { "biayaNasabah": 0,    "acquirer": 0, "issuer": 0, "destination": 0, "switching": 0 },
       "Transfer":       { "biayaNasabah": 4000, "acquirer": 0, "issuer": 4000, "destination": 0, "switching": 0 },
       "Transfer Inter": { "acquirer": 0, "destination": 0 }
     },
