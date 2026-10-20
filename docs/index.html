@@ -60,7 +60,7 @@
 </main>
 <div id="detailModal" class="modal-overlay" hidden><div class="modal-box"><div class="modal-head"><div><h2 id="detailModalTitle">Detail Transaksi</h2><p id="detailModalSubtitle" class="modal-subtitle"></p></div><button id="detailModalClose" class="button quiet" type="button">✕ Tutup</button></div><div id="detailModalScroll" class="modal-scroll"><table id="detailModalTable"><thead id="detailModalHead"></thead><tbody id="detailModalBody"></tbody></table></div><div class="modal-foot"><button id="detailModalDownload" class="button primary" type="button">↓ Download Excel Detail</button></div></div></div>
 <div id="versionModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:640px"><div class="modal-head"><div><h2>Riwayat Versi</h2><p class="modal-subtitle">Catatan perubahan tools dari waktu ke waktu.</p></div><button id="versionModalClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="versionList" style="padding:4px 0 20px"></div></div></div></div>
-<div id="gtGuideModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:1000px"><div class="modal-head"><div><h2>Panduan Skema GT</h2><p class="modal-subtitle">Kolom Acquirer &amp; Destination mengikuti <code>gt-config.json</code> (otomatis berubah kalau config diubah). Kolom Biaya Nasabah, Issuer, Switching bersifat referensi tetap.</p></div><button id="gtGuideClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="gtGuideContent" style="padding:4px 0 20px"></div></div><div class="modal-foot"><button id="gtGuideDownload" class="button primary" type="button">↓ Download Excel Panduan</button></div></div></div>
+<div id="gtGuideModal" class="modal-overlay" hidden><div class="modal-box" style="max-width:1000px"><div class="modal-head"><div><h2>Panduan Skema GT</h2><p class="modal-subtitle">Seluruh angka di tabel ini (Biaya Nasabah, Acquirer, Destination, Issuer, Switching) mengikuti <code>gt-config.json</code> — otomatis berubah kalau config diubah.</p></div><button id="gtGuideClose" class="button quiet" type="button">✕ Tutup</button></div><div class="modal-scroll"><div id="gtGuideContent" style="padding:4px 0 20px"></div></div><div class="modal-foot"><button id="gtGuideDownload" class="button primary" type="button">↓ Download Excel Panduan</button></div></div></div>
 <script>
 (function () {
   var FEE_RULE_LABELS = { 'Info Saldo':'Info Saldo', 'Tarik Tunai':'Tarik Tunai', 'Transfer Intra':'Transfer Intra (Issuer=Destination)', 'Transfer Inter':'Transfer Inter (Issuer<>Destination)', 'Payment (ACQ-BILLER)':'Payment' };
@@ -95,24 +95,12 @@
       console.warn('Gagal memuat fee-config.json, memakai nilai default bawaan.', err);
     });
   }
-  window.GT_CONFIG = {
-    bankCodes: { BNI:'009', BRI:'002', MDR:'008', BTN:'200', AGR:'494', MTP:'564', BSM:'451', MUA:'147', JBS:'425', DKI:'111', MLK:'131', KAS:'122', BKL:'133', SUL:'134', LMP:'121', NTB:'128', NUT:'130', SMT:'117', JTM:'114', BJB:'110', BAL:'947', BMS:'815', GPY:'914', ALB:'567', BMI:'157', GNS:'161', CBC:'164', NOB:'503', BCA:'014', CMB:'022', VIC:'566', POS:'191', MNC:'485' },
-    gt1: ['BNI','BRI','MDR','BTN'],
-    gt3: ['AGR','MTP','BSM'],
-    gt4: ['MUA','JBS','DKI','MLK','KAS','BKL','SUL','LMP','NTB','NUT','SMT','JTM','BJB'],
-    gt5: ['BAL','BMS','GPY','ALB','BMI','GNS','CBC','NOB','BCA','CMB','VIC','POS','MNC'],
-    rateProfiles: {
-      gt1: { 'Info Saldo':{acquirer:0,destination:0}, 'Tarik Tunai':{acquirer:0,destination:0}, 'Transfer Intra':{acquirer:0,destination:0}, 'Transfer Inter':{acquirer:3625,destination:0} },
-      feeLainLain: { 'Info Saldo':{acquirer:3625,destination:0}, 'Tarik Tunai':{acquirer:7125,destination:0}, 'Transfer':{acquirer:4625,destination:1500} },
-      gt2: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      gt3: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      gt4: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      gt5: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      asbanda: { 'Info Saldo':{acquirer:3230,destination:0}, 'Tarik Tunai':{acquirer:6510,destination:0}, 'Transfer':{acquirer:3800,destination:1500}, 'CCW 23xxxx':{acquirer:6510,destination:0}, 'CCW 32xxxx':{acquirer:3000,destination:0} },
-      gt7: { 'Info Saldo':{acquirer:0,destination:0}, 'Tarik Tunai':{acquirer:0,destination:0}, 'Transfer':{acquirer:0,destination:0}, 'Transfer Inter':{acquirer:0,destination:0} },
-      interkoneksi: { 'Transfer':{acquirer:0,destination:1500} }
-    }
-  };
+  // Semua isi GT_CONFIG datang dari gt-config.json (satu-satunya sumber angka).
+  // Sengaja TIDAK ada angka cadangan di sini: kalau config gagal dimuat, tool berhenti
+  // dengan pesan error, bukan diam-diam menghitung pakai angka lama.
+  var GT_PROFILE_KEYS = ['gt1','feeLainLain','gt2','gt3','gt4','gt5','asbanda','gt7','interkoneksi'];
+  window.GT_CONFIG = { bankCodes:{}, gt1:[], gt3:[], gt4:[], gt5:[], rateProfiles:{} };
+  GT_PROFILE_KEYS.forEach(function (key) { window.GT_CONFIG.rateProfiles[key]={}; });
   var GT_GROUP_LABELS = { gt1:'GT 1 — Skema ATM LINK', gt3:'GT 3 — Himbara Group lain', gt4:'GT 4 — BPD / ASBANDA', gt5:'GT 5 — Bank Umum lain' };
   function renderGtRefList() {
     var listEl=document.getElementById('gtRefList'); if (!listEl) return;
@@ -129,65 +117,85 @@
       if (!res.ok) throw new Error('HTTP '+res.status);
       return res.json();
     }).then(function (data) {
-      if (data.bankCodes) Object.assign(window.GT_CONFIG.bankCodes, data.bankCodes);
-      ['gt1','gt3','gt4','gt5'].forEach(function (key) { if (Array.isArray(data[key])) window.GT_CONFIG[key]=data[key]; });
-      if (data.rateProfiles) {
-        ['gt1','feeLainLain','gt2','gt3','gt4','gt5','asbanda','gt7','interkoneksi'].forEach(function (key) {
-          if (data.rateProfiles[key]) Object.assign(window.GT_CONFIG.rateProfiles[key], data.rateProfiles[key]);
-        });
-      }
-    }).catch(function (err) {
-      console.warn('Gagal memuat gt-config.json, memakai skema GT bawaan.', err);
+      if (!data.bankCodes || !data.rateProfiles) throw new Error('gt-config.json tidak lengkap (bankCodes / rateProfiles kosong)');
+      Object.assign(window.GT_CONFIG.bankCodes, data.bankCodes);
+      ['gt1','gt3','gt4','gt5'].forEach(function (key) {
+        if (!Array.isArray(data[key])) throw new Error('gt-config.json: daftar bank "'+key+'" tidak ada');
+        window.GT_CONFIG[key]=data[key];
+      });
+      GT_PROFILE_KEYS.forEach(function (key) {
+        if (!data.rateProfiles[key]) throw new Error('gt-config.json: rateProfiles."'+key+'" tidak ada');
+        Object.assign(window.GT_CONFIG.rateProfiles[key], data.rateProfiles[key]);
+      });
     });
+  }
+  function showConfigError(err) {
+    var box=document.createElement('div');
+    box.style.cssText='margin:24px;padding:18px 20px;border:2px solid var(--red);border-radius:10px;background:#fff5f5;color:#8a1020;font-size:14px;line-height:1.6';
+    box.innerHTML='<strong style="font-size:16px">Gagal memuat gt-config.json — perhitungan dihentikan.</strong>'
+      +'<p style="margin:8px 0 0">Tool ini mengambil seluruh nilai fee dari <code>gt-config.json</code>. Karena file itu tidak terbaca, tidak ada angka cadangan yang dipakai supaya hasil hitung tidak salah.</p>'
+      +'<p style="margin:8px 0 0">Pastikan halaman dibuka lewat <code>https://syifaacil-creator.github.io/ToolsPerhitunganFee/</code> (bukan file lokal), lalu refresh.</p>'
+      +'<p style="margin:8px 0 0;font-family:monospace;font-size:12.5px">'+String(err && err.message ? err.message : err)+'</p>';
+    document.body.insertBefore(box, document.body.firstChild);
   }
   var GT_GUIDE_SECTIONS = [
     { title:'GT1 = Issuer Himbara (All himbara)', membersKey:'gt1', profileKey:'gt1', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:0, issuer:'-', switching:375 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:0, issuer:'-', switching:375 },
-      { label:'Transfer Intra Bank', rateLabel:'Transfer Intra', biayaNasabah:0, issuer:'-', switching:375 },
-      { label:'Transfer Inter Bank', rateLabel:'Transfer Inter', biayaNasabah:4000, issuer:'-', switching:375 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer Intra Bank', rateLabel:'Transfer Intra' },
+      { label:'Transfer Inter Bank', rateLabel:'Transfer Inter' }
     ] },
     { title:'GT2 = Issuer Himbara & Another Bank (Acq or Dest = Non HIMBARA)', membersKey:'gt1', profileKey:'gt2', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:395, switching:375 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:615, switching:375 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:825, switching:375 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'GT3 = Issuer Himbara Group', membersKey:'gt3', profileKey:'gt3', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:220, switching:550 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:440, switching:550 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:650, switching:550 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'GT4 = Issuer BPD & Another Bank', membersKey:'gt4', profileKey:'gt4', note:'*Saat ini, seluruh BPD masih menerapkan ketentuan yang berlaku eksisting (kondisi sebelum ASBANDA)', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:220, switching:770 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:430, switching:770 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'GT5 = Issuer Bank Umum', membersKey:'gt5', profileKey:'gt5', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:'-', switching:990 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:'-', switching:1200 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'Fee Lain-lain (Jika Iss & Acq adalah Himbara + Channel Non ATM)', membersKey:'gt1', profileKey:'feeLainLain', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:375 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:'-', switching:375 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:'-', switching:375 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'GT7 = Issuer Himbara (All himbara) dari Acquirer Mesin ECP Terminal ID (Txxxxxx)', membersKey:'gt1', profileKey:'gt7', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:0, issuer:'-', switching:0 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:0, issuer:'-', switching:0 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:4000, issuer:4000, switching:0 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] },
     { title:'ASBANDA', membersKey:'gt4', profileKey:'asbanda', note:'*Note belum live', rows:[
-      { label:'Cek Saldo', rateLabel:'Info Saldo', biayaNasabah:4000, issuer:'-', switching:770 },
-      { label:'Tarik Tunai', rateLabel:'Tarik Tunai', biayaNasabah:7500, issuer:220, switching:770 },
-      { label:'Transfer', rateLabel:'Transfer', biayaNasabah:6500, issuer:430, switching:770 }
+      { label:'Cek Saldo', rateLabel:'Info Saldo' },
+      { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
+      { label:'Transfer', rateLabel:'Transfer' }
     ] }
   ];
   function guideDash(v) { return v ? fmtRule(v) : '-'; }
+  function gtGuideRate(profileKey, rateLabel) {
+    return ((window.GT_CONFIG.rateProfiles[profileKey])||{})[rateLabel] || null;
+  }
+  // acquirer & destination: 0 ditampilkan '-' (tidak ada hak/kewajiban)
   function gtGuideRateCell(profileKey, rateLabel, side) {
-    var profile=(window.GT_CONFIG.rateProfiles[profileKey])||{};
-    var rate=profile[rateLabel];
+    var rate=gtGuideRate(profileKey, rateLabel);
     return rate ? guideDash(rate[side]) : '-';
+  }
+  // biayaNasabah & switching: 0 tetap ditampilkan '0' (memang gratis / tanpa fee switching)
+  // issuer: null di gt-config.json berarti tidak berlaku -> '-'
+  function gtGuideFeeCell(profileKey, rateLabel, field) {
+    var rate=gtGuideRate(profileKey, rateLabel);
+    if (!rate || rate[field]==null) return '-';
+    return fmtRule(rate[field]);
   }
   function buildGtGuideRows() {
     return GT_GUIDE_SECTIONS.map(function (section) {
@@ -201,11 +209,11 @@
       var section=entry.section;
       var rowsHtml=section.rows.map(function (row) {
         return '<tr><td>'+row.label+'</td>'
-          +'<td class="right">'+fmtRule(row.biayaNasabah)+'</td>'
+          +'<td class="right">'+gtGuideFeeCell(section.profileKey, row.rateLabel, 'biayaNasabah')+'</td>'
           +'<td class="right">'+gtGuideRateCell(section.profileKey, row.rateLabel, 'acquirer')+'</td>'
           +'<td class="right">'+gtGuideRateCell(section.profileKey, row.rateLabel, 'destination')+'</td>'
-          +'<td class="right">'+(row.issuer==='-' ? '-' : fmtRule(row.issuer))+'</td>'
-          +'<td class="right">'+fmtRule(row.switching)+'</td></tr>';
+          +'<td class="right">'+gtGuideFeeCell(section.profileKey, row.rateLabel, 'issuer')+'</td>'
+          +'<td class="right">'+gtGuideFeeCell(section.profileKey, row.rateLabel, 'switching')+'</td></tr>';
       }).join('');
       return '<div style="margin-bottom:22px"><div class="report-title" style="border-radius:8px 8px 0 0">'+section.title+'</div>'
         +'<div style="padding:6px 10px;background:#fafcfe;border:1px solid var(--line);border-top:0;font-size:12.5px;color:var(--muted)">'+entry.members+'</div>'
@@ -220,9 +228,8 @@
     GT_GUIDE_SECTIONS.forEach(function (section) {
       var members=(window.GT_CONFIG[section.membersKey]||[]).join(', ');
       section.rows.forEach(function (row) {
-        var profile=(window.GT_CONFIG.rateProfiles[section.profileKey])||{};
-        var rate=profile[row.rateLabel] || { acquirer:0, destination:0 };
-        rows.push([section.title, members, row.label, row.biayaNasabah, rate.acquirer, rate.destination, row.issuer==='-' ? 0 : row.issuer, row.switching]);
+        var rate=gtGuideRate(section.profileKey, row.rateLabel) || {};
+        rows.push([section.title, members, row.label, rate.biayaNasabah||0, rate.acquirer||0, rate.destination||0, rate.issuer||0, rate.switching||0]);
       });
       if (section.note) rows.push([section.note,'','','','','','','']);
     });
@@ -1147,14 +1154,13 @@
   setupGtGuide();
   setupInterkoneksiParser();
   renderRuleList();
-  renderGtRefList();
   Promise.all([loadFeeConfig(), loadGtConfig()]).then(function () {
     renderRuleList();
     renderGtRefList();
     createApp('', document.getElementById('tabPanelLink'));
     createAppBPD('mp', document.getElementById('tabPanelMp'));
     setupTabs();
-  });
+  }).catch(showConfigError);
 }());
 </script>
 </body>

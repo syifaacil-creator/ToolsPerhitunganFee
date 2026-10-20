@@ -1,5 +1,5 @@
 {
-  "_catatan": "Untuk menambah anggota bank baru di satu GT: tambahkan 3 huruf prefix (sesuai awalan nama file report) ke array gt1/gt3/gt4/gt5 di bawah, DAN tambahkan pasangan 'PREFIX':'kode bank' di bankCodes. Kode bank HARUS kode bank resmi yang dipakai pada kolom KODE BANK di report (bukan boleh dikira-kira) — kalau belum tahu kodenya, isi dulu dengan string kosong supaya tidak salah hitung, nanti update setelah kode aslinya didapat. rateProfiles sekarang terpisah PER GRUP (tidak digabung lagi): gt1 -> grup GT 1, feeLainLain -> grup FEE LAIN-LAIN, gt2 -> grup GT 2, gt3 -> grup GT 3, gt4 -> grup GT 4, gt5 -> grup GT 5, asbanda -> grup ASBANDA, gt7 -> grup GT 7 (cuma Transfer Inter), interkoneksi -> grup INTERKONEKSI (cuma Transfer). Boleh diisi beda-beda per grup kapan saja, tidak saling pengaruh. PENTING: nilai di sini otomatis dipakai sebagai nilai awal kolom A & D di tabel, DAN juga sebagai fallback di index.html (window.GT_CONFIG) kalau file ini gagal dimuat — kalau ubah angka di sini, pastikan fallback di index.html ikut disamakan supaya tidak balik ke angka lama saat fetch gagal.",
+  "_catatan": "Untuk menambah anggota bank baru di satu GT: tambahkan 3 huruf prefix (sesuai awalan nama file report) ke array gt1/gt3/gt4/gt5 di bawah, DAN tambahkan pasangan 'PREFIX':'kode bank' di bankCodes. Kode bank HARUS kode bank resmi yang dipakai pada kolom KODE BANK di report (bukan boleh dikira-kira) — kalau belum tahu kodenya, isi dulu dengan string kosong supaya tidak salah hitung, nanti update setelah kode aslinya didapat. rateProfiles sekarang terpisah PER GRUP (tidak digabung lagi): gt1 -> grup GT 1, feeLainLain -> grup FEE LAIN-LAIN, gt2 -> grup GT 2, gt3 -> grup GT 3, gt4 -> grup GT 4, gt5 -> grup GT 5, asbanda -> grup ASBANDA, gt7 -> grup GT 7 (cuma Transfer Inter), interkoneksi -> grup INTERKONEKSI (cuma Transfer). Boleh diisi beda-beda per grup kapan saja, tidak saling pengaruh. PENTING: file ini satu-satunya sumber angka fee — tidak ada lagi angka cadangan di index.html. Tiap jenis transaksi punya: acquirer & destination (dipakai sebagai nilai awal kolom A & D di tabel perhitungan, 0 tampil tanda strip di Panduan Skema GT), serta biayaNasabah, issuer, switching (dipakai di tabel Panduan Skema GT; isi issuer dengan null kalau tidak berlaku supaya tampil tanda strip, sedangkan biayaNasabah/switching bernilai 0 tetap tampil 0). Baris CCW 23xxxx/32xxxx dan interkoneksi tidak muncul di panduan, jadi cukup acquirer & destination saja. Kalau file ini gagal dimuat, tool berhenti dengan pesan error (bukan pakai angka lama), jadi cukup edit di sini saja.",
   "bankCodes": {
     "BNI": "009", "BRI": "002", "MDR": "008", "BTN": "200",
     "AGR": "494", "MTP": "564", "BSM": "451",
@@ -12,55 +12,55 @@
   "gt5": ["BAL", "BMS", "GPY", "ALB", "BMI", "GNS", "CBC", "NOB", "BCA", "CMB", "VIC", "POS", "MNC"],
   "rateProfiles": {
     "gt1": {
-      "Info Saldo": { "acquirer": 0, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 0, "destination": 0 },
-      "Transfer Intra": { "acquirer": 0, "destination": 0 },
-      "Transfer Inter": { "acquirer": 3625, "destination": 0 }
+      "Info Saldo":     { "acquirer": 0,    "destination": 0, "biayaNasabah": 0,    "issuer": null, "switching": 375 },
+      "Tarik Tunai":    { "acquirer": 0,    "destination": 0, "biayaNasabah": 0,    "issuer": null, "switching": 375 },
+      "Transfer Intra": { "acquirer": 0,    "destination": 0, "biayaNasabah": 0,    "issuer": null, "switching": 375 },
+      "Transfer Inter": { "acquirer": 3625, "destination": 0, "biayaNasabah": 4000, "issuer": null, "switching": 375 }
     },
     "feeLainLain": {
-      "Info Saldo": { "acquirer": 3625, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 7125, "destination": 0 },
-      "Transfer": { "acquirer": 4625, "destination": 1500 }
+      "Info Saldo":  { "acquirer": 3625, "destination": 0,    "biayaNasabah": 4000, "issuer": null, "switching": 375 },
+      "Tarik Tunai": { "acquirer": 7125, "destination": 0,    "biayaNasabah": 7500, "issuer": null, "switching": 375 },
+      "Transfer":    { "acquirer": 4625, "destination": 1500, "biayaNasabah": 6500, "issuer": null, "switching": 375 }
     },
     "gt2": {
-      "Info Saldo": { "acquirer": 3230, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 6510, "destination": 0 },
-      "Transfer": { "acquirer": 3800, "destination": 1500 },
-      "CCW 23xxxx": { "acquirer": 6510, "destination": 0 },
-      "CCW 32xxxx": { "acquirer": 3000, "destination": 0 }
+      "Info Saldo":  { "acquirer": 3230, "destination": 0,    "biayaNasabah": 4000, "issuer": 395, "switching": 375 },
+      "Tarik Tunai": { "acquirer": 6510, "destination": 0,    "biayaNasabah": 7500, "issuer": 615, "switching": 375 },
+      "Transfer":    { "acquirer": 3800, "destination": 1500, "biayaNasabah": 6500, "issuer": 825, "switching": 375 },
+      "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
+      "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "gt3": {
-      "Info Saldo": { "acquirer": 3230, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 6510, "destination": 0 },
-      "Transfer": { "acquirer": 3800, "destination": 1500 },
-      "CCW 23xxxx": { "acquirer": 6510, "destination": 0 },
-      "CCW 32xxxx": { "acquirer": 3000, "destination": 0 }
+      "Info Saldo":  { "acquirer": 3230, "destination": 0,    "biayaNasabah": 4000, "issuer": 220, "switching": 550 },
+      "Tarik Tunai": { "acquirer": 6510, "destination": 0,    "biayaNasabah": 7500, "issuer": 440, "switching": 550 },
+      "Transfer":    { "acquirer": 3800, "destination": 1500, "biayaNasabah": 6500, "issuer": 650, "switching": 550 },
+      "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
+      "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "gt4": {
-      "Info Saldo": { "acquirer": 3230, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 6510, "destination": 0 },
-      "Transfer": { "acquirer": 3800, "destination": 1500 },
-      "CCW 23xxxx": { "acquirer": 6510, "destination": 0 },
-      "CCW 32xxxx": { "acquirer": 3000, "destination": 0 }
+      "Info Saldo":  { "acquirer": 3230, "destination": 0,    "biayaNasabah": 4000, "issuer": null, "switching": 770 },
+      "Tarik Tunai": { "acquirer": 6510, "destination": 0,    "biayaNasabah": 7500, "issuer": 220,  "switching": 770 },
+      "Transfer":    { "acquirer": 3800, "destination": 1500, "biayaNasabah": 6500, "issuer": 430,  "switching": 770 },
+      "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
+      "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "gt5": {
-      "Info Saldo": { "acquirer": 3230, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 6510, "destination": 0 },
-      "Transfer": { "acquirer": 3800, "destination": 1500 },
-      "CCW 23xxxx": { "acquirer": 6510, "destination": 0 },
-      "CCW 32xxxx": { "acquirer": 3000, "destination": 0 }
+      "Info Saldo":  { "acquirer": 3230, "destination": 0,    "biayaNasabah": 4000, "issuer": null, "switching": 770 },
+      "Tarik Tunai": { "acquirer": 6510, "destination": 0,    "biayaNasabah": 7500, "issuer": null, "switching": 990 },
+      "Transfer":    { "acquirer": 3800, "destination": 1500, "biayaNasabah": 6500, "issuer": null, "switching": 1200 },
+      "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
+      "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "asbanda": {
-      "Info Saldo": { "acquirer": 0, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 0, "destination": 0 },
-      "Transfer": { "acquirer": 0, "destination": 0 },
-      "CCW 23xxxx": { "acquirer": 0, "destination": 0 },
-      "CCW 32xxxx": { "acquirer": 0, "destination": 0 }
+      "Info Saldo":  { "acquirer": 0, "destination": 0, "biayaNasabah": 4000, "issuer": null, "switching": 770 },
+      "Tarik Tunai": { "acquirer": 0, "destination": 0, "biayaNasabah": 7500, "issuer": 220,  "switching": 770 },
+      "Transfer":    { "acquirer": 0, "destination": 0, "biayaNasabah": 6500, "issuer": 430,  "switching": 770 },
+      "CCW 23xxxx":  { "acquirer": 0, "destination": 0 },
+      "CCW 32xxxx":  { "acquirer": 0, "destination": 0 }
     },
     "gt7": {
-      "Info Saldo": { "acquirer": 0, "destination": 0 },
-      "Tarik Tunai": { "acquirer": 0, "destination": 0 },
-      "Transfer": { "acquirer": 0, "destination": 0 },
+      "Info Saldo":     { "acquirer": 0, "destination": 0, "biayaNasabah": 0,    "issuer": null, "switching": 0 },
+      "Tarik Tunai":    { "acquirer": 0, "destination": 0, "biayaNasabah": 0,    "issuer": null, "switching": 0 },
+      "Transfer":       { "acquirer": 0, "destination": 0, "biayaNasabah": 4000, "issuer": 4000, "switching": 0 },
       "Transfer Inter": { "acquirer": 0, "destination": 0 }
     },
     "interkoneksi": {
