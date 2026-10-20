@@ -45,9 +45,9 @@
       "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
     "gt5": {
-      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3230, "issuer": null, "destination": 0,    "switching": 770 },
-      "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 6510, "issuer": null, "destination": 0,    "switching": 990 },
-      "Transfer":    { "biayaNasabah": 6500, "acquirer": 3800, "issuer": null, "destination": 1500, "switching": 1200 },
+      "Info Saldo":  { "biayaNasabah": 4000, "acquirer": 3230, "issuer": 0, "destination": 0,    "switching": 770 },
+      "Tarik Tunai": { "biayaNasabah": 7500, "acquirer": 6510, "issuer": 0, "destination": 0,    "switching": 990 },
+      "Transfer":    { "biayaNasabah": 6500, "acquirer": 3800, "issuer": 0, "destination": 1500, "switching": 1200 },
       "CCW 23xxxx":  { "acquirer": 6510, "destination": 0 },
       "CCW 32xxxx":  { "acquirer": 3000, "destination": 0 }
     },
