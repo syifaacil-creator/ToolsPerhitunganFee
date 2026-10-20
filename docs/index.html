@@ -99,7 +99,7 @@
   // Sengaja TIDAK ada angka cadangan di sini: kalau config gagal dimuat, tool berhenti
   // dengan pesan error, bukan diam-diam menghitung pakai angka lama.
   var GT_PROFILE_KEYS = ['gt1','feeLainLain','gt2','gt3','gt4','gt5','asbanda','gt7','interkoneksi'];
-  window.GT_CONFIG = { bankCodes:{}, gt1:[], gt3:[], gt4:[], gt5:[], rateProfiles:{} };
+  window.GT_CONFIG = { bankCodes:{}, gt1:[], gt3:[], gt4:[], gt5:[], asbandaMembers:[], rateProfiles:{} };
   GT_PROFILE_KEYS.forEach(function (key) { window.GT_CONFIG.rateProfiles[key]={}; });
   var GT_GROUP_LABELS = { gt1:'GT 1 — Skema ATM LINK', gt3:'GT 3 — Himbara Group lain', gt4:'GT 4 — BPD / ASBANDA', gt5:'GT 5 — Bank Umum lain' };
   function renderGtRefList() {
@@ -119,10 +119,12 @@
     }).then(function (data) {
       if (!data.bankCodes || !data.rateProfiles) throw new Error('gt-config.json tidak lengkap (bankCodes / rateProfiles kosong)');
       Object.assign(window.GT_CONFIG.bankCodes, data.bankCodes);
-      ['gt1','gt3','gt4','gt5'].forEach(function (key) {
+      ['gt1','gt3','gt4','gt5','asbandaMembers'].forEach(function (key) {
         if (!Array.isArray(data[key])) throw new Error('gt-config.json: daftar bank "'+key+'" tidak ada');
         window.GT_CONFIG[key]=data[key];
       });
+      var bukanBpd=window.GT_CONFIG.asbandaMembers.filter(function (p) { return window.GT_CONFIG.gt4.indexOf(p) < 0; });
+      if (bukanBpd.length) throw new Error('gt-config.json: anggota asbandaMembers harus ada juga di daftar gt4 — '+bukanBpd.join(', '));
       GT_PROFILE_KEYS.forEach(function (key) {
         if (!data.rateProfiles[key]) throw new Error('gt-config.json: rateProfiles."'+key+'" tidak ada');
         Object.assign(window.GT_CONFIG.rateProfiles[key], data.rateProfiles[key]);
@@ -175,7 +177,7 @@
       { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
       { label:'Transfer', rateLabel:'Transfer' }
     ] },
-    { title:'ASBANDA', membersKey:'gt4', profileKey:'asbanda', note:'*Note belum live', rows:[
+    { title:'ASBANDA', membersKey:'asbandaMembers', profileKey:'asbanda', note:'*Note belum live', rows:[
       { label:'Cek Saldo', rateLabel:'Info Saldo' },
       { label:'Tarik Tunai', rateLabel:'Tarik Tunai' },
       { label:'Transfer', rateLabel:'Transfer' }
@@ -476,6 +478,11 @@
     var GT3TR=['451','494','564'];
     var GT4=GT4_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
     var GT5=GT5_PREFIXES.map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
+    // ASBANDA = subset dari GT 4 (lihat asbandaMembers di gt-config.json).
+    // Transaksi masuk ASBANDA hanya kalau SEMUA pihak yang terlibat anggota ASBANDA:
+    // bank sendiri (dari nama file) + lawan transaksi, plus destination khusus Transfer.
+    // Kalau ada satu pihak saja BPD non-ASBANDA, transaksi tetap masuk GT 4.
+    var ASB=(window.GT_CONFIG.asbandaMembers||[]).map(function (p) { return BANK_CODE[p]; }).filter(Boolean);
     // Daftar khusus skema GT1 (Module91) — sedikit berbeda dari GT4/GT5 di atas, porting apa adanya
     var GT1_GT3=['451','494','564'];
     var GT1_GT5=['947','914','157','161','164','503','014','022','566','191'];
@@ -535,17 +542,25 @@
     function countPrefixJIn(rows, getG, getJ, prefix, list) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isInList(getJ(r), list); }); }
     function countGPrefixOnly(rows, getG, prefix) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix; }); }
     function countAcqExcludeFileBank(rows, getG, getJ, prefix, list, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isInList(getJ(r),list) && normalizeCode(getJ(r)) !== normalizeCode(bankFile); }); }
-    function countGT4TransferOneSide(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && isInList(getJ(r),GT4) && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && !isInList(getM(r),GT4); }); }
-    function countGT4TransferBothSides(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && isInList(getJ(r),GT4) && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && isInList(getM(r),GT4); }); }
+    // --- Pemisah ASBANDA vs GT 4 ---------------------------------
+    // Cek Saldo & Tarik Tunai: 2 pihak (bank sendiri + lawan). Transfer: 3 pihak (+ destination).
+    function isAsb2(bankFile, other) { return isInList(bankFile,ASB) && isInList(other,ASB); }
+    function isAsb3(bankFile, other, dest) { return isAsb2(bankFile,other) && isInList(dest,ASB); }
+    // Sisi HAK (laporan ACQ/DEST): J = lawan transaksi, M = destination
+    function countBpdNonAsb(rows, getG, getJ, prefix, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isInList(getJ(r),GT4) && !isAsb2(bankFile,getJ(r)); }); }
+    function countAsbPair(rows, getG, getJ, prefix, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === prefix && isAsb2(bankFile,getJ(r)); }); }
+    function countGT4TransferNonAsb(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && isInList(getJ(r),GT4) && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && !isAsb3(bankFile,getJ(r),getM(r)); }); }
+    function countAsbTransfer(rows, getG, getJ, getM, bankFile) { return rows.filter(function (r) { return getG(r).slice(0,2) === '40' && normalizeCode(getJ(r)) !== normalizeCode(bankFile) && isAsb3(bankFile,getJ(r),getM(r)); }); }
     function countDestG7_GT2(rows) { return rows.filter(function (r) { var g=bbG(r).slice(0,2); var j=normalizeCode(bbJ(r)); var m=normalizeCode(bbM(r)); var d=bbD(r); if (g !== '40') return false; if (GT1.indexOf(j) < 0) return false; if (['920','889','153','014','011'].indexOf(m) >= 0) return false; if (m === '200') { if (d.charAt(0) === '6') return false; if (d.slice(0,2) === '13') return false; return true; } return true; }); }
     function countDestG16_GT5(rows) { return rows.filter(function (r) { var g=bbG(r).slice(0,2); var j=normalizeCode(bbJ(r)); var m=normalizeCode(bbM(r)); return g === '40' && GT5.indexOf(j) >= 0 && m !== '014' && m !== '920'; }); }
-    function countIssPrefixExclude(rows, prefix, list) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && !isInList(issJ(r), list); }); }
-    function countIssPrefixInclude(rows, prefix, list) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && isInList(issJ(r), list); }); }
     function countIssPrefix(rows, prefix) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix; }); }
-    function countIssGT4XOR(rows, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; if (normalizeCode(issJ(r)) === normalizeCode(bankFile)) return false; var isJ=isInList(issJ(r),GT4), isM=isInList(issM(r),GT4); return !(isJ && isM); }); }
-    function countIssGT4XORP7(rows, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; if (normalizeCode(issM(r)) === normalizeCode(bankFile)) return false; var isJ=isInList(issJ(r),GT4), isM=isInList(issM(r),GT4); return !(isJ && isM); }); }
-    function countIssGT4Both(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && isInList(issJ(r),GT4) && normalizeCode(issJ(r)) !== normalizeCode(bankFile) && isInList(issM(r),GT4); }); }
-    function countIssGT4BothP13(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && isInList(issJ(r),GT4) && isInList(issM(r),GT4) && normalizeCode(issM(r)) !== normalizeCode(bankFile); }); }
+    // Sisi KEWAJIBAN (laporan ISS): bank sendiri = issuer, issJ = acquirer, issM = destination
+    function countIssNonAsb(rows, prefix, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && !isAsb2(bankFile,issJ(r)); }); }
+    function countIssAsb(rows, prefix, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === prefix && isAsb2(bankFile,issJ(r)); }); }
+    function countIssTransferNonAsb(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && normalizeCode(issJ(r)) !== normalizeCode(bankFile) && !isAsb3(bankFile,issJ(r),issM(r)); }); }
+    function countIssTransferNonAsbP7(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && normalizeCode(issM(r)) !== normalizeCode(bankFile) && !isAsb3(bankFile,issJ(r),issM(r)); }); }
+    function countIssAsbTransfer(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && normalizeCode(issJ(r)) !== normalizeCode(bankFile) && isAsb3(bankFile,issJ(r),issM(r)); }); }
+    function countIssAsbTransferP13(rows, bankFile) { return rows.filter(function (r) { return issF(r).slice(0,2) === '40' && normalizeCode(issM(r)) !== normalizeCode(bankFile) && isAsb3(bankFile,issJ(r),issM(r)); }); }
     function countIssExcludeFileBank(rows, bankColumnGetter, bankFile) { return rows.filter(function (r) { if (issF(r).slice(0,2) !== '40') return false; var v=bankColumnGetter(r); if (v === '') return false; return normalizeCode(v) !== normalizeCode(bankFile); }); }
 
     function computeGroupCounts345(gt, bankFile) {
@@ -560,9 +575,9 @@
       set('hak','GT 3','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT3IS), []);
       set('hak','GT 3','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT3IS), []);
       set('hak','GT 3','Transfer', gt === '3' ? countAcqExcludeFileBank(acqRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'40',GT3TR), gt === '3' ? countAcqExcludeFileBank(destRows,bbG,bbJ,'40',GT3TR,bankFile) : countPrefixJIn(destRows,bbG,bbJ,'40',GT3TR));
-      set('hak','GT 4','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), []);
-      set('hak','GT 4','Tarik Tunai', gt === '4' ? [] : countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), []);
-      if (gt === '4') { set('hak','GT 4','Transfer', countGT4TransferOneSide(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferOneSide(destRows,bbG,bbJ,bbM,bankFile)); }
+      set('hak','GT 4','Info Saldo', gt === '4' ? countBpdNonAsb(acqRows,bbG,bbJ,'31',bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), []);
+      set('hak','GT 4','Tarik Tunai', gt === '4' ? countBpdNonAsb(acqRows,bbG,bbJ,'01',bankFile) : countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), []);
+      if (gt === '4') { set('hak','GT 4','Transfer', countGT4TransferNonAsb(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferNonAsb(destRows,bbG,bbJ,bbM,bankFile)); }
       else { set('hak','GT 4','Transfer', countPrefixJIn(acqRows,bbG,bbJ,'40',GT4), countPrefixJIn(destRows,bbG,bbJ,'40',GT4)); }
       set('hak','GT 5','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT5), []);
       set('hak','GT 5','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT5), []);
@@ -573,15 +588,15 @@
       var interkoneksiDest345 = gt === '4' ? countInterkoneksiBPD(destRows) : gt === '3' ? countInterkoneksiHG(destRows) : null;
       set('hak','INTERKONEKSI','Transfer', interkoneksiDest345 == null ? null : [], interkoneksiDest345);
       if (gt === '4') {
-        set('hak','ASBANDA','Info Saldo', countPrefixJIn(acqRows,bbG,bbJ,'31',GT4), []);
-        set('hak','ASBANDA','Tarik Tunai', countPrefixJIn(acqRows,bbG,bbJ,'01',GT4), []);
-        set('hak','ASBANDA','Transfer', countGT4TransferBothSides(acqRows,bbG,bbJ,bbM,bankFile), countGT4TransferBothSides(destRows,bbG,bbJ,bbM,bankFile));
+        set('hak','ASBANDA','Info Saldo', countAsbPair(acqRows,bbG,bbJ,'31',bankFile), []);
+        set('hak','ASBANDA','Tarik Tunai', countAsbPair(acqRows,bbG,bbJ,'01',bankFile), []);
+        set('hak','ASBANDA','Transfer', countAsbTransfer(acqRows,bbG,bbJ,bbM,bankFile), countAsbTransfer(destRows,bbG,bbJ,bbM,bankFile));
       }
 
       if (gt === '4') {
-        set('kewajiban',ownName,'Info Saldo', countIssPrefixExclude(issRows,'31',GT4), []);
-        set('kewajiban',ownName,'Tarik Tunai', countIssPrefixExclude(issRows,'01',GT4), []);
-        set('kewajiban',ownName,'Transfer', countIssGT4XOR(issRows,bankFile), countIssGT4XORP7(issRows,bankFile));
+        set('kewajiban',ownName,'Info Saldo', countIssNonAsb(issRows,'31',bankFile), []);
+        set('kewajiban',ownName,'Tarik Tunai', countIssNonAsb(issRows,'01',bankFile), []);
+        set('kewajiban',ownName,'Transfer', countIssTransferNonAsb(issRows,bankFile), countIssTransferNonAsbP7(issRows,bankFile));
       } else {
         set('kewajiban',ownName,'Info Saldo', countIssPrefix(issRows,'31'), []);
         set('kewajiban',ownName,'Tarik Tunai', countIssPrefix(issRows,'01'), []);
@@ -591,9 +606,9 @@
       set('kewajiban','CCW','CCW 32xxxx', countIssPrefix(issRows,'32'), countIssPrefix(issRows,'32'));
       set('kewajiban','INTERKONEKSI','Transfer', null, null);
       if (gt === '4') {
-        set('kewajiban','ASBANDA','Info Saldo', countIssPrefixInclude(issRows,'31',GT4), []);
-        set('kewajiban','ASBANDA','Tarik Tunai', countIssPrefixInclude(issRows,'01',GT4), []);
-        set('kewajiban','ASBANDA','Transfer', countIssGT4Both(issRows,bankFile), countIssGT4BothP13(issRows,bankFile));
+        set('kewajiban','ASBANDA','Info Saldo', countIssAsb(issRows,'31',bankFile), []);
+        set('kewajiban','ASBANDA','Tarik Tunai', countIssAsb(issRows,'01',bankFile), []);
+        set('kewajiban','ASBANDA','Transfer', countIssAsbTransfer(issRows,bankFile), countIssAsbTransferP13(issRows,bankFile));
       }
       return { counts:c, detail:detail };
     }
