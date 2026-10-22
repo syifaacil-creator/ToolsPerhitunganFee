@@ -1,0 +1,10 @@
+# Report dan file settlement berisi data nasabah (nomor kartu, nomor rekening).
+# Repo ini publik — jangan pernah ikut ter-commit.
+*-Report-*.txt
+SETTLE_*
+*.xlsx
+*.xlsm
+*.xls
+
+# Pengecualian: file contoh yang memang sengaja disimpan, tambahkan manual di sini
+# dengan tanda seru, contoh:  !contoh-aman.txt
