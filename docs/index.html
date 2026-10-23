@@ -18,6 +18,10 @@
 .inter-banner .inter-notes summary{cursor:pointer;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fbfcfe;user-select:none}
 .inter-banner .inter-notes summary:hover{background:#f1f5f9}
 .inter-banner .inter-notes ul{margin:8px 0 0;padding-left:22px;line-height:1.7}
+.fbi-upload{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.fbi-upload h2{margin:0 0 6px}
+.button.fbi-pick{background:var(--red);color:#fff;font-weight:800;border-color:var(--red)}
+.button.fbi-pick:hover{filter:brightness(0.93)}
 .pending{color:var(--muted);font-style:italic;font-weight:600;font-size:11px}
 .scheme-banner{margin-top:12px;padding:10px 14px;border-radius:8px;background:#eef4fa;border:1px solid var(--line);color:var(--navy);font-size:13px;font-weight:700}.scheme-banner.warn{background:#fff3f2;border-color:#f3c6c2;color:var(--red)}
 .gt-ref-list{grid-template-columns:1fr}.gt-ref-list li{font-size:12.5px;color:var(--muted)}.gt-ref-list li strong{display:block;color:var(--navy);margin-bottom:2px}
@@ -54,7 +58,7 @@
 <div id="tabPanelMp" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnMp" hidden>
 <section class="intro"><div><h1>ATM MERAH PUTIH REPORT PARSER & FEE CALCULATION TOOLS</h1><p>Proses file report TXT menjadi tampilan perhitungan fee, lalu download hasilnya sebagai file Excel.</p></div><svg class="hero-art" viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="8" y="2" width="94" height="44" rx="6" fill="#fff" stroke="#dde3ea" stroke-width="1.5"/><circle cx="90" cy="12" r="4" fill="#c1121f"/><rect x="16" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="46" y="12" width="26" height="9" rx="2" fill="#0b1f3a"/><rect x="16" y="26" width="56" height="6" rx="2" fill="#8fa0b8"/><rect x="16" y="35" width="40" height="5" rx="2" fill="#c1121f"/><rect x="8" y="46" width="94" height="102" rx="6" fill="#c1121f"/><rect x="16" y="54" width="78" height="86" rx="5" fill="#a10f19"/><rect x="26" y="64" width="58" height="40" rx="4" fill="#0b1f3a" stroke="#16345f" stroke-width="1.5"/><rect x="32" y="70" width="46" height="8" rx="2" fill="#e2222f"/><rect x="32" y="82" width="30" height="5" rx="1.5" fill="#7fa8d6"/><rect x="32" y="90" width="38" height="5" rx="1.5" fill="#7fa8d6"/><rect x="26" y="110" width="58" height="24" rx="4" fill="#fff"/><circle cx="35" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="35" cy="127" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="117" r="2.3" fill="#0b1f3a"/><circle cx="75" cy="127" r="2.3" fill="#0b1f3a"/><rect x="44" y="112" width="22" height="18" rx="2" fill="#dde3ea"/></svg><p class="note">Pada bagian hasil perhitungan, Kolom kuning <strong>A dan D</strong> bisa disesuaikan nilainya. Kolom jumlah dan subtotal terisi otomatis dari perhitungan data transaksi.</p></section>
 <div id="mpmessage" class="message"></div>
-<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"><div id="mpschemeBanner" class="scheme-banner" hidden></div><div class="interkoneksi-upload"><label class="button quiet" for="mpinterkoneksiInput">Upload file Interkoneksi (opsional)</label><input id="mpinterkoneksiInput" type="file" accept=".txt,text/plain"><button id="mpinterkoneksiProcess" class="button secondary" type="button" disabled>↓ Download Excel Interkoneksi</button><button id="mpinterkoneksiReset" class="button quiet" type="button" disabled>Reset</button><span id="mpinterkoneksiFile" class="file-name">Belum ada file Interkoneksi dipilih</span><p id="mpinterkoneksiStatus" class="interkoneksi-note">Parser report TXT Interkoneksi (LAPORAN TRANSAKSI INTERKONEKSI) menjadi Excel .xlsx — header berwarna, seluruh sel diberi border.</p></div></div><div class="rules"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap"><h2>2. Referensi kode bank per GT</h2><button id="gtGuideBtn" class="button quiet" type="button" style="font-size:12px;padding:6px 12px">📋 Panduan Skema GT</button></div><p>Skema tabel otomatis mengikuti 3 huruf pertama nama file (sebelum tanda "-"). Daftar &amp; nilai fee per GT diambil dari <code>gt-config.json</code> — edit file itu di repo untuk menambah anggota baru atau ubah nilai fee per GT.</p><ul id="gtRefList" class="rule-list gt-ref-list"></ul></div></section>
+<section class="panel upload"><div id="mpdropzone" class="upload-area"><h2>1. Pilih report TXT yang akan di proses</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button primary" for="mpfileInput">Pilih file TXT</label><button id="mpprocessButton" class="button secondary" disabled>Proses parser ke Excel</button><button id="mpresetButton" class="button quiet" disabled>Reset</button></div><div id="mpfileName" class="file-name">Belum ada file dipilih</div><input id="mpfileInput" type="file" accept=".txt,text/plain"><div id="mpschemeBanner" class="scheme-banner" hidden></div><div class="fbi-upload"><h2>2. Pilih report TXT yang akan di proses (Fee Based Income)</h2><p>Format nama file: <strong>XXX-Report-Harian-LINK-MP-YYMMDD-NEW</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button fbi-pick" for="mpfbiInput">Pilih File TXT</label><input id="mpfbiInput" type="file" accept=".txt,text/plain"><button id="mpfbiDownload" class="button secondary" type="button" disabled>↓ Download Hasil Parser</button><button id="mpfbiReset" class="button quiet" type="button" disabled>Reset</button></div><div id="mpfbiFile" class="file-name">Belum ada file dipilih</div><p id="mpfbiStatus" class="interkoneksi-note">Khusus report format NEW. Hasilnya hanya file Excel, tidak dipakai untuk perhitungan hak dan kewajiban.</p></div><div class="fbi-upload"><h2>3. Pilih report TXT yang akan di proses (File Interkoneksi)</h2><p>Format nama file: <strong>SETTLE_JALN_XXXX_YYMMDD_BNF</strong>. Parser ini memisahkan semua kode report yang terhitung pada proses settlement (Transaksi Berhasil, Suspect Open, Suspect Urgent Priority).</p><div class="actions"><label class="button fbi-pick" for="mpinterkoneksiInput">Pilih File TXT</label><input id="mpinterkoneksiInput" type="file" accept=".txt,text/plain"><button id="mpinterkoneksiProcess" class="button secondary" type="button" disabled>↓ Download Hasil Parser</button><button id="mpinterkoneksiReset" class="button quiet" type="button" disabled>Reset</button></div><div id="mpinterkoneksiFile" class="file-name">Belum ada file dipilih</div><p id="mpinterkoneksiStatus" class="interkoneksi-note">Opsional. Tanpa file ini perhitungan tetap jalan, tapi tanpa filter interkoneksi.</p></div></div><div class="rules"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap"><h2>4. Referensi kode bank per GT</h2><button id="gtGuideBtn" class="button quiet" type="button" style="font-size:12px;padding:6px 12px">📋 Panduan Skema GT</button></div><p>Skema tabel otomatis mengikuti 3 huruf pertama nama file (sebelum tanda "-"). Daftar &amp; nilai fee per GT diambil dari <code>gt-config.json</code> — edit file itu di repo untuk menambah anggota baru atau ubah nilai fee per GT.</p><ul id="gtRefList" class="rule-list gt-ref-list"></ul></div></section>
 <section class="panel sheet"><div class="sheet-head"><div><h2>Hasil perhitungan</h2><p id="mpdescription">Upload file lalu klik proses parser.</p></div><button id="mpdownloadExcel" class="button primary" disabled>↓ Download Excel</button></div><div id="mpinterBanner" class="inter-banner" hidden></div><div id="mpempty" class="empty"><strong>Belum ada hasil</strong><br>Hasil parser akan tampil sesuai skema GT yang terdeteksi dari nama file.</div><div id="mpsheetScroll" class="sheet-scroll" hidden>
 
 <div id="mpclassicWrap" hidden><div class="report-grid"><div><div class="report-title">Hak Atas Fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicHakBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06B</p><table class="accumulation"><caption>Total Hak Fee Per Jenis Transaksi</caption><tbody id="mpclassicHakAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 06A</p></div><div><div class="report-title">Kewajiban Atas fee</div><div class="report-subtitle">RINGKASAN ACQUIRER & DESTINATION</div><table><colgroup><col style="width:28%"><col style="width:9%"><col style="width:9%"><col style="width:18%"><col style="width:9%"><col style="width:9%"><col style="width:18%"></colgroup><thead><tr><th rowspan="2">Jenis Transaksi</th><th colspan="3">Acquirer</th><th colspan="3">Destination</th></tr><tr><th>A<br>Fee Per Trx</th><th>B<br>Jumlah Trx</th><th>C<br>Fee*Jumlah</th><th>D<br>Fee Per Trx</th><th>E<br>Jumlah Trx</th><th>F<br>Fee*Jumlah</th></tr></thead><tbody id="mpclassicKewajibanBody"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03B</p><table class="accumulation"><caption>Total Kewajiban Fee Per Jenis Transaksi</caption><tbody id="mpclassicKewajibanAccumulation"></tbody></table><p class="manual-note">*Cek manual kembali pada kode report 03A</p></div></div><section class="panel compare" style="margin-top:22px"><div class="sheet-head"><div><h2>Perbandingan Total Fee vs Report</h2><p>Cross-check otomatis Total Fee hasil perhitungan terhadap Total Fee yang tertera pada report (kode 06A untuk Hak, 03A untuk Kewajiban).</p></div></div><div style="padding:22px"><div class="compare-grid"><div><div class="report-title">Kode Report 06A — Hak Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Selisih</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareHakBody"></tbody></table></div></div><div><div class="report-title">Kode Report 03A — Kewajiban Atas Fee</div><div class="compare-scroll"><table><thead><tr><th>Jenis Transaksi</th><th>Total Fee</th><th>Total Fee di Report</th><th>Selisih</th><th>Hasil Compare</th></tr></thead><tbody id="mpclassicCompareKewajibanBody"></tbody></table></div></div></div></div></section></div>
@@ -255,8 +259,16 @@
     modal.addEventListener('click', function (e) { if (e.target===modal) modal.hidden=true; });
     downloadBtn.addEventListener('click', downloadGtGuideXlsx);
   }
-  var CURRENT_VERSION = '3.0';
+  var CURRENT_VERSION = '3.1';
   var CHANGELOG = [
+    { version:'3.1', date:'2026-10-23', type:'Minor', changes:[
+      'Parser baru "Fee Based Income" di tab ATM MERAH PUTIH untuk report format NEW (XXX-Report-Harian-LINK-MP-YYMMDD-NEW). Hasilnya Excel 6 sheet; tidak dipakai untuk perhitungan hak dan kewajiban',
+      'Report format NEW dipotong per posisi kolom, bukan per spasi, karena sebagian kolom bisa kosong (KODE BANK DESTINATION, NOMOR REKENING TUJUAN, KODE PRINSIPAL) sehingga pemisahan per spasi membuat isi kolom bergeser',
+      'Kolom tambahan di format NEW ikut terbaca: NOMOR REKENING TUJUAN, NOMOR REKENING ASAL, KODE PRINSIPAL, BIAYA NASABAH, FEE ACQ, FEE ISS, FEE DEST, FEE SWITCHER, dan FEE BILLER untuk modul payment',
+      'Blok upload file Interkoneksi dirapikan jadi blok bernomor sendiri; fungsinya tidak berubah',
+      'Nomor kartu kini dimask (6 digit depan + X + 4 digit belakang) di Excel Interkoneksi dan Fee Based Income, menyamai parser utama. Masking hanya di file Excel; data di memori tetap asli supaya pencocokan interkoneksi tidak terpengaruh',
+      'Fix: sel kosong di Excel Fee Based Income tidak mendapat border'
+    ] },
     { version:'3.0', date:'2026-10-22', type:'Major', changes:[
       'File Interkoneksi (SETTLE_..._YYMMDD_BNF) sekarang ikut dihitung, bukan cuma diubah jadi Excel — satu tombol "Proses" memparse report dan file interkoneksi sekaligus, tombol download tetap terpisah',
       'Transaksi yang ada di file interkoneksi dikeluarkan dari sisi Destination GT 2, GT 3, GT 4, GT 5, dan ASBANDA, lalu dihitung di baris INTERKONEKSI. Sisi Kewajiban Atas Fee tidak berubah',
@@ -1306,11 +1318,210 @@
     sheet['!cols']=[{ wch:28 },{ wch:40 }];
   }
 
+  // ============================================================
+  // PARSER REPORT "NEW" (Fee Based Income) — XXX-Report-Harian-LINK-MP-YYMMDD-NEW
+  // Hanya mengubah TXT jadi Excel; tidak dipakai untuk hitungan hak/kewajiban.
+  //
+  // Format NEW punya kolom lebih banyak dan sebagian bisa KOSONG (mis. KODE BANK
+  // DESTINATION, NOMOR REKENING TUJUAN, KODE PRINSIPAL). Karena itu baris tidak
+  // bisa dipecah per spasi seperti parser lama — harus dipotong per posisi kolom.
+  // Angka di bawah = posisi awal tiap kolom (1-based), diturunkan dari baris
+  // header report. Kolom berakhir tepat sebelum posisi awal kolom berikutnya.
+  // ============================================================
+  var FBI_LAYOUTS = {
+    'ACQ-BASICBANKING': { codes:['04','05A','05B'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['KODE TERMINAL',21],['NOMOR KARTU',38],
+      ['JENIS MESSAGE',58],['KODE PEMROSESAN',66],['NOMINAL TRANSAKSI',79],['KODE KESALAHAN',92],
+      ['KODE BANK ISSUER',102],['NOMOR REFERENSI',111],['CHANNEL TYPE',124],['KODE BANK DESTINATION',133],
+      ['NOMOR REKENING TUJUAN',145],['KODE PRINSIPAL',166],['BIAYA NASABAH',182],['FEE ACQ',199],
+      ['FEE ISS',212],['FEE DEST',224],['FEE SWITCHER',236]
+    ] },
+    'ISS-BASICBANKING': { codes:['01','02A','02B'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['NOMOR KARTU',21],['JENIS MESSAGE',41],
+      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',64],['KODE KESALAHAN',75],['KODE TERMINAL',85],
+      ['KODE BANK ACQUIRER',102],['NOMOR REFERENSI',111],['CHANNEL TYPE',124],['KODE BANK DESTINATION',133],
+      ['NOMOR REKENING TUJUAN',145],['NOMOR REKENING ASAL',173],['KODE PRINSIPAL',194],['BIAYA NASABAH',217],
+      ['FEE ACQ',231],['FEE ISS',244],['FEE DEST',257],['FEE SWITCHER',270]
+    ] },
+    'DEST-BASICBANKING': { codes:['07','08A','08B'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['KODE TERMINAL',21],['NOMOR KARTU',38],
+      ['JENIS MESSAGE',58],['KODE PEMROSESAN',66],['NOMINAL TRANSAKSI',79],['KODE KESALAHAN',92],
+      ['KODE BANK ISSUER',102],['NOMOR REFERENSI',111],['CHANNEL TYPE',124],['KODE BANK ACQUIRER',133],
+      ['NOMOR REKENING TUJUAN',142],['KODE PRINSIPAL',163],['BIAYA NASABAH',179],['FEE ACQ',196],
+      ['FEE ISS',209],['FEE DEST',222],['FEE SWITCHER',233]
+    ] },
+    'ACQ-PAYMENT': { codes:['34','35A','35B'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['KODE TERMINAL',21],['NOMOR KARTU',38],
+      ['JENIS MESSAGE',58],['KODE PEMROSESAN',66],['NOMINAL TRANSAKSI',79],['NOMINAL TAGIHAN',96],
+      ['ADMIN FEE',110],['KODE KESALAHAN',119],['KODE BANK ISSUER',129],['NOMOR REFERENSI',138],
+      ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
+      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',247],['FEE ISS',260],['FEE BILLER',270],['FEE SWITCHER',281]
+    ] },
+    'ISS-PAYMENT': { codes:['31','32A','32B'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['NOMOR KARTU',21],['JENIS MESSAGE',41],
+      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',93],
+      ['KODE KESALAHAN',102],['KODE TERMINAL',112],['KODE BANK ACQUIRER',129],['NOMOR REFERENSI',138],
+      ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
+      ['KODE BANK BILLER',219],['NOMOR REKENING ASAL',231],['KODE PRINSIPAL',260],['FEE ACQ',276],
+      ['FEE ISS',289],['FEE BILLER',299],['FEE SWITCHER',310]
+    ] },
+    'BILLER-PAYMENT': { codes:['09','09D','09E'], cols:[
+      ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['NOMOR KARTU',21],['JENIS MESSAGE',41],
+      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',93],
+      ['KODE KESALAHAN',102],['KODE TERMINAL',112],['KODE BANK ACQUIRER',129],['NOMOR REFERENSI',138],
+      ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
+      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',247],['FEE ISS',260],['FEE BILLER',270],['FEE SWITCHER',281]
+    ] }
+  };
+  var FBI_ANGKA = /^(NOMINAL|BIAYA|FEE|ADMIN)/;
+
+  function fbiModuleForCode(code) {
+    for (var name in FBI_LAYOUTS) { if (FBI_LAYOUTS[name].codes.indexOf(code) >= 0) return name; }
+    return '';
+  }
+  function fbiPotong(line, start, next) {
+    var from=start-1;
+    if (from >= line.length) return '';
+    var potong=(next > 0) ? line.substring(from, next-1) : line.substring(from);
+    return potong.replace(/^\s+|\s+$/g,'');
+  }
+  function fbiAngka(text) {
+    var bersih=String(text == null ? '' : text).replace(/,/g,'').replace(/\s/g,'');
+    if (bersih === '' || !/^-?\d+(\.\d+)?$/.test(bersih)) return null;
+    return Number(bersih);
+  }
+  // Baris transaksi: diawali WAKTU dan TANGGAL 6 digit, sama seperti parser lama.
+  function fbiBarisTransaksi(line) {
+    var t=line.replace(/\t/g,'        ');
+    return /^\d{6}\s+\d{6}\s/.test(t) ? t : null;
+  }
+
+  function parseFbiText(text) {
+    var hasil={}; var skipped=[]; var total=0;
+    for (var nama in FBI_LAYOUTS) hasil[nama]=[];
+    var active=''; var modul='';
+    String(text).replace(/\r/g,'').split('\n').forEach(function (line, idx) {
+      var head=line.match(/KODE REPORT\s*:\s*([0-9A-Z]+)/i);
+      if (head) { active=head[1].toUpperCase(); modul=fbiModuleForCode(active); return; }
+      if (!modul) return;
+      if (/T\s*O\s*T\s*A\s*L/i.test(line)) { active=''; modul=''; return; }
+      var baris=fbiBarisTransaksi(line);
+      if (!baris) return;
+      var cols=FBI_LAYOUTS[modul].cols;
+      var values=cols.map(function (c, i) {
+        if (c[1] === 0) return active;
+        var next = (i+1 < cols.length) ? cols[i+1][1] : 0;
+        var isi=fbiPotong(baris, c[1], next);
+        if (FBI_ANGKA.test(c[0])) { var n=fbiAngka(isi); return n === null ? isi : n; }
+        return isi;
+      });
+      hasil[modul].push(values);
+      total+=1;
+    });
+    return { data:hasil, total:total, skipped:skipped };
+  }
+
+  function downloadFbiXlsx(parsed, baseName) {
+    if (!window.XLSX) return '';
+    var book=XLSX.utils.book_new();
+    Object.keys(FBI_LAYOUTS).forEach(function (nama) {
+      var cols=FBI_LAYOUTS[nama].cols;
+      var idxKartu=-1;
+      cols.forEach(function (c, i) { if (c[0] === 'NOMOR KARTU') idxKartu=i; });
+      var isi=parsed.data[nama].map(function (row) {
+        var salinan=row.slice();
+        if (idxKartu >= 0) salinan[idxKartu]=maskCardNumber(salinan[idxKartu]);
+        return salinan;
+      });
+      var rows=[cols.map(function (c) { return c[0]; })].concat(isi);
+      if (rows.length === 1) rows.push(cols.map(function (_, i) { return i === 0 ? 'Tidak ada data' : ''; }));
+      var sheet=XLSX.utils.aoa_to_sheet(rows);
+      fbiStyleSheet(sheet, rows, cols);
+      XLSX.utils.book_append_sheet(book, sheet, nama.substring(0,31));
+    });
+    var fileName=String(baseName || 'hasil').replace(/\.txt$/i,'')+'-parser-fbi.xlsx';
+    XLSX.writeFile(book, fileName, { cellStyles:true });
+    return fileName;
+  }
+
+  function fbiStyleSheet(sheet, rows, cols) {
+    var garis={ style:'thin', color:{ rgb:'7F9DB2' } };
+    var border={ top:garis, bottom:garis, left:garis, right:garis };
+    var headerStyle={ fill:{ fgColor:{ rgb:'17324D' } }, font:{ bold:true, color:{ rgb:'FFFFFF' }, sz:11 }, alignment:{ horizontal:'center', vertical:'center', wrapText:true }, border:border };
+    var bodyStyle={ border:{ top:{ style:'thin', color:{ rgb:'D5E0E8' } }, bottom:{ style:'thin', color:{ rgb:'D5E0E8' } }, left:{ style:'thin', color:{ rgb:'D5E0E8' } }, right:{ style:'thin', color:{ rgb:'D5E0E8' } } } };
+    // Sel kosong tetap dibuat supaya border-nya ikut terpasang — kalau tidak,
+    // kolom yang kosong (sering terjadi di format NEW) tampil tanpa garis.
+    for (var r=0; r<rows.length; r+=1) {
+      for (var c=0; c<cols.length; c+=1) {
+        var addr=XLSX.utils.encode_cell({ r:r, c:c });
+        if (!sheet[addr]) sheet[addr]={ v:'', t:'s' };
+        var cell=sheet[addr];
+        if (r === 0) { cell.s=headerStyle; continue; }
+        cell.s=bodyStyle;
+        if (FBI_ANGKA.test(cols[c][0]) && typeof cell.v === 'number') cell.z='#,##0';
+      }
+    }
+    sheet['!ref']=XLSX.utils.encode_range({ s:{ r:0, c:0 }, e:{ r:Math.max(rows.length-1,0), c:cols.length-1 } });
+    sheet['!freeze']={ xSplit:0, ySplit:1 };
+    sheet['!autofilter']={ ref:XLSX.utils.encode_range({ s:{ r:0, c:0 }, e:{ r:Math.max(rows.length-1,0), c:rows[0].length-1 } }) };
+    sheet['!cols']=rows[0].map(function (h) { return { wch:Math.min(Math.max(String(h).length+3,14),30) }; });
+  }
+
+  function setupFbiParser() {
+    var input=document.getElementById('mpfbiInput');
+    var downloadBtn=document.getElementById('mpfbiDownload');
+    var resetBtn=document.getElementById('mpfbiReset');
+    var label=document.getElementById('mpfbiFile');
+    var status=document.getElementById('mpfbiStatus');
+    if (!input || !downloadBtn) return;
+    var current=null; var parsed=null;
+    var catatanAwal=status.textContent;
+
+    function setFile(file) {
+      current=file || null; parsed=null;
+      label.textContent=current ? current.name : 'Belum ada file dipilih';
+      downloadBtn.disabled=true;
+      resetBtn.disabled=!current;
+      status.textContent=current ? 'Membaca file...' : catatanAwal;
+      if (!current) return;
+      if (!/-NEW$/i.test(current.name.replace(/\.txt$/i,''))) {
+        status.textContent='Nama file tidak berakhiran "-NEW". Pastikan formatnya XXX-Report-Harian-LINK-MP-YYMMDD-NEW.';
+      }
+      var reader=new FileReader();
+      reader.onerror=function () { status.textContent='Gagal membaca file.'; };
+      reader.onload=function () {
+        try { parsed=parseFbiText(String(reader.result || '')); }
+        catch (err) { status.textContent='Gagal mem-parsing: '+err.message; return; }
+        if (!parsed.total) { status.textContent='Tidak ada baris transaksi yang terbaca. Pastikan ini report format NEW.'; return; }
+        var rincian=Object.keys(FBI_LAYOUTS).filter(function (n) { return parsed.data[n].length; })
+          .map(function (n) { return n+': '+parsed.data[n].length; }).join(', ');
+        status.textContent=parsed.total+' transaksi terbaca ('+rincian+'). Siap diunduh.';
+        downloadBtn.disabled=false;
+      };
+      reader.readAsText(current);
+    }
+
+    input.addEventListener('change', function (event) { setFile(event.target.files[0]); });
+    resetBtn.addEventListener('click', function () { input.value=''; setFile(null); });
+    downloadBtn.addEventListener('click', function () {
+      if (!parsed) return;
+      var nama=downloadFbiXlsx(parsed, current ? current.name : 'hasil');
+      if (nama) status.textContent=parsed.total+' transaksi → '+nama;
+    });
+  }
   // Dipakai oleh tombol "Download Excel Interkoneksi" di tab ATM MERAH PUTIH.
   // Hanya membangun workbook dari hasil parse yang sudah ada di memori.
   function downloadInterkoneksiXlsx(result, baseName) {
     if (!window.XLSX || !result || !result.rows.length) return '';
-    var sheetRows=[INTERKONEKSI_HEADERS.slice()].concat(result.rows);
+    // Nomor kartu dimask di hasil Excel; data asli di memori tidak diubah
+    // supaya pencocokan dengan report tetap memakai nilai sebenarnya.
+    var idxKartu=INTERKONEKSI_HEADERS.indexOf('No Kartu');
+    var barisAman=result.rows.map(function (row) {
+      var salinan=row.slice();
+      if (idxKartu >= 0) salinan[idxKartu]=maskCardNumber(salinan[idxKartu]);
+      return salinan;
+    });
+    var sheetRows=[INTERKONEKSI_HEADERS.slice()].concat(barisAman);
     var totalNominal=0, totalFee=0;
     result.rows.forEach(function (row) { totalNominal += Number(row[13]) || 0; totalFee += Number(row[16]) || 0; });
     var totalRow=INTERKONEKSI_HEADERS.map(function () { return ''; });
@@ -1338,6 +1549,7 @@
   setupDetailModal();
   setupVersionModal();
   setupGtGuide();
+  setupFbiParser();
   renderRuleList();
   Promise.all([loadFeeConfig(), loadGtConfig()]).then(function () {
     renderRuleList();
