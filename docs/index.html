@@ -267,7 +267,8 @@
       'Kolom tambahan di format NEW ikut terbaca: NOMOR REKENING TUJUAN, NOMOR REKENING ASAL, KODE PRINSIPAL, BIAYA NASABAH, FEE ACQ, FEE ISS, FEE DEST, FEE SWITCHER, dan FEE BILLER untuk modul payment',
       'Blok upload file Interkoneksi dirapikan jadi blok bernomor sendiri; fungsinya tidak berubah',
       'Nomor kartu kini dimask (6 digit depan + X + 4 digit belakang) di Excel Interkoneksi dan Fee Based Income, menyamai parser utama. Masking hanya di file Excel; data di memori tetap asli supaya pencocokan interkoneksi tidak terpengaruh',
-      'Fix: sel kosong di Excel Fee Based Income tidak mendapat border'
+      'Fix: sel kosong di Excel Fee Based Income tidak mendapat border',
+      'Fix: kolom fee di modul payment (ACQ/ISS/BILLER-PAYMENT) terpotong karena batas kolomnya terlalu ke kanan — nilai seperti 7,125 terbelah jadi 7, dan 125. Angka fee rata kanan ke ujung label, jadi batas awal kolom dilebarkan'
     ] },
     { version:'3.0', date:'2026-10-22', type:'Major', changes:[
       'File Interkoneksi (SETTLE_..._YYMMDD_BNF) sekarang ikut dihitung, bukan cuma diubah jadi Excel — satu tombol "Proses" memparse report dan file interkoneksi sekaligus, tombol download tetap terpisah',
@@ -1353,24 +1354,24 @@
     'ACQ-PAYMENT': { codes:['34','35A','35B'], cols:[
       ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['KODE TERMINAL',21],['NOMOR KARTU',38],
       ['JENIS MESSAGE',58],['KODE PEMROSESAN',66],['NOMINAL TRANSAKSI',79],['NOMINAL TAGIHAN',96],
-      ['ADMIN FEE',110],['KODE KESALAHAN',119],['KODE BANK ISSUER',129],['NOMOR REFERENSI',138],
+      ['ADMIN FEE',108],['KODE KESALAHAN',119],['KODE BANK ISSUER',129],['NOMOR REFERENSI',138],
       ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
-      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',247],['FEE ISS',260],['FEE BILLER',270],['FEE SWITCHER',281]
+      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',241],['FEE ISS',251],['FEE BILLER',264],['FEE SWITCHER',277]
     ] },
     'ISS-PAYMENT': { codes:['31','32A','32B'], cols:[
       ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['NOMOR KARTU',21],['JENIS MESSAGE',41],
-      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',93],
+      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',91],
       ['KODE KESALAHAN',102],['KODE TERMINAL',112],['KODE BANK ACQUIRER',129],['NOMOR REFERENSI',138],
       ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
-      ['KODE BANK BILLER',219],['NOMOR REKENING ASAL',231],['KODE PRINSIPAL',260],['FEE ACQ',276],
-      ['FEE ISS',289],['FEE BILLER',299],['FEE SWITCHER',310]
+      ['KODE BANK BILLER',219],['NOMOR REKENING ASAL',231],['KODE PRINSIPAL',260],['FEE ACQ',270],
+      ['FEE ISS',280],['FEE BILLER',293],['FEE SWITCHER',306]
     ] },
     'BILLER-PAYMENT': { codes:['09','09D','09E'], cols:[
       ['KODE REPORT',0],['WAKTU TRANSAKSI',1],['TANGGAL TRANSAKSI',11],['NOMOR KARTU',21],['JENIS MESSAGE',41],
-      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',93],
+      ['KODE PEMROSESAN',49],['NOMINAL TRANSAKSI',62],['NOMINAL TAGIHAN',79],['ADMIN FEE',91],
       ['KODE KESALAHAN',102],['KODE TERMINAL',112],['KODE BANK ACQUIRER',129],['NOMOR REFERENSI',138],
       ['CHANNEL TYPE',151],['KODE PRODUK',160],['NAMA PRODUK',179],['ID PEMBAYARAN',201],
-      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',247],['FEE ISS',260],['FEE BILLER',270],['FEE SWITCHER',281]
+      ['KODE BANK BILLER',219],['KODE PRINSIPAL',231],['FEE ACQ',241],['FEE ISS',251],['FEE BILLER',264],['FEE SWITCHER',277]
     ] }
   };
   var FBI_ANGKA = /^(NOMINAL|BIAYA|FEE|ADMIN)/;
